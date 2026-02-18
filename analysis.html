@@ -1,0 +1,373 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
+<title>CIO Weekly Audit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#5c6bc0">
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="spring-theme-fixed.css">
+<style>
+    /* 深度归因页面专属 */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 15px;
+        margin-bottom: 24px;
+    }
+    @media (max-width: 768px) {
+        .dashboard-grid { grid-template-columns: 1fr; }
+        .card-main-stats { grid-row: auto; }
+        .card-bench { grid-column: auto; grid-row: auto; }
+    }
+    .dashboard-grid .card { margin: 0; }
+    .dashboard-grid .text-secondary { font-size: 11px; color: #888; margin-bottom: 4px; }
+    .dashboard-grid .value { font-weight: bold; font-size: 1.5rem; color: var(--text); }
+    .card-main-stats { grid-row: span 2; }
+    .card-main-stats .value-lg { font-size: 1.75rem; }
+    .goals-progress-bar { height: 8px; background: rgba(0,0,0,0.1); border-radius: 4px; overflow: hidden; margin-top: 8px; }
+    .goals-progress-fill { height: 100%; background: var(--primary); border-radius: 4px; }
+    .card-drawdown { border-left: 4px solid var(--down); }
+    .card-drawdown.alert { border-left-color: var(--danger); box-shadow: 0 0 0 1px rgba(239,83,80,0.25); }
+    .card-bench { grid-column: 2 / span 2; grid-row: 2; }
+    .bench-card { background: rgba(255,255,255,0.2); border-radius: 12px; padding: 12px; margin-top: 8px; border: 1px solid rgba(255,255,255,0.4); }
+    .bench-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px dashed rgba(0,0,0,0.15); font-size: 13px; }
+    .bench-row:last-child { border-bottom: none; }
+    .bench-row-header { border-bottom-color: transparent; padding-top: 0; }
+    .bench-section { margin-bottom: 14px; }
+    .bench-section:last-child { margin-bottom: 0; }
+    .bench-title { font-weight: bold; color: var(--text); flex-shrink: 0; }
+    .bench-metrics { display: flex; gap: 8px; align-items: center; min-width: 0; flex: 1; }
+    .bench-metrics-header { font-size: 11px; color: #888; }
+    .metric-tag { padding: 2px 6px; border-radius: 4px; font-size: 0.9em; font-weight: 500; }
+    .tag-me { background: rgba(92,107,192,0.2); color: var(--primary); }
+    .tag-bench { background: rgba(0,0,0,0.1); color: var(--text-muted); }
+    .bench-bar-mine { flex: 1 1 0; min-width: 20px; max-width: 80px; height: 6px; background: var(--primary); border-radius: 3px; }
+    .bench-bar-bm { flex: 1 1 0; min-width: 20px; max-width: 80px; height: 6px; background: rgba(0,0,0,0.2); border-radius: 3px; }
+    .bench-alpha { flex: 0 0 48px; text-align: center; font-weight: 600; font-size: 12px; }
+    .bench-alpha.positive { color: var(--down); }
+    .bench-alpha.negative { color: var(--up); }
+    @media (max-width: 600px) {
+        .bench-row { flex-direction: column; align-items: flex-start; gap: 6px; padding: 10px 0; font-size: 12px; }
+        .bench-metrics { width: 100%; justify-content: space-between; background: rgba(255,255,255,0.2); padding: 6px 8px; border-radius: 8px; }
+        .metric-tag { font-size: 0.85em; }
+        .bench-bar-mine, .bench-bar-bm { max-width: none; }
+    }
+    .goals-diagnosis { color: var(--danger); font-size: 13px; padding: 10px 14px; margin: 0 0 24px 0; background: rgba(239,83,80,0.1); border-radius: 0 6px 6px 0; border-left: 4px solid var(--danger); }
+
+    /* Markdown / AI 报告 */
+    .md-box { line-height: 1.8; color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important; }
+    .md-box table { width: 100%; border-collapse: collapse; margin: 20px 0; background: rgba(255,255,255,0.2); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.4); }
+    .md-box th { background: rgba(92,107,192,0.15); color: var(--primary); padding: 12px; text-align: left; font-size: 12px; }
+    .md-box td { padding: 12px; border-bottom: 1px solid rgba(0,0,0,0.08); font-size: 12px; color: var(--text); }
+    .md-box ul { list-style: none; padding-left: 10px; }
+    .md-box li { margin-bottom: 12px; color: var(--text-muted); line-height: 1.8; position: relative; padding-left: 20px; font-size: 14px; }
+    .md-box li::before { content: "•"; color: var(--primary); position: absolute; left: 0; font-weight: bold; }
+    .md-box h2 { margin-top: 35px; padding: 10px; border-radius: 0 4px 4px 0; }
+    .md-box strong { color: var(--primary); font-weight: 700; font-size: 14px; }
+    .md-box p strong { background: rgba(92,107,192,0.15); padding: 2px 6px; border-radius: 4px; margin-right: 4px; font-size: 14px; }
+    .analysis-section { margin: 20px 0; border-left: 4px solid var(--primary); padding: 10px 20px; }
+    .glossary-term { border-bottom: 1px dashed var(--primary); cursor: help; color: var(--primary); font-weight: 600; }
+    .tooltip { position: fixed; background: rgba(60,60,80,0.95); color: #fff; padding: 15px; border-radius: 12px; border: 1px solid rgba(92,107,192,0.5); display: none; z-index: 3000; font-size: 14px; max-width: 250px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+    .chart-container { position: relative; height: 300px; margin: 20px 0; }
+</style>
+</head><body>
+<div id="loginStatus" onclick="handleStatusClick()"><span id="statusText"></span></div>
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <h2>🔐 查看完整数据</h2>
+        <input type="password" id="passwordInput" placeholder="请输入密码" onkeypress="if(event.key==='Enter') login()">
+        <button onclick="login()">授权</button>
+        <p id="loginError" style="color:#f44336; margin-top:10px;"></p>
+    </div>
+</div>
+<div id="tooltip" class="tooltip"></div>
+<nav class="nav-tabs tab-nav"><a href="index.html" class="nav-tab">每日对账</a><a href="analysis.html" class="nav-tab active">深度归因</a><a href="history.html" class="nav-tab">历史回测</a><a href="knowledge.html" class="nav-tab">投资字典</a></nav>
+<div class="container">
+    <p style="color:#888; font-size:11px;">PERIOD: 7D | 2026-02-18 23:02:28</p>
+    
+    <h2>战略指挥室</h2>
+    <div class="dashboard-grid">
+        <div class="card card-main-stats">
+            <div class="text-secondary">总资产</div>
+            <div class="value value-lg"><span id="current_mv"></span></div>
+            <div class="text-secondary" style="margin-top:12px">本周收益</div>
+            <div class="value"><span id="weekly_return"></span></div>
+            <div class="text-secondary" style="margin-top:8px">今年以来</div>
+            <div class="value"><span id="total_return"></span></div>
+            <div class="text-secondary" style="margin-top:8px">YTD收益</div>
+            <div class="value"><span id="ytd_pnl_value"></span> (<span id="ytd_pnl_rate"></span>)</div>
+        </div>
+        <div class="card card-savings">
+            <div class="text-secondary">存钱进度</div>
+            <div class="value" style="font-size:1.1rem">已存 <span id="goal_current"></span> / 目标 <span id="goal_target"></span></div>
+            <div class="goals-progress-bar"><div class="goals-progress-fill" style="width:50.0%"></div></div>
+        </div>
+        <div class="card card-drawdown">
+            <div class="text-secondary">当前回撤</div>
+            <div class="value" style="color:var(--text)">-1.5%</div>
+            <div class="text-secondary" style="margin-top:4px">底线 -10%</div>
+        </div>
+        <div class="card card-bench">
+            <div class="text-secondary" style="margin-bottom:8px">基准对比</div>
+            <div class="bench-card"><div class="bench-section">
+        <div class="bench-row bench-row-header">
+            <div class="bench-title">本周 (Weekly)</div>
+            <div class="bench-metrics bench-metrics-header text-secondary">我 | Alpha | 基准</div>
+        </div>
+        <div class="bench-row">
+            <div class="bench-title">沪深300</div>
+            <div class="bench-metrics">
+                <div class="bench-bar-mine" style="width:77.26524393173824%"></div>
+                <span class="bench-alpha positive">+10.5%</span>
+                <div class="bench-bar-bm" style="width:50.90500904470667%"></div>
+                <span class="metric-tag tag-bench">+0.4%</span>
+            </div>
+        </div>
+        <div class="bench-row">
+            <div class="bench-title">纳斯达克100</div>
+            <div class="bench-metrics">
+                <div class="bench-bar-mine" style="width:77.26524393173824%"></div>
+                <span class="bench-alpha positive">+11.8%</span>
+                <div class="bench-bar-bm" style="width:47.79456092612157%"></div>
+                <span class="metric-tag tag-bench">-0.9%</span>
+            </div>
+        </div>
+    </div><div class="bench-section">
+        <div class="bench-row bench-row-header">
+            <div class="bench-title">年度长跑 (YTD)</div>
+            <div class="bench-metrics bench-metrics-header text-secondary">我 | Alpha | 基准</div>
+        </div>
+        <div class="bench-row">
+            <div class="bench-title">沪深300</div>
+            <div class="bench-metrics">
+                <div class="bench-bar-mine" style="width:58.33009666232915%"></div>
+                <span class="bench-alpha positive">+2.9%</span>
+                <div class="bench-bar-bm" style="width:50.9622965014841%"></div>
+                <span class="metric-tag tag-bench">+0.4%</span>
+            </div>
+        </div>
+        <div class="bench-row">
+            <div class="bench-title">纳斯达克100</div>
+            <div class="bench-metrics">
+                <div class="bench-bar-mine" style="width:58.33009666232915%"></div>
+                <span class="bench-alpha positive">+5.8%</span>
+                <div class="bench-bar-bm" style="width:43.931672503213115%"></div>
+                <span class="metric-tag tag-bench">-2.4%</span>
+            </div>
+        </div>
+    </div></div>
+        </div>
+    </div>
+    
+    
+    <h2>组合底层穿透</h2>
+    <div class="card">
+        <div class="chart-container"><canvas id="assetDonut"></canvas></div>
+        <script type="text/template" id="xray-source">#### 组合底层穿透 - 重仓标的 TOP 10
+
+| 排名 | 标的名称 | 穿透持仓市值 | 组合权重 |
+| :--- | :--- | :--- | :--- |
+| 1 | 实物黄金 (Au9999) | ¥2,831 | 13.2% |
+| 2 | 中长期债基组合 | ¥1,500 | 7.0% |
+| 3 | 中短债基金组合 | ¥1,200 | 5.6% |
+| 4 | 紫金矿业 | ¥580 | 2.7% |
+| 5 | 港股价值标的 | ¥450 | 2.1% |
+| 6 | 蓝筹价值股 | ¥450 | 2.1% |
+| 7 | 广发多因子 | ¥450 | 2.1% |
+| 8 | 核心成长股 | ¥450 | 2.1% |
+| 9 | 洛阳钼业 | ¥376 | 1.8% |
+| 10 | 兴业银行 | ¥356 | 1.7% |
+</script>
+        <div id="xray-target" class="md-box"></div>
+    </div>
+    
+    <div class="analysis-section md-box">
+        <script type="text/template" id="ai-source">## 1. 盈亏归因与 Alpha 分析
+*   **核心驱动：资源股与黄金的强势表现是本周超额收益的主要引擎。**
+    *   **行业层面**：组合中权重最高的 **Resource (资源)** 板块（占组合约32%）是本周收益的核心贡献者。结合重仓股明细，**紫金矿业 (+2.7%)** 与 **洛阳钼业 (+1.8%)** 的合计权重超过4.5%，其股价上涨对组合净值拉动显著。
+    *   **资产类别**：第一重仓 **实物黄金 (13.2%)** 在本周全球市场波动中发挥了关键的避险与对冲作用，其上涨直接贡献了可观的绝对收益，并有效对冲了其他风险资产的潜在下跌。
+    *   **Alpha 来源**：本周取得显著正 Alpha（+2.95% vs 沪深300， +5.76% vs 纳指100），原因明确：
+        1.  **行业配置 Alpha**：超配表现强劲的资源/黄金板块，低配或规避了本周疲软的科技股（纳指基准下跌-2.43%）。
+        2.  **资产配置 Alpha**：在权益资产之外，配置了约12.6%的债券基金（中长债+中短债），提供了稳定器和低相关性收益，这在市场震荡期尤为宝贵。
+        3.  **选股 Alpha**：在价值/资源板块内部，重仓的紫金、洛钼等标的跑赢了行业或大盘基准。
+
+## 2. 宏观因子对持仓的冲击
+*   **对前三大重仓的具体影响分析：**
+    *   **实物黄金 (Au9999, 13.2%)**：当前宏观环境（地缘政治不确定性、市场对美联储降息路径的反复博弈）对黄金构成直接利好。美元与美债实际利率的波动是金价的核心驱动。若市场避险情绪升温或降息预期重燃，金价将继续获得支撑；反之，若美国经济数据持续强劲推高实际利率，金价将承压。**当前持仓是对冲尾部风险和货币贬值的有效工具。**
+    *   **中长期债基组合 (7.0%) & 中短债基金组合 (5.6%)**：国内货币政策维持宽松基调，对债市形成基本面支撑。经济数据（如CPI、社融）的强弱将影响长端利率的波动。**中短债受资金面影响更直接，流动性管理功能强；中长期债对经济预期和货币政策更敏感，目前配置提供了稳定的票息收益并降低了组合波动。**
+
+## 3. 风险雷达 (波动率与回撤)
+*   **组合波动率 23.29%**：显著偏高，表明组合进攻性较强，这与超配周期性资源股和黄金有关。这既是高收益潜力的来源，也是主要风险点。
+*   **最大回撤 -1.55%**：控制良好，远低于波动率水平，说明**当前的资产搭配（股+债+商品）起到了有效的内部对冲作用**，平滑了净值曲线。
+*   **核心风险点**：
+    1.  **资源股回调风险**：资源品价格（铜、金等）受全球宏观需求预期影响大，若经济数据转弱或美元走强，板块可能出现快速回撤。
+    2.  **集中度风险**：黄金+资源股合计权重极高，导致组合表现与大宗商品周期高度绑定。
+    3.  **流动性风险**：部分持仓（如港股价值标的、个别股票）流动性可能弱于大盘，在极端行情下冲击成本较高。
+
+## 4. 下周交易指令 (CIO 决议)
+**决议：维持战略配置，进行战术性再平衡与获利了结。**
+*   **止盈/减仓警示**：
+    1.  **对资源股进行部分获利了结**：鉴于资源板块短期涨幅较大且组合权重已极高，**指令：减持紫金矿业、洛阳钼业各0.5%-1%的仓位**，锁定部分利润，降低单一板块风险暴露。
+    2.  **审视黄金超配比例**：黄金仓位已达战术目标上限（13%）。**指令：暂不加仓，若金价快速冲高（如单周涨幅超3%），则启动减持1-2%仓位的预案。**
+*   **买入/加仓方向**：
+    1.  **增配稳健资产**：将上述减持资源股所得资金，**优先增配【中长期债基组合】1%的仓位**，以进一步降低组合整体波动率，契合“存钱进度50%”的稳健需求。
+    2.  **寻找错杀机会**：密切关注本周跑输的 **Tech (科技)** 板块。若市场情绪继续悲观导致优质科技成长股出现非理性下跌，**预留资金，准备小幅试探性加仓【核心成长股】或相关ETF，单笔加仓不超过组合市值的1%。**
+*   **风控底线**：**将最大回撤警戒线上移至 -3.0%**。若净值回撤触及-2.5%，自动启动全面检视，并准备减持波动最大的头寸。当前风控状态健康，但需为潜在波动做好准备。</script>
+        <div id="ai-target"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // 1. 渲染圆环图
+    const ctx = document.getElementById('assetDonut').getContext('2d');
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: { labels: ['Resource', 'Pension', 'Dividend', 'Tech'], datasets: [{ data: [7157.896368, 5999.896484, 5226.6106, 3008.008662], backgroundColor: ['hsl(140, 45%, 45%)', 'hsl(70, 45%, 45%)', 'hsl(0, 45%, 45%)', 'hsl(210, 45%, 45%)'], borderWidth: 0, hoverOffset: 15 }] },
+        options: { plugins: { legend: { position: 'bottom', labels: { color: '#888', font: { size: 12 } } } }, cutout: '70%', responsive: true, maintainAspectRatio: false }
+    });
+
+    // 1. 词典配置
+    const GLOSSARY = {
+        'US10Y': '美债10Y收益率。全球资产定价之锚，反映市场对长期通胀与无风险利率的预期。',
+        'DXY': '美元指数。衡量美元对一篮子货币的强度，其走强通常对新兴市场流动性构成压力。',
+        'VIX': '波动率指数（恐慌指数）。衡量标普500期权蕴含的隐含波动率，数值高企反映避险情绪浓厚。',
+        '回撤': '最大回撤（MDD）。资产净值从历史高点回落的百分比，是评估风险控制能力的关键指标。',
+        '阿尔法': '超额收益（Alpha）。独立于市场波动之外的获利能力，体现主动管理的选股溢价。',
+        '贝塔': '系统性收益（Beta）。与大盘波动相关的收益部分，反映组合对市场整体风险的暴露程度。',
+        '波动率': '收益率离散程度。量化资产价格波动的剧烈程度，是现代投资组合风险定价的核心。',
+        '再平衡': '资产权重纠偏。通过减持超配资产、增持低配资产，强制使组合回归目标风险水平。',
+        '基准': '业绩比较基准（Benchmark）。客观评价组合获利能力是否达标的参照系。'
+    };
+
+    // 2. 词典渲染引擎 (防止标签嵌套)
+    const sortedTerms = Object.keys(GLOSSARY).sort((a, b) => b.length - a.length);
+
+    function walkAndReplace(node) {
+        if (node.nodeType === 3) { // 文本节点
+            let text = node.data;
+            let hasChange = false;
+            sortedTerms.forEach(term => {
+                if (text.includes(term)) {
+                    const regex = new RegExp(term, 'g');
+                    text = text.replace(regex, `@@${term}@@`);
+                    hasChange = true;
+                }
+            });
+            if (hasChange) {
+                const newSpan = document.createElement('span');
+                newSpan.innerHTML = text.replace(/@@(.*?)@@/g, (match, p1) => {
+                    return `<span class="glossary-term" data-tip="${GLOSSARY[p1]}">${p1}</span>`;
+                });
+                node.parentNode.replaceChild(newSpan, node);
+            }
+        } else {
+            for (let i = node.childNodes.length - 1; i >= 0; i--) {
+                if (node.childNodes[i].className !== 'glossary-term') {
+                    walkAndReplace(node.childNodes[i]);
+                }
+            }
+        }
+    }
+
+    // 3. 执行渲染
+    const renderWithGlossary = (sourceId, targetId) => {
+        const target = document.getElementById(targetId);
+        target.innerHTML = marked.parse(document.getElementById(sourceId).innerHTML);
+        walkAndReplace(target);
+    };
+
+    renderWithGlossary('xray-source', 'xray-target');
+    renderWithGlossary('ai-source', 'ai-target');
+
+    // 5. 登录与数据脱敏
+    const privateData = {"current_mv": "¥22,105.22", "total_return": "+3.33%", "weekly_return": "+10.91%", "ytd_pnl_value": "¥+5,305", "ytd_pnl_rate": "+31.58%", "goal_target": "¥50,000", "goal_current": "¥25,000"};
+    const publicData = {"current_mv": "已隐藏", "total_return": "+3.33%", "weekly_return": "+10.91%", "ytd_pnl_value": "已隐藏", "ytd_pnl_rate": "+31.58%", "goal_target": "已隐藏", "goal_current": "已隐藏"};
+    const PASSWORD_HASH = "608f4a69d48963560e8c0fcb2f6da1a51e87b117dcf1b3054038f7cbd8660def";
+
+    async function sha256(message) {
+        const msgBuffer = new TextEncoder().encode(message);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function renderData(data, isPrivate) {
+        document.getElementById('current_mv').textContent = data.current_mv;
+        document.getElementById('total_return').textContent = data.total_return;
+        document.getElementById('weekly_return').textContent = data.weekly_return;
+        document.getElementById('ytd_pnl_value').textContent = data.ytd_pnl_value;
+        document.getElementById('ytd_pnl_rate').textContent = data.ytd_pnl_rate;
+        document.getElementById('goal_target').textContent = data.goal_target;
+        document.getElementById('goal_current').textContent = data.goal_current;
+    }
+
+    function showPrivateData() {
+        document.getElementById('statusText').textContent = '🟢 完整模式';
+        document.getElementById('loginModal').style.display = 'none';
+        document.getElementById('loginModal').classList.remove('show');
+        renderData(privateData, true);
+    }
+
+    function showPublicData() {
+        document.getElementById('statusText').textContent = '⚪️ 公开模式';
+        renderData(publicData, false);
+    }
+
+    function handleStatusClick() {
+        const isLoggedIn = localStorage.getItem('fundAgentLoggedIn') === 'true';
+        if (isLoggedIn) {
+            if(confirm('确定要退出登录吗？')) {
+                localStorage.removeItem('fundAgentLoggedIn');
+                showPublicData();
+            }
+        } else {
+            document.getElementById('loginModal').style.display = 'flex';
+            document.getElementById('loginModal').classList.add('show');
+        }
+    }
+
+    async function login() {
+        const password = document.getElementById('passwordInput').value;
+        if (!password) {
+            document.getElementById('loginError').textContent = '请输入密码';
+            return;
+        }
+        const hash = await sha256(password);
+        if (hash === PASSWORD_HASH) {
+            localStorage.setItem('fundAgentLoggedIn', 'true');
+            showPrivateData();
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('loginError').textContent = '';
+        } else {
+            document.getElementById('loginError').textContent = '密码错误';
+            setTimeout(() => { document.getElementById('loginError').textContent = ''; }, 2000);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (localStorage.getItem('fundAgentLoggedIn') === 'true') {
+            showPrivateData();
+        } else {
+            showPublicData();
+        }
+    });
+
+    // 4. 悬浮窗监听
+    const tooltip = document.getElementById('tooltip');
+    document.addEventListener('mousemove', e => {
+        if (e.target.classList.contains('glossary-term')) {
+            tooltip.innerText = e.target.getAttribute('data-tip');
+            tooltip.style.display = 'block';
+            let x = e.clientX + 10;
+            if (x + 280 > window.innerWidth) x = e.clientX - 290;
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = (e.clientY + 10) + 'px';
+        } else {
+            tooltip.style.display = 'none';
+        }
+    });
+</script>
+<script>if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(function(){}); }</script>
+</body></html>

@@ -1,0 +1,444 @@
+/* ========================================
+   春季主题玻璃拟态样式 - 修复版
+   - 高对比度字体颜色
+   - 苹果风格字体系统
+   - 易读字号
+   - 压缩的移动端卡片
+   ======================================== */
+
+/* ========================================
+   1. CSS变量定义
+   ======================================== */
+:root {
+  /* 配色方案：晨雾灰蓝 */
+  --bg-gradient-1: #e8eaf6;
+  --bg-gradient-2: #c5cae9;
+  --bg-gradient-3: #b0bec5;
+  --bg-gradient-4: #90a4ae;
+  --bg-gradient-5: #78909c;
+  
+  /* 文字颜色 - 高对比度 */
+  --text-primary: #1a1a1a;        /* 主文字：深黑色 */
+  --text-secondary: #424242;      /* 次要文字：深灰色 */
+  --text-tertiary: #616161;       /* 三级文字：中灰色 */
+  --text-muted: #757575;          /* 弱化文字：灰色 */
+  --text-on-glass: #2c2c2c;       /* 玻璃卡片上的文字 */
+  
+  /* 强调色 */
+  --accent-primary: #5c6bc0;      /* 主强调色：靛蓝 */
+  --accent-secondary: #7986cb;    /* 次强调色：浅靛蓝 */
+  --accent-success: #66bb6a;      /* 成功/上涨：绿色 */
+  --accent-danger: #ef5350;       /* 危险/下跌：红色 */
+  --accent-warning: #ffa726;      /* 警告：橙色 */
+  
+  /* 兼容旧变量 */
+  --primary: #5c6bc0;
+  --up: #66bb6a;
+  --down: #ef5350;
+  
+  /* 玻璃拟态效果 */
+  --glass-bg: rgba(255, 255, 255, 0.35);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-shadow: rgba(31, 38, 135, 0.15);
+  --glass-blur: 20px;
+  
+  /* 间距系统 */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
+  --spacing-2xl: 24px;
+  --spacing-3xl: 32px;
+  
+  /* 圆角 */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  
+  /* 字体系统 - 苹果风格 */
+  --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  
+  /* 字号系统 - 易读性优化 */
+  --font-size-xs: 11px;
+  --font-size-sm: 13px;
+  --font-size-base: 15px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 28px;
+  --font-size-4xl: 32px;
+  
+  /* 字重 */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* 行高 */
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  
+  /* 移动端卡片高度 */
+  --card-height-mobile: 48px;     /* 压缩后的卡片高度 */
+  --card-padding-mobile: 10px 12px;
+}
+
+/* ========================================
+   2. 全局样式
+   ======================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+  color: var(--text-primary);
+  background: linear-gradient(135deg,
+    var(--bg-gradient-1) 0%,
+    var(--bg-gradient-2) 25%,
+    var(--bg-gradient-3) 50%,
+    var(--bg-gradient-4) 75%,
+    var(--bg-gradient-5) 100%
+  );
+  background-attachment: fixed;
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ========================================
+   3. 玻璃拟态卡片
+   ======================================== */
+.glass-card, .card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 8px 32px var(--glass-shadow);
+  padding: var(--spacing-2xl);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover, .card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(31, 38, 135, 0.25);
+}
+
+/* ========================================
+   4. 导航栏 - 兼容 tab-nav 与 nav-tabs
+   ======================================== */
+.nav-tabs, .tab-nav {
+  display: flex;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-2xl);
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-tab, .tab-nav a {
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.nav-tab:hover, .tab-nav a:hover {
+  background: rgba(255, 255, 255, 0.3);
+  color: var(--text-primary);
+}
+
+.nav-tab.active, .tab-nav a.active {
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--accent-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ========================================
+   5. 标题和文字
+   ======================================== */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  line-height: var(--line-height-tight);
+  margin-bottom: var(--spacing-lg);
+}
+
+h1 { font-size: var(--font-size-4xl); }
+h2 { font-size: var(--font-size-3xl); }
+h3 { font-size: var(--font-size-2xl); }
+h4 { font-size: var(--font-size-xl); }
+h5 { font-size: var(--font-size-lg); }
+h6 { font-size: var(--font-size-md); }
+
+p {
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-md);
+}
+
+.text-primary { color: var(--accent-primary); font-weight: var(--font-weight-medium); }
+.text-muted {
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.text-small {
+  font-size: var(--font-size-sm);
+}
+
+/* ========================================
+   6. 基金持仓表格/卡片 - 移动端优化
+   ======================================== */
+.holdings-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 var(--spacing-sm);
+}
+
+.holdings-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+.holdings-table th {
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.holdings-table td {
+  padding: var(--spacing-lg);
+  font-size: var(--font-size-base);
+  color: var(--text-on-glass);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+.holdings-table tr {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.holdings-table tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+/* 移动端：卡片式布局 - 压缩版 */
+@media (max-width: 768px) {
+  .holdings-table {
+    display: block;
+    border-spacing: 0 6px;
+  }
+  
+  .holdings-table thead {
+    display: none;
+  }
+  
+  .holdings-table tbody {
+    display: block;
+  }
+  
+  .holdings-table tr {
+    display: flex;
+    flex-direction: column;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border-radius: var(--radius-md);
+    margin-bottom: 6px;
+    padding: 10px 12px;
+    min-height: var(--card-height-mobile);
+  }
+  
+  .holdings-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    background: transparent;
+    border: none;
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-tight);
+  }
+  
+  .holdings-table td:before {
+    content: attr(data-label);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-tertiary);
+    font-size: var(--font-size-xs);
+    min-width: 70px;
+  }
+  
+  .holdings-table td:first-child {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 4px;
+  }
+  
+  .holdings-table td:first-child:before {
+    display: none;
+  }
+}
+
+/* ========================================
+   7. 数值显示
+   ======================================== */
+.value-positive {
+  color: var(--accent-success);
+  font-weight: var(--font-weight-medium);
+}
+
+.value-negative {
+  color: var(--accent-danger);
+  font-weight: var(--font-weight-medium);
+}
+
+.value-neutral {
+  color: var(--text-secondary);
+}
+
+.value-large {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.value-medium {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ========================================
+   8. 按钮
+   ======================================== */
+.btn {
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family);
+  color: var(--text-primary);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 44px;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--glass-shadow);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-sm {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-sm);
+  min-height: 36px;
+}
+
+.btn-primary {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+}
+
+.btn-primary:hover {
+  background: var(--accent-secondary);
+  border-color: var(--accent-secondary);
+}
+
+/* ========================================
+   9-16. 其余样式（精简）
+   ======================================== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-2xl);
+}
+
+.chart-container {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.mb-md { margin-bottom: var(--spacing-md); }
+.d-flex { display: flex; }
+.align-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+
+/* 紧凑模式 */
+@media (max-width: 768px) {
+  .holdings-compact .holdings-table tr {
+    padding: 8px 10px;
+    margin-bottom: 4px;
+    min-height: 40px;
+  }
+  
+  .holdings-compact .holdings-table td {
+    padding: 2px 0;
+    font-size: 12px;
+  }
+  
+  .holdings-compact .holdings-table td:first-child {
+    font-size: 14px;
+    padding-bottom: 4px;
+    margin-bottom: 2px;
+  }
+  
+  .holdings-compact .holdings-table td:before {
+    font-size: 10px;
+    min-width: 60px;
+  }
+}

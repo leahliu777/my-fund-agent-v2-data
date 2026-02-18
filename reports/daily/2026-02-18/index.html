@@ -5,73 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>CIO Dashboard | 2026-02-18 22:08:16</title>
+    <title>CIO Dashboard | 2026-02-18 23:13:49</title>
+    <meta name="theme-color" content="#5c6bc0">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="spring-theme-fixed.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <style>
-        :root {
-            --primary: #26c6da;
-            --secondary: #66bb6a;
-            --success: #81c784;
-            --warning: #ffb74d;
-            --danger: #ef5350;
-            --up: #81c784;
-            --down: #ef5350;
-            --text: #333;
-            --text-muted: #666;
-            --border: rgba(255,255,255,0.4);
-        }
-        html { scroll-behavior: smooth; }
-        body {
-            margin: 0; padding: 0;
-            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 25%, #c8e6c9 50%, #fff9c4 75%, #ffe0b2 100%);
-            background-attachment: fixed;
-            color: var(--text);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            overflow-x: hidden; width: 100%;
-            min-height: 100vh;
-        }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
-
-        /* 玻璃卡片 */
-        .card {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.5);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border-left: 4px solid var(--primary);
-            transform: translateZ(0);
-            will-change: transform;
-        }
-        .card:hover {
-            transform: translateY(-4px) translateZ(0);
-            box-shadow: 0 12px 48px rgba(31, 38, 135, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.6);
-        }
-        .metric-value { contain: layout style paint; }
-
+        /* 每日对账页面专属 */
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .metric-value { contain: layout style paint; }
         .sector-bar { height: 16px; display: flex; border-radius: 8px; overflow: hidden; margin: 10px 0; background: rgba(0,0,0,0.08); }
 
         /* 玻璃表格容器 */
         .table-scroll-wrapper {
             width: 100%; overflow-x: auto; margin: 20px 0; border-radius: 20px;
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
         }
         .table-scroll-wrapper.custom-scrollbar { -webkit-overflow-scrolling: touch; }
         .table-scroll-wrapper::-webkit-scrollbar { width: 6px; height: 6px; }
         .table-scroll-wrapper::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 10px; }
-        .table-scroll-wrapper::-webkit-scrollbar-thumb { background: rgba(38, 198, 218, 0.3); border-radius: 10px; }
-        .table-scroll-wrapper::-webkit-scrollbar-thumb:hover { background: rgba(38, 198, 218, 0.5); }
+        .table-scroll-wrapper::-webkit-scrollbar-thumb { background: rgba(92, 107, 192, 0.3); border-radius: 10px; }
+        .table-scroll-wrapper::-webkit-scrollbar-thumb:hover { background: rgba(92, 107, 192, 0.5); }
 
         table { width: 100%; border-collapse: collapse; min-width: 650px; }
         th, td { padding: 14px 10px; text-align: left; border-bottom: 1px solid rgba(0,0,0,0.08); white-space: nowrap; font-size: 14px; color: var(--text); }
-        th { background: rgba(38, 198, 218, 0.15); color: var(--primary); font-size: 11px; text-transform: uppercase; }
+        th { background: rgba(92, 107, 192, 0.15); color: var(--primary); font-size: 11px; text-transform: uppercase; }
         .text-right { text-align: right; }
 
         .ai-report h2 { font-size: 16px; color: var(--primary); margin: 35px 0 15px; border-left: 4px solid var(--primary); padding-left: 15px; }
@@ -81,37 +43,22 @@
 
         /* 玻璃气象站 */
         .weather-drawer {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(30px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
             margin: 0; width: 100%;
         }
         .summary-bar { padding: 12px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; list-style: none; min-height: 44px; }
         .macro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; padding: 0 20px 20px; }
         .macro-card {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(10px);
             padding: 12px; border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             border-left: 3px solid;
         }
 
-        /* 玻璃导航栏 */
-        .tab-nav {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(30px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            display: flex; justify-content: center;
-            position: -webkit-sticky; position: sticky; top: 0; z-index: 1000; width: 100%;
-        }
-        .tab-nav a {
-            padding: 12px 20px; color: var(--text-muted); text-decoration: none; font-weight: bold; font-size: 14px;
-            border-radius: 10px; transition: all 0.2s ease; min-height: 44px; display: flex; align-items: center;
-        }
-        .tab-nav a:hover { background: rgba(255, 255, 255, 0.3); }
-        .tab-nav a.active { background: rgba(38, 198, 218, 0.3); color: var(--primary); }
-
-        /* Login Modal - 玻璃风格 */
+        /* Login Modal - 日报专属（theme.css 已有基础样式）*/
         .modal { display: none; position: fixed; z-index: 11000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(4px); justify-content: center; align-items: center; }
         .modal.show { display: flex; }
         .modal-content {
@@ -131,20 +78,20 @@
         }
         .modal-content input:focus {
             background: rgba(255, 255, 255, 0.7);
-            border-color: rgba(38, 198, 218, 0.6);
+            border-color: rgba(92, 107, 192, 0.6);
             outline: none;
-            box-shadow: 0 0 0 4px rgba(38, 198, 218, 0.1);
+            box-shadow: 0 0 0 4px rgba(92, 107, 192, 0.1);
         }
         .modal-content input::placeholder { color: rgba(0, 0, 0, 0.4); }
         .modal-content button {
             width: 85%; padding: 12px 24px;
-            background: rgba(38, 198, 218, 0.4);
+            background: rgba(92, 107, 192, 0.4);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(38, 198, 218, 0.5);
-            border-radius: 12px; color: #0d7377; font-weight: 600; font-size: 16px; cursor: pointer;
+            border: 1px solid rgba(92, 107, 192, 0.5);
+            border-radius: 12px; color: #3f51b5; font-weight: 600; font-size: 16px; cursor: pointer;
             transition: all 0.3s ease;
         }
-        .modal-content button:hover { background: rgba(38, 198, 218, 0.6); transform: scale(1.02); }
+        .modal-content button:hover { background: rgba(92, 107, 192, 0.6); transform: scale(1.02); }
         .modal-content button:active { transform: scale(0.98); }
         #loginStatus {
             position: fixed; top: 12px; right: 12px;
@@ -195,39 +142,9 @@
 
         /* 平板端 */
         @media (min-width: 769px) and (max-width: 1024px) { .stat-grid { gap: 20px; } }
-
-        /* --- 暗黑模式适配 --- */
-        @media (prefers-color-scheme: dark) {
-            :root { --text: #e0e0e0; --text-muted: #aaa; }
-            body.spring-theme {
-                background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
-            }
-            .card, .table-scroll-wrapper, .weather-drawer, .macro-card, .tab-nav {
-                background: rgba(0, 0, 0, 0.3);
-                border-color: rgba(255, 255, 255, 0.1);
-            }
-            .table-scroll-wrapper { box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
-            .macro-card { border-color: rgba(255, 255, 255, 0.1); }
-            th, td { border-bottom-color: rgba(255,255,255,0.08); }
-            th { background: rgba(38, 198, 218, 0.2); }
-            .sector-bar { background: rgba(255,255,255,0.08); }
-            .modal-content {
-                background: rgba(30, 30, 30, 0.95);
-                border-color: rgba(255, 255, 255, 0.1);
-            }
-            .modal-content input {
-                background: rgba(0, 0, 0, 0.3);
-                border-color: rgba(255, 255, 255, 0.15);
-                color: #e0e0e0;
-            }
-            .modal-content input::placeholder { color: rgba(255,255,255,0.5); }
-            .modal-content button { background: rgba(38, 198, 218, 0.3); color: #81c784; }
-            #loginStatus { background: rgba(0, 0, 0, 0.4); border-color: rgba(255, 255, 255, 0.15); }
-            .table-scroll-wrapper .holdings-table tbody tr { background: rgba(0, 0, 0, 0.25); border-color: rgba(255,255,255,0.1); }
-        }
     </style>
 </head>
-<body class="spring-theme">
+<body>
     <div id="loginStatus" onclick="handleStatusClick()">
         <span id="statusText"></span>
     </div>
@@ -241,14 +158,14 @@
         </div>
     </div>
 
-    <div class="tab-nav"><a href="index.html" class="active">每日对账</a><a href="analysis.html">深度归因</a><a href="history.html">历史回测</a><a href="knowledge.html">投资字典</a></div>
+    <nav class="nav-tabs tab-nav"><a href="index.html" class="nav-tab active">每日对账</a><a href="analysis.html" class="nav-tab">深度归因</a><a href="history.html" class="nav-tab">历史回测</a><a href="knowledge.html" class="nav-tab">投资字典</a></nav>
 
     <details class="weather-drawer">
         <summary class="summary-bar">
-            <div style="font-weight:bold; color:#66bb6a">宏观气象站：持续顺风 (Score: 16.40)</div>
-            <div style="font-size:12px; color:#666">2026-02-18 22:08:16</div>
+            <div style="font-weight:bold; color:#66bb6a">宏观气象站：持续顺风 (Score: 17.06)</div>
+            <div style="font-size:12px; color:#666">2026-02-18 23:13:49</div>
         </summary>
-        <div class="macro-grid"><div class="macro-card" style="border-color:#81c784"><div style="font-size:10px;color:#888">US10Y</div><div style="font-weight:bold">4.08% 🟢</div><div style="font-size:10px;color:#aaa">低于4.2%有利</div></div><div class="macro-card" style="border-color:#ef5350"><div style="font-size:10px;color:#888">VIX</div><div style="font-weight:bold">20.2 🔴</div><div style="font-size:10px;color:#aaa">低于20有利</div></div><div class="macro-card" style="border-color:#81c784"><div style="font-size:10px;color:#888">DXY</div><div style="font-weight:bold">97.4 🟢</div><div style="font-size:10px;color:#aaa">低于104有利</div></div><div class="macro-card" style="border-color:#81c784"><div style="font-size:10px;color:#888">CNH</div><div style="font-weight:bold">6.889 🟢</div><div style="font-size:10px;color:#aaa">低于7.3有利</div></div></div>
+        <div class="macro-grid"><div class="macro-card" style="border-color:#66bb6a"><div style="font-size:10px;color:#888">US10Y</div><div style="font-weight:bold">4.08% 🟢</div><div style="font-size:10px;color:#aaa">低于4.2%有利</div></div><div class="macro-card" style="border-color:#66bb6a"><div style="font-size:10px;color:#888">VIX</div><div style="font-weight:bold">19.4 🟢</div><div style="font-size:10px;color:#aaa">低于20有利</div></div><div class="macro-card" style="border-color:#66bb6a"><div style="font-size:10px;color:#888">DXY</div><div style="font-weight:bold">97.4 🟢</div><div style="font-size:10px;color:#aaa">低于104有利</div></div><div class="macro-card" style="border-color:#66bb6a"><div style="font-size:10px;color:#888">CNH</div><div style="font-weight:bold">6.887 🟢</div><div style="font-size:10px;color:#aaa">低于7.3有利</div></div></div>
     </details>
 
     <div class="container">
@@ -256,18 +173,31 @@
             <div class="card">
                 <div style="font-size:11px;color:#888;letter-spacing:1px">7D ASSET TREND</div>
                 <div style="height:45px"><canvas id="trendChart"></canvas></div>
-                <div id="mv_display" class="metric-value" style="font-size:28px; font-weight:bold; margin-top:10px; font-family:monospace"></div>
+                <div id="mv_display" class="metric-value value-large" style="margin-top:10px; font-family:monospace"></div>
             </div>
             <div class="card">
                 <div style="font-size:11px;color:#888;letter-spacing:1px">PORTFOLIO MIX</div>
-                <div class="sector-bar"><div style="width:33.301466565603285%; background:#26c6da" title="Resource"></div><div style="width:28.41618437661961%; background:#66bb6a" title="Pension"></div><div style="width:24.93646790110645%; background:#81c784" title="Dividend"></div><div style="width:13.345881156670657%; background:#ffb74d" title="Tech"></div></div>
-                <div style="display:flex; flex-wrap:wrap; gap:8px"><span style="color:#26c6da; margin-right:10px; font-size:10px">● Resource 33%</span><span style="color:#66bb6a; margin-right:10px; font-size:10px">● Pension 28%</span><span style="color:#81c784; margin-right:10px; font-size:10px">● Dividend 25%</span><span style="color:#ffb74d; margin-right:10px; font-size:10px">● Tech 13%</span></div>
-                <div id="pnl_display" class="metric-value" style="font-size:28px; font-weight:bold; margin-top:10px; font-family:monospace"></div>
+                <div class="sector-bar"><div style="width:33.301466565603285%; background:#5c6bc0" title="Resource"></div><div style="width:28.41618437661961%; background:#7986cb" title="Pension"></div><div style="width:24.93646790110645%; background:#66bb6a" title="Dividend"></div><div style="width:13.345881156670657%; background:#ffa726" title="Tech"></div></div>
+                <div style="display:flex; flex-wrap:wrap; gap:8px"><span style="color:#5c6bc0; margin-right:10px; font-size:10px">● Resource 33%</span><span style="color:#7986cb; margin-right:10px; font-size:10px">● Pension 28%</span><span style="color:#66bb6a; margin-right:10px; font-size:10px">● Dividend 25%</span><span style="color:#ffa726; margin-right:10px; font-size:10px">● Tech 13%</span></div>
+                <div id="pnl_display" class="metric-value value-large" style="margin-top:10px; font-family:monospace"></div>
             </div>
         </div>
 
-        <div class="table-scroll-wrapper custom-scrollbar">
+        <div class="d-flex justify-between align-center mb-md" style="margin-top:20px">
+            <h3>基金持仓</h3>
+            <button class="btn btn-sm" onclick="toggleCompactMode()"><span id="compactModeText">紧凑模式</span></button>
+        </div>
+        <div id="holdingsContainer" class="table-scroll-wrapper custom-scrollbar holdings-compact">
             <table id="holdings_table" class="holdings-table"></table>
+        </div>
+
+        <div class="card" style="margin-top:20px">
+            <div style="font-size:11px;color:#888;letter-spacing:1px;margin-bottom:8px">累计收益率</div>
+            <div id="cumulative_return_chart" style="width:100%; height:300px;"></div>
+        </div>
+        <div class="card" style="margin-top:20px">
+            <div style="font-size:11px;color:#888;letter-spacing:1px;margin-bottom:8px">历史回撤</div>
+            <div id="drawdown_chart" style="width:100%; height:300px;"></div>
         </div>
 
         <div class="ai-report" id="ai-report"></div>
@@ -276,11 +206,12 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const privateData = {"mv_display": "¥21,864.85", "pnl_display": "¥-225.93", "pnl_color": "var(--down)", "funds": [{"name": "创金合信中证红利低波指数C", "mode": "估值", "mv": "¥3,439", "rate": -1.06, "pnl": "¥-36.46", "cum": 1.9929834905660249, "grid": "-", "acc": "A"}, {"name": "南方纳斯达克100指数(QDII)A", "mode": "估值", "mv": "¥1,382", "rate": -0.12, "pnl": "¥-1.66", "cum": -1.2571537001897615, "grid": "-", "acc": "A"}, {"name": "富国沪深300增强A", "mode": "估值", "mv": "¥2,013", "rate": -1.25, "pnl": "¥-25.16", "cum": 8.546941230381488, "grid": "-", "acc": "A"}, {"name": "嘉实上海金ETF联接C", "mode": "实时", "mv": "¥3,153", "rate": 1.36570252145376, "pnl": "¥+43.07", "cum": 5.809510656907446, "grid": "-", "acc": "A"}, {"name": "东方红颐和积极养老五年(FOF)Y", "mode": "估值", "mv": "¥3,108", "rate": -0.58, "pnl": "¥-18.03", "cum": 3.607269548633174, "grid": "-", "acc": "B"}, {"name": "广发养老2050五年持有期混合(FOF)Y", "mode": "估值", "mv": "¥3,105", "rate": -1.1, "pnl": "¥-34.15", "cum": 3.5014978292330134, "grid": "-", "acc": "B"}, {"name": "华夏中证有色金属ETF联接A", "mode": "估值", "mv": "¥4,128", "rate": -3.5, "pnl": "¥-144.48", "cum": -1.190069607892219, "grid": "<span style='color:#81c784;font-weight:bold'>[BUY]</span>", "acc": "A"}, {"name": "华夏人工智能ETC联接C", "mode": "估值", "mv": "¥1,536", "rate": -0.59, "pnl": "¥-9.06", "cum": -4.49945634815011, "grid": "-", "acc": "A"}], "t_values": [16800.0, 16850.0, 16834.8, 16832.63]};
-        const publicData = {"mv_display": "已隐藏", "pnl_display": "-1.03%", "pnl_color": "var(--down)", "funds": [{"name": "创金合信中证红利低波指数C", "mode": "估值", "weight": "15.7%", "rate": -1.06, "cum": 1.9929834905660249, "grid": "-", "acc": "A"}, {"name": "南方纳斯达克100指数(QDII)A", "mode": "估值", "weight": "6.3%", "rate": -0.12, "cum": -1.2571537001897615, "grid": "-", "acc": "A"}, {"name": "富国沪深300增强A", "mode": "估值", "weight": "9.2%", "rate": -1.25, "cum": 8.546941230381488, "grid": "-", "acc": "A"}, {"name": "嘉实上海金ETF联接C", "mode": "实时", "weight": "14.4%", "rate": 1.36570252145376, "cum": 5.809510656907446, "grid": "-", "acc": "A"}, {"name": "东方红颐和积极养老五年(FOF)Y", "mode": "估值", "weight": "14.2%", "rate": -0.58, "cum": 3.607269548633174, "grid": "-", "acc": "B"}, {"name": "广发养老2050五年持有期混合(FOF)Y", "mode": "估值", "weight": "14.2%", "rate": -1.1, "cum": 3.5014978292330134, "grid": "-", "acc": "B"}, {"name": "华夏中证有色金属ETF联接A", "mode": "估值", "weight": "18.9%", "rate": -3.5, "cum": -1.190069607892219, "grid": "<span style='color:#81c784;font-weight:bold'>[BUY]</span>", "acc": "A"}, {"name": "华夏人工智能ETC联接C", "mode": "估值", "weight": "7.0%", "rate": -0.59, "cum": -4.49945634815011, "grid": "-", "acc": "A"}], "t_values": [0.0, 0.29761904761904656, 0.2071428571428502, 0.19422619047619882]};
-        const aiReport = "## 1. 盈亏真相 (Who made/lost money)\n* 今日组合整体亏损-1.03%，主要由权益类资产普遍下跌驱动，符合【亏损下跌】定性。**嘉实上海金ETF联接C (+1.37%)** 是唯一盈利资产，其避险属性在今日市场环境中凸显。\n* **主要亏损包袱**集中于高贝塔及周期板块：**华夏中证有色金属ETF联接A (-3.50%)** 跌幅最深，反映对经济增长敏感资产遭抛售；**富国沪深300增强A (-1.25%)** 与**创金合信中证红利低波指数C (-1.06%)** 显示国内宽基指数承压。\n* **账户博弈表现**：账户A（主动策略）整体跌幅大于账户B（养老防御FOF）。账户B中两只FOF（-0.58%， -1.10%）跌幅相对温和，其多元资产配置起到一定缓冲作用，表现**符合其防御定位预期**。账户A内部，除黄金外全线下跌，显示其主动风险暴露在今日全面受挫。\n\n## 2. 大环境传导审计 (Macro Push & Pull)\n* **美债收益率(US10Y) 4.079% 与美元指数(DXY) 97.354 构成组合压力**：两者处于中性偏高位置，压制全球风险资产估值，并利空有色金属等大宗商品板块（解释华夏有色-3.50%的部分原因）。同时，这对**南方纳斯达克100 (-0.12%)** 形成抑制，但其跌幅相对有限，显示科技股韧性。\n* **恐慌指数(VIX) 20.16 处于中性**：未出现极端恐慌，市场下跌更可能源于经济数据或利率预期驱动的有序抛售，而非流动性危机。这解释了跌幅的差异性而非普崩。\n* **阿尔法与贝塔表现**：今日组合表现主要由**负向市场贝塔**主导，沪深300、红利低波等宽基指数下跌即是明证。**负阿尔法**显著，因组合中多数主动型产品（如富国沪深300增强、各行业主题基金）跌幅均超越或接近其基准，仅黄金资产产生显著正阿尔法。**北向资金小幅净流出**加剧了A股核心资产的流动性压力。\n\n## 3. 组合状况分析 (Health Check)\n* 单日波动在承受范围内。以核心宽基（沪深300增强、红利低波）跌幅约-1%为基准，组合整体-1.03%的波动属正常市场波动范畴，未出现极端个券风险。\n* **健康质量评估**：需对比历史最大回撤阈值。假设组合历史最大回撤阈值为-15%至-20%，今日下跌仅构成小幅回撤。然而，**华夏有色（-3.50%）** 等单一资产波动剧烈，需警惕其在组合中的风险贡献是否超标。账户B的FOF结构有效平抑了整体波动，组合健康度未因单日下跌而恶化，但需监控权益部分是否出现趋势性破位。\n\n## 4. 战术调仓指令 (Tactical Orders)\n* **减仓/调出**：**华夏中证有色金属ETF联接A** 为今日最大亏损源，且对利率与增长预期高度敏感。在宏观环境未明确转向对其有利前，应**执行减仓**，降低组合波动性。\n* **平衡/对冲**：增持**嘉实上海金ETF联接C** 的敞口，作为对冲宏观不确定性与潜在市场波动的战术性资产。同时，考虑将部分资金转入货币基金或短债，以提升组合在利率中性偏高环境下的防御性。\n* **观望/持有**：**南方纳斯达克100** 跌幅可控，显示韧性，可持有观望。账户B的两只养老FOF维持配置，发挥其长期资产配置与风险分散功能。**人工智能ETF联接**及**沪深300增强**等核心权益仓位暂持，但需设定更严格的止损纪律。\n* **再平衡触发**：若A股宽基指数（以沪深300为基准）进一步下跌超过2%，将触发再平衡机制，按原定风险预算比例，对权益仓位进行分批补仓。";
+        const privateData = {"mv_display": "¥21,864.85", "pnl_display": "¥-195.02", "pnl_color": "var(--down)", "funds": [{"name": "创金合信中证红利低波指数C", "mode": "估值", "mv": "¥3,439", "rate": -1.06, "pnl": "¥-36.46", "cum": 1.9929834905660249, "grid": "-", "acc": "A"}, {"name": "南方纳斯达克100指数(QDII)A", "mode": "估值", "mv": "¥1,382", "rate": -0.12, "pnl": "¥-1.66", "cum": -1.2571537001897615, "grid": "-", "acc": "A"}, {"name": "富国沪深300增强A", "mode": "估值", "mv": "¥2,013", "rate": -1.25, "pnl": "¥-25.16", "cum": 8.546941230381488, "grid": "-", "acc": "A"}, {"name": "嘉实上海金ETF联接C", "mode": "实时", "mv": "¥3,153", "rate": 2.34615463013923, "pnl": "¥+73.98", "cum": 5.809510656907446, "grid": "-", "acc": "A"}, {"name": "东方红颐和积极养老五年(FOF)Y", "mode": "估值", "mv": "¥3,108", "rate": -0.58, "pnl": "¥-18.03", "cum": 3.607269548633174, "grid": "-", "acc": "B"}, {"name": "广发养老2050五年持有期混合(FOF)Y", "mode": "估值", "mv": "¥3,105", "rate": -1.1, "pnl": "¥-34.15", "cum": 3.5014978292330134, "grid": "-", "acc": "B"}, {"name": "华夏中证有色金属ETF联接A", "mode": "估值", "mv": "¥4,128", "rate": -3.5, "pnl": "¥-144.48", "cum": -1.190069607892219, "grid": "<span style='color:#66bb6a;font-weight:bold'>[BUY]</span>", "acc": "A"}, {"name": "华夏人工智能ETC联接C", "mode": "估值", "mv": "¥1,536", "rate": -0.59, "pnl": "¥-9.06", "cum": -4.49945634815011, "grid": "-", "acc": "A"}], "t_values": [16800.0, 16850.0, 16834.8, 16832.63]};
+        const publicData = {"mv_display": "已隐藏", "pnl_display": "-0.89%", "pnl_color": "var(--down)", "funds": [{"name": "创金合信中证红利低波指数C", "mode": "估值", "weight": "15.7%", "rate": -1.06, "cum": 1.9929834905660249, "grid": "-", "acc": "A"}, {"name": "南方纳斯达克100指数(QDII)A", "mode": "估值", "weight": "6.3%", "rate": -0.12, "cum": -1.2571537001897615, "grid": "-", "acc": "A"}, {"name": "富国沪深300增强A", "mode": "估值", "weight": "9.2%", "rate": -1.25, "cum": 8.546941230381488, "grid": "-", "acc": "A"}, {"name": "嘉实上海金ETF联接C", "mode": "实时", "weight": "14.4%", "rate": 2.34615463013923, "cum": 5.809510656907446, "grid": "-", "acc": "A"}, {"name": "东方红颐和积极养老五年(FOF)Y", "mode": "估值", "weight": "14.2%", "rate": -0.58, "cum": 3.607269548633174, "grid": "-", "acc": "B"}, {"name": "广发养老2050五年持有期混合(FOF)Y", "mode": "估值", "weight": "14.2%", "rate": -1.1, "cum": 3.5014978292330134, "grid": "-", "acc": "B"}, {"name": "华夏中证有色金属ETF联接A", "mode": "估值", "weight": "18.9%", "rate": -3.5, "cum": -1.190069607892219, "grid": "<span style='color:#66bb6a;font-weight:bold'>[BUY]</span>", "acc": "A"}, {"name": "华夏人工智能ETC联接C", "mode": "估值", "weight": "7.0%", "rate": -0.59, "cum": -4.49945634815011, "grid": "-", "acc": "A"}], "t_values": [0.0, 0.29761904761904656, 0.2071428571428502, 0.19422619047619882]};
+        const aiReport = "## 1. 盈亏真相 (Who made/lost money)\n* 今日组合整体亏损-0.89%，主要受A股宽基指数（沪深300 -1.25%）及周期板块（有色金属 -3.50%）大幅下跌拖累。唯一盈利资产为黄金（+2.35%），其避险属性在今日市场下跌中凸显。\n* 账户A（主动策略）整体表现弱于账户B（养老防御）。账户A中高贝塔的有色金属、人工智能及红利低波品种均录得显著下跌，符合其高波动特性。账户B中两只养老FOF跌幅相对温和（-0.58%/-1.10%），其分散化配置起到一定防御作用，表现符合其“减震器”定位。\n\n## 2. 大环境传导审计 (Macro Push & Pull)\n* **美债收益率(4.081%)与美元指数(97.407)维持中性偏强**：压制了以美元计价的纳斯达克100指数（仅微跌-0.12%，表现相对坚韧），但更主要的是加剧了全球对高估值资产和周期品的担忧。这直接穿透至A股，导致对利率敏感的沪深300以及强周期的有色金属板块（华夏有色 -3.50%）遭遇大幅抛售。\n* **VIX(19.38)中性但市场实际波动加剧**：宏观指标看似平稳，但A股内部出现了显著的避险交易。资金从权益流向黄金（嘉实上海金 +2.35%），创造了今日主要的正阿尔法。组合的负贝塔主要源于对A股（特别是周期与大盘板块）的高暴露，在今日系统性下跌中无法幸免。\n\n## 3. 组合状况分析 (Health Check)\n* 单日-0.89%的回撤在可控范围内，未触发组合预设的日波动预警阈值（通常设为-2%）。但需警惕有色金属（-3.50%）等单一资产的极端波动。\n* 对比历史最大回撤，当前组合净值应从近期高点回撤约【需输入具体数值】%。若该数值低于历史最大回撤的50%，则组合健康质量仍属良好；若已接近历史极值，则需警惕下行风险的持续性。目前看，由单一行业引发的剧烈波动需纳入监控。\n\n## 4. 战术调仓指令 (Tactical Orders)\n* **减仓/对冲**：立即降低“华夏中证有色金属ETF联接A”的仓位。该资产今日跌幅远超基准及同类，呈现非理性下跌特征，且宏观面（强美元、需求担忧）对其构成持续逆风。减持部分可用于增持现金或防御资产。\n* **再平衡/增持**：将减持所得资金，部分增配至“嘉实上海金ETF联接C”。在宏观不确定性未消除、市场避险情绪升温的[GRID]信号下，黄金的战术配置价值提升。\n* **观望/持有**：对“南方纳斯达克100”及两只养老FOF保持持仓。纳指在强美元背景下展现韧性，可继续作为组合增长锚；养老FOF波动可控，维持其核心防御配置功能。暂不对宽基指数（沪深300、红利低波）进行被动杀跌，等待市场情绪稳定。";
         const PASSWORD_HASH = "608f4a69d48963560e8c0fcb2f6da1a51e87b117dcf1b3054038f7cbd8660def";
         const trendDates = ["01-14", "01-15", "01-16", "01-17"];
+        const echartsConfig = {"cumulative_return": {"xAxis": {"type": "category", "data": ["2026-01-14", "2026-01-15", "2026-01-16", "2026-01-17"]}, "yAxis": {"type": "value", "axisLabel": {"formatter": "{value}%"}}, "series": [{"data": [0.0, 0.3, 0.21, 0.19], "type": "line", "smooth": true, "itemStyle": {"color": "#5c6bc0"}}]}, "drawdown": {"xAxis": {"type": "category", "data": ["2026-01-14", "2026-01-15", "2026-01-16", "2026-01-17"]}, "yAxis": {"type": "value", "axisLabel": {"formatter": "{value}%"}}, "series": [{"data": [0.0, 0.0, -0.09, -0.1], "type": "line", "smooth": true, "itemStyle": {"color": "#ef5350"}, "areaStyle": {"color": "rgba(239,83,80,0.2)"}}]}};
 
         async function sha256(message) {
             const msgBuffer = new TextEncoder().encode(message);
@@ -307,13 +238,15 @@
             ['A', 'B'].forEach(acc => {
                 data.funds.filter(f => f.acc === acc).forEach(f => {
                     const rateColor = f.rate >= 0 ? 'var(--up)' : 'var(--down)';
-                    tableBody += `<tr><td data-label="基金资产" style="font-weight:bold;">${f.name} <small style="color:var(--text-muted)">[${f.mode}]</small></td>`;
+                    const rateCls = f.rate >= 0 ? 'value-positive' : 'value-negative';
+                    const cumCls = f.cum >= 0 ? 'value-positive' : 'value-negative';
+                    tableBody += `<tr><td data-label="基金名称" style="font-weight:bold;">${f.name} <small class="text-muted">[${f.mode}]</small></td>`;
                     if (isPrivate) {
-                        tableBody += `<td data-label="市值" class="text-right">${f.mv}</td><td data-label="当日%" class="text-right" style="color:${rateColor}">${f.rate.toFixed(2)}%</td><td data-label="当日±" class="text-right" style="color:${rateColor}">${f.pnl}</td>`;
+                        tableBody += `<td data-label="市值" class="text-right value-neutral">${f.mv}</td><td data-label="当日%" class="text-right ${rateCls}">${f.rate.toFixed(2)}%</td><td data-label="当日±" class="text-right ${rateCls}">${f.pnl}</td>`;
                     } else {
-                        tableBody += `<td data-label="占比" class="text-right">${f.weight}</td><td data-label="当日%" class="text-right" style="color:${rateColor}">${f.rate.toFixed(2)}%</td>`;
+                        tableBody += `<td data-label="占比" class="text-right value-neutral">${f.weight}</td><td data-label="当日%" class="text-right ${rateCls}">${f.rate.toFixed(2)}%</td>`;
                     }
-                    tableBody += `<td data-label="累计" class="text-right" style="color:${f.cum >= 0 ? 'var(--up)' : 'var(--down)'}">${f.cum.toFixed(2)}%</td><td data-label="信号" class="text-right">${f.grid}</td></tr>`;
+                    tableBody += `<td data-label="累计" class="text-right ${cumCls}">${f.cum.toFixed(2)}%</td><td data-label="信号" class="text-right">${f.grid}</td></tr>`;
                 });
             });
             tableBody += '</tbody>';
@@ -330,15 +263,15 @@
             const trendCtx = document.getElementById('trendChart').getContext('2d');
             if(window.myChart) window.myChart.destroy();
             const grad = trendCtx.createLinearGradient(0, 0, 0, 200);
-            grad.addColorStop(0, 'rgba(38, 198, 218, 0.3)');
-            grad.addColorStop(1, 'rgba(38, 198, 218, 0)');
+            grad.addColorStop(0, 'rgba(92, 107, 192, 0.3)');
+            grad.addColorStop(1, 'rgba(92, 107, 192, 0)');
             window.myChart = new Chart(trendCtx, {
                 type: 'line',
                 data: {
                     labels: trendDates,
                     datasets: [{
                         data: data.t_values,
-                        borderColor: '#26c6da',
+                        borderColor: '#5c6bc0',
                         backgroundColor: grad,
                         borderWidth: 2,
                         pointRadius: 0,
@@ -403,12 +336,49 @@
             showPublicData();
         }
 
-        // 页面加载时检查登录状态
+        // ECharts 累计收益与回撤
+        function initEchartsCharts() {
+            if (typeof echarts === 'undefined') return;
+            const cumEl = document.getElementById('cumulative_return_chart');
+            const ddEl = document.getElementById('drawdown_chart');
+            if (cumEl && echartsConfig.cumulative_return && echartsConfig.cumulative_return.series) {
+                const cumChart = echarts.init(cumEl);
+                cumChart.setOption({ tooltip: { trigger: 'axis' }, grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true }, ...echartsConfig.cumulative_return });
+                window.addEventListener('resize', () => cumChart.resize());
+            }
+            if (ddEl && echartsConfig.drawdown && echartsConfig.drawdown.series) {
+                const ddChart = echarts.init(ddEl);
+                ddChart.setOption({ tooltip: { trigger: 'axis' }, grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true }, ...echartsConfig.drawdown });
+                window.addEventListener('resize', () => ddChart.resize());
+            }
+        }
+
+        function toggleCompactMode() {
+            const container = document.getElementById('holdingsContainer');
+            const text = document.getElementById('compactModeText');
+            if (container.classList.contains('holdings-compact')) {
+                container.classList.remove('holdings-compact');
+                text.textContent = '舒适模式';
+                localStorage.setItem('holdingsMode', 'comfortable');
+            } else {
+                container.classList.add('holdings-compact');
+                text.textContent = '紧凑模式';
+                localStorage.setItem('holdingsMode', 'compact');
+            }
+        }
         document.addEventListener('DOMContentLoaded', () => {
             if (localStorage.getItem('fundAgentLoggedIn') === 'true') {
                 showPrivateData();
             } else {
                 showPublicData();
+            }
+            initEchartsCharts();
+            const mode = localStorage.getItem('holdingsMode');
+            const container = document.getElementById('holdingsContainer');
+            const text = document.getElementById('compactModeText');
+            if (mode === 'comfortable' && container && text) {
+                container.classList.remove('holdings-compact');
+                text.textContent = '舒适模式';
             }
         });
     </script>

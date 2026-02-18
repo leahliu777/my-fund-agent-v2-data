@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#5c6bc0">
+    <title>投资大脑 | 字典 & 手动刷新</title>
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="spring-theme-fixed.css">
+    <style>
+        /* 投资字典页面专属 */
+        .form-row { margin-bottom: 12px; }
+        .form-row label { display: block; font-size: 11px; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 4px; }
+        #status {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            min-height: 48px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            display: none;
+        }
+        #status.success {
+            display: block;
+            background: rgba(102, 187, 106, 0.2);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+        #status.error {
+            display: block;
+            background: rgba(239, 83, 80, 0.2);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+        .dict-section-title {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: bold;
+            margin: 24px 0 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dict-section-title:first-of-type { margin-top: 0; }
+        .dict-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+        .term-card {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            padding: 16px;
+            transition: all 0.2s ease;
+        }
+        .term-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(31, 38, 135, 0.15);
+        }
+        .term-badge { display: inline-block; font-weight: bold; font-size: 14px; margin-bottom: 8px; padding: 4px 0; color: var(--text); }
+        .term-desc { color: var(--text-muted); font-size: 13px; line-height: 1.7; margin: 0; }
+        @media (max-width: 600px) { .dict-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <nav class="nav-tabs tab-nav">
+        <a href="index.html" class="nav-tab">每日对账</a>
+        <a href="analysis.html" class="nav-tab">深度归因</a>
+        <a href="history.html" class="nav-tab">历史回测</a>
+        <a href="knowledge.html" class="nav-tab active">投资字典</a>
+    </nav>
+    <div class="container">
+        <h1 class="page-title">投资大脑</h1>
+
+        <!-- 1. 顶部控制台 -->
+        <section class="card">
+            <h2>控制台 · 手动刷新数据</h2>
+            <div class="form-row">
+                <label for="token">GitHub Token</label>
+                <input type="password" id="token" placeholder="粘贴 ghp_... Token" autocomplete="off">
+            </div>
+            <div class="form-row">
+                <label for="repo">仓库路径</label>
+                <input type="text" id="repo" value="leahliu777/my-fund-agent-v2" placeholder="owner/repo">
+            </div>
+            <button type="button" class="btn-refresh" id="btnRefresh">立即刷新数据</button>
+            <div id="status" role="status"></div>
+        </section>
+
+        <!-- 2. 宏观雷达说明书 -->
+        <section class="card">
+            <h2> 宏观雷达说明书 (Macro Radar)</h2>
+            <table class="macro-table">
+                <thead>
+                    <tr>
+                        <th>指标</th>
+                        <th>人话解释</th>
+                        <th>预警阈值</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>十年美债 (US10Y)</td>
+                        <td>全球资产定价之锚</td>
+                        <td><span class="danger">&gt; 4.3%</span> 危险，压制A股 | <span class="safe">&lt; 3.8%</span> 利好</td>
+                    </tr>
+                    <tr>
+                        <td>美元指数 (DXY)</td>
+                        <td>资金回流美国的强度</td>
+                        <td><span class="danger">&gt; 104</span> 外资流出 | <span class="safe">&lt; 101</span> 资金宽松</td>
+                    </tr>
+                    <tr>
+                        <td>北向资金 (Northbound)</td>
+                        <td>外资对A股的态度</td>
+                        <td><span class="safe">&gt; +20亿</span> 积极买入 | <span class="danger">&lt; -20亿</span> 恐慌出逃</td>
+                    </tr>
+                    <tr>
+                        <td>恐慌指数 (VIX)</td>
+                        <td>美股恐慌程度</td>
+                        <td><span class="danger">&gt; 20</span> 恐慌 | <span class="safe">&lt; 15</span> 平稳</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 3. 基金术语字典 · 卡片矩阵 -->
+        <section class="card">
+            <h2>基金术语字典 (Fund Dictionary)</h2>
+
+            <h3 class="dict-section-title">交易方向与策略 (Trading Direction &amp; Strategy)</h3>
+            <div class="dict-grid">
+                <div class="term-card">
+                    <div class="term-badge">看涨 | Long (Bullish)</div>
+                    <p class="term-desc">乐观预期下的头寸布局，代表对资产未来价值增长的风险敞口。</p>
+                </div>
+                <div class="term-card">
+                    <div class="term-badge">看跌 / 做空 | Bearish / Short</div>
+                    <p class="term-desc">从价格下跌中获利：借入资产卖出、跌后买回，高阶对冲或投机。</p>
+                </div>
+                <div class="term-card">
+                    <div class="term-badge">左侧交易 | Counter-trend</div>
+                    <p class="term-desc">趋势未反转前提前入场（如抄底），追求最大利润但需强判断与承受浮亏。</p>
+                </div>
+                <div class="term-card">
+                    <div class="term-badge">右侧交易 | Trend Following</div>
+                    <p class="term-desc">等趋势反转信号明确后再入场，牺牲初段利润换更高确定性。</p>
+                </div>
+            </div>
+
+            <h3 class="dict-section-title">宏观因子深度解析 (Macro Factors)</h3>
+            <div class="dict-grid">
+                <div class="term-card">
+                    <div class="term-badge">利率因子 | Interest Rate</div>
+                    <p class="term-desc">资产定价的地心引力，十年期国债为基准，利率升压制成长股估值。</p>
+                </div>
+                <div class="term-card">
+                    <div class="term-badge">通胀因子 | Inflation</div>
+                    <p class="term-desc">货币购买力的侵蚀者，适度通胀利好资源类，恶性通胀引发加息与波动。</p>
+                </div>
+                <div class="term-card">
+                    <div class="term-badge">汇率因子 | Currency</div>
+                    <p class="term-desc">跨境投资的调节阀，本币贬值增加海外资产本币计价收益。</p>
+                </div>
+                <div class="term-card">
+                    <div class="term-badge">信用利差 | Credit Spread</div>
+                    <p class="term-desc">高风险债与国债收益率差，利差走阔预示衰退或收紧，系统性风险前瞻指标。</p>
+                </div>
+            </div>
+
+            <h3 class="dict-section-title">基金报告核心术语 (Core Report)</h3>
+            <div class="dict-grid">
+                <div class="term-card">
+                    <div class="term-badge">阿尔法 | Alpha</div>
+                    <p class="term-desc">超额收益，衡量基金经理跑赢基准的能力。</p>
+                </div>
+                <div class="term-card">
+                    <div class="term-badge">贝塔 | Beta</div>
+                    <p class="term-desc">组合对市场变动的敏感性，贝塔 1.2 即市场涨 10% 组合理论涨 12%。</p>
+                </div>
+                <div class="term-card">
+                    <div class="term-badge">最大回撤 | Max Drawdown</div>
+                    <p class="term-desc">特定时间内从巅峰到谷底的最惨跌幅，定义痛苦阈值与风险底线。</p>
+                </div>
+                <div class="term-card">
+                    <div class="term-badge">夏普比率 | Sharpe Ratio</div>
+                    <p class="term-desc">风险调整后的收益效率，高夏普即收益拿得相对安稳。</p>
+                </div>
+            </div>
+
+            <h3 class="dict-section-title">组合管理与动作 (Portfolio Management)</h3>
+            <div class="dict-grid">
+                <div class="term-card">
+                    <div class="term-badge">资产配置画像 | X-Ray</div>
+                    <p class="term-desc">穿透多只基金重合后的真实资产暴露，避免集中度陷阱。</p>
+                </div>
+                <div class="term-card">
+                    <div class="term-badge">战术调仓 | Tactical Tilt</div>
+                    <p class="term-desc">长期战略不变下的短期微调，根据宏观信号捕捉阶段性阿尔法。</p>
+                </div>
+                <div class="term-card">
+                    <div class="term-badge">止盈 / 止损 | Take Profit / Stop Loss</div>
+                    <p class="term-desc">预设退出机制，止损防致命伤，止盈将账面富贵转为确定复利。</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        (function () {
+            var STORAGE_KEY = 'fund_agent_gh_token';
+            var tokenEl = document.getElementById('token');
+            var repoEl = document.getElementById('repo');
+            var btn = document.getElementById('btnRefresh');
+            var statusEl = document.getElementById('status');
+
+            if (tokenEl && localStorage.getItem(STORAGE_KEY)) {
+                tokenEl.value = localStorage.getItem(STORAGE_KEY);
+            }
+            tokenEl && tokenEl.addEventListener('change', function () {
+                var v = tokenEl.value.trim();
+                if (v) localStorage.setItem(STORAGE_KEY, v);
+            });
+
+            function setStatus(success, message) {
+                statusEl.className = success ? 'success' : 'error';
+                statusEl.textContent = message;
+            }
+
+            btn && btn.addEventListener('click', function () {
+                var repo = (repoEl && repoEl.value.trim()) || 'leahliu777/my-fund-agent-v2';
+                var token = tokenEl && tokenEl.value.trim();
+                if (!token) {
+                    setStatus(false, '请先填写 GitHub Token');
+                    return;
+                }
+                var ownerRepo = repo.replace(/^https?:\/\/github\.com\//i, '').replace(/\/?$/, '');
+                var url = 'https://api.github.com/repos/' + ownerRepo + '/actions/workflows/fund_monitor.yml/dispatches';
+
+                btn.disabled = true;
+                setStatus(true, '请求中…');
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ref: 'main' })
+                })
+                    .then(function (res) {
+                        if (res.status === 204 || res.ok) {
+                            setStatus(true, '已触发 workflow，请到 GitHub Actions 查看运行状态。');
+                            if (token) localStorage.setItem(STORAGE_KEY, token);
+                        } else {
+                            return res.text().then(function (t) {
+                                setStatus(false, 'HTTP ' + res.status + '\n' + (t || res.statusText));
+                            });
+                        }
+                    })
+                    .catch(function (err) {
+                        setStatus(false, '请求失败: ' + (err.message || String(err)));
+                    })
+                    .then(function () {
+                        btn.disabled = false;
+                    });
+            });
+        })();
+    </script>
+    <script>if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(function(){}); }</script>
+</body>
+</html>
