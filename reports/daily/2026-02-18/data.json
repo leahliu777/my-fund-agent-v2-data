@@ -1,0 +1,14 @@
+{
+  "update_time": "2026-02-18 14:30:00",
+  "rate_a": -1.48,
+  "rate_b": -0.84,
+  "weather": "晴朗",
+  "macro": {
+    "us10y": "--",
+    "vix": "--",
+    "dxy": "--"
+  },
+  "grid_count": 1,
+  "total_pnl": -837.67,
+  "daily_pnl": -233.56
+}

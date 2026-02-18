@@ -1,0 +1,257 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FundAgent">
+    <link rel="apple-touch-icon" href="https://n.sinaimg.cn/sinakd20111/600/w1080h1920/20200331/6f61-irpunai8085233.jpg">
+    <title>CIO Dashboard | 2026-02-18 14:30:00</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#050505">
+    <style>
+        :root { --bg: #1a1a1a; --card: #242424; --primary: #d4af37; --text: #e0e0e0; --up: #ff4d4d; --down: #2ecc71; --border: #333; }
+        
+        /* 1. 全局样式重置：消除白边，禁止横滑 */
+        html, body { 
+            margin: 0; padding: 0; 
+            background: var(--bg); color: var(--text); 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
+            overflow-x: hidden; width: 100%;
+        }
+
+        /* 2. 导航与气象站：精准定位 */
+        .tab-nav { background: var(--card); border-bottom: 1px solid var(--border); display: flex; justify-content: center; position: -webkit-sticky; position: sticky; top: 0; z-index: 1000; width: 100%; }
+        .tab-nav a { padding: 15px 25px; color: #888; text-decoration: none; font-weight: bold; font-size: 14px; }
+        .tab-nav a.active { color: var(--primary); border-bottom: 2px solid var(--primary); }
+
+        .weather-drawer { background: #1f1f1f; border-bottom: 1px solid var(--primary); margin: 0; width: 100%; }
+        .summary-bar { padding: 12px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; list-style: none; }
+        .macro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; padding: 0 20px 20px; background: #161616; }
+        .macro-card { background: #2a2a2a; padding: 10px; border-radius: 4px; border-left: 3px solid #444; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
+        
+        /* 3. 卡片布局：手机端自动堆叠 (1fr) */
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
+        .card { background: var(--card); padding: 20px; border-radius: 8px; margin: 15px 0; border: 1px solid var(--border); border-left: 4px solid var(--primary); box-sizing: border-box; }
+        
+        .sector-bar { height: 16px; display: flex; border-radius: 8px; overflow: visible; margin: 10px 0; background: #111; }
+
+        /* 4. 持仓列表：局部滚动容器，保护手机布局 */
+        .table-scroll-wrapper { 
+            width: 100%; 
+            overflow-x: auto; /* 允许表格内部滑动 */
+            -webkit-overflow-scrolling: touch; 
+            margin: 20px 0; 
+            border-radius: 8px;
+            background: var(--card);
+            border: 1px solid var(--border);
+        }
+        table { width: 100%; border-collapse: collapse; min-width: 650px; /* 锁定最小宽度确保数据不挤压 */ }
+        th, td { padding: 14px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; font-size: 14px }
+        th { background: #2a2a2a; color: var(--primary); font-size: 11px; text-transform: uppercase; }
+        .text-right { text-align: right; }
+
+        /* 5. 审计报告：深度对齐 */
+        .ai-report h2 { font-size: 16px; color: var(--primary); font-weight: bold; margin: 35px 0 15px; border-left: 4px solid var(--primary); padding-left: 15px; line-height: 2;  }
+        .ai-report ul { list-style: none; padding-left: 10px; }
+        .ai-report li { margin-bottom: 12px; color: #ccc; line-height: 1.8; position: relative; padding-left: 20px; font-size: 14px; }
+        .ai-report li::before { content: "•"; color: var(--primary); position: absolute; left: 0; font-weight: bold; }
+
+        .glossary-term { border-bottom: 1px dashed var(--primary); cursor: help; color: var(--primary); font-weight: 600; }
+        .tooltip { position: fixed; background: rgba(20,20,20,0.95); color: #fff; padding: 15px; border-radius: 8px; border: 1px solid var(--primary); display: none; z-index: 3000; font-size: 14px; max-width: 250px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        #toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); background: var(--primary); color: #000; padding: 12px 25px; border-radius: 30px; font-weight: bold; display: none; z-index: 4000; }
+
+        @media (max-width: 600px) { 
+            .stat-grid { grid-template-columns: 1fr; } /* 强制单列堆叠 */
+            .container { padding: 15px; }
+        }
+    </style>
+    </head><body>
+    <div id="toast">CIO 指令已复制 (Gemini)</div>
+    <div id="tooltip" class="tooltip"></div>
+    <div class="tab-nav">
+        <a href="/" class="active">每日对账</a>
+        <a href="/analysis">深度归因</a>
+        <a href="knowledge.html">投资字典 & 手动刷新</a>
+    </div>
+
+    <details class="weather-drawer">
+        <summary class="summary-bar">
+            <div style="font-weight:bold; color:#4caf50">宏观气象站：晴朗 (Score: 100.00)</div>
+            <div style="font-size:12px; color:#666">2026-02-18 14:30:00</div>
+        </summary>
+        <div class="macro-grid"><div class="macro-card" style="border-color:#4caf50"><div style="font-size:10px;color:#888">美债10Y</div><div style="font-weight:bold">4.00% </div><div style="font-size:10px;color:#aaa">利息舒适，利好投资</div></div><div class="macro-card" style="border-color:#4caf50"><div style="font-size:10px;color:#888">恐慌VIX</div><div style="font-weight:bold">15.00 </div><div style="font-size:10px;color:#aaa">情绪稳定，信心充足</div></div><div class="macro-card" style="border-color:#4caf50"><div style="font-size:10px;color:#888">离岸CNH</div><div style="font-weight:bold">7.15 </div><div style="font-size:10px;color:#aaa">汇率走强，资金流入</div></div><div class="macro-card" style="border-color:#4caf50"><div style="font-size:10px;color:#888">美元DXY</div><div style="font-weight:bold">101.00 </div><div style="font-size:10px;color:#aaa">美元温和，流动性好</div></div></div>
+    </details>
+
+    <div class="container">
+        <div class="stat-grid">
+            <div class="card" style="margin:0">
+                <div style="font-size:11px;color:#888;letter-spacing:1px">7D ASSET TREND</div>
+                <div style="height:45px"><canvas id="trendChart"></canvas></div>
+                <div style="font-size:28px; font-weight:bold; margin-top:10px; font-family:monospace">&yen;18,505</div>
+            </div>
+            <div class="card" style="margin:0">
+                <div style="font-size:11px;color:#888;letter-spacing:1px">PORTFOLIO MIX</div>
+                <div class="sector-bar"><div style="width:33.57624462888232%; background:hsl(0, 45%, 45%)" title="Pension"></div><div style="width:31.945827100523665%; background:hsl(70, 45%, 45%)" title="Resource"></div><div style="width:18.969753417064062%; background:hsl(140, 45%, 45%)" title="Dividend"></div><div style="width:15.50817485352994%; background:hsl(210, 45%, 45%)" title="Tech"></div></div>
+                <div style="display:flex; flex-wrap:wrap; gap:8px"><span style="color:hsl(0, 45%, 45%); margin-right:10px; font-size:10px">● Pension 34%</span><span style="color:hsl(70, 45%, 45%); margin-right:10px; font-size:10px">● Resource 32%</span><span style="color:hsl(140, 45%, 45%); margin-right:10px; font-size:10px">● Dividend 19%</span><span style="color:hsl(210, 45%, 45%); margin-right:10px; font-size:10px">● Tech 16%</span></div>
+                <div style="font-size:28px; font-weight:bold; color:var(--down); margin-top:10px; font-family:monospace">&yen;-233.56</div>
+            </div>
+        </div>
+
+        <div class="table-scroll-wrapper">
+            <table>
+                <thead><tr><th>基金资产 (MODE)</th><th class='text-right'>市值</th><th class='text-right'>当日%</th><th class='text-right'>当日&plusmn;</th><th class='text-right'>累计</th><th class='text-right'>信号</th></tr></thead>
+                <tbody><tr class="clickable-row" onclick="deepDivePrompt('创金合信中证红利低波指数C', 'Dividend', 0, 0, 0, -1.06)">
+                <td style="font-weight:bold; min-width:120px">创金合信中证红利低波指数C <small style="color:#666">[估值]</small></td>
+                <td class='text-right'>&yen;1,497</td>
+                <td class='text-right' style='color:#2ecc71'>-1.06%</td>
+                <td class='text-right' style='color:#2ecc71'>&yen;-15.87</td>
+                <td class='text-right' style='color:#2ecc71'>+9.13%</td>
+                <td class='text-right'>-</td>
+            </tr><tr class="clickable-row" onclick="deepDivePrompt('南方纳斯达克100指数(QDII)A', 'Tech', 0, 0, 0, -0.12)">
+                <td style="font-weight:bold; min-width:120px">南方纳斯达克100指数(QDII)A <small style="color:#666">[估值]</small></td>
+                <td class='text-right'>&yen;1,334</td>
+                <td class='text-right' style='color:#2ecc71'>-0.12%</td>
+                <td class='text-right' style='color:#2ecc71'>&yen;-1.60</td>
+                <td class='text-right' style='color:#2ecc71'>-1.18%</td>
+                <td class='text-right'>-</td>
+            </tr><tr class="clickable-row" onclick="deepDivePrompt('富国沪深300增强A', 'Dividend', 0, 0, 0, -1.25)">
+                <td style="font-weight:bold; min-width:120px">富国沪深300增强A <small style="color:#666">[估值]</small></td>
+                <td class='text-right'>&yen;2,013</td>
+                <td class='text-right' style='color:#2ecc71'>-1.25%</td>
+                <td class='text-right' style='color:#2ecc71'>&yen;-25.16</td>
+                <td class='text-right' style='color:#2ecc71'>+8.55%</td>
+                <td class='text-right'>-</td>
+            </tr><tr class="clickable-row" onclick="deepDivePrompt('嘉实上海金ETF联接C', 'Resource', 0, 0, 0, 0.8296133227338576)">
+                <td style="font-weight:bold; min-width:120px">嘉实上海金ETF联接C <small style="color:#666">[实时]</small></td>
+                <td class='text-right'>&yen;1,783</td>
+                <td class='text-right' style='color:#ff4d4d'>+0.83%</td>
+                <td class='text-right' style='color:#ff4d4d'>&yen;+14.80</td>
+                <td class='text-right' style='color:#ff4d4d'>-40.16%</td>
+                <td class='text-right'>-</td>
+            </tr><tr class="clickable-row" onclick="deepDivePrompt('华夏中证有色金属ETF联接A', 'Resource', 0, 0, 0, -3.5)">
+                <td style="font-weight:bold; min-width:120px">华夏中证有色金属ETF联接A <small style="color:#666">[估值]</small></td>
+                <td class='text-right'>&yen;4,128</td>
+                <td class='text-right' style='color:#2ecc71'>-3.50%</td>
+                <td class='text-right' style='color:#2ecc71'>&yen;-144.48</td>
+                <td class='text-right' style='color:#2ecc71'>-1.19%</td>
+                <td class='text-right'><span style='color:#4caf50;font-weight:bold'>[BUY]</span></td>
+            </tr><tr class="clickable-row" onclick="deepDivePrompt('华夏人工智能ETC联接C', 'Tech', 0, 0, 0, -0.59)">
+                <td style="font-weight:bold; min-width:120px">华夏人工智能ETC联接C <small style="color:#666">[估值]</small></td>
+                <td class='text-right'>&yen;1,536</td>
+                <td class='text-right' style='color:#2ecc71'>-0.59%</td>
+                <td class='text-right' style='color:#2ecc71'>&yen;-9.06</td>
+                <td class='text-right' style='color:#2ecc71'>-4.50%</td>
+                <td class='text-right'>-</td>
+            </tr><tr class="clickable-row" onclick="deepDivePrompt('东方红颐和积极养老五年(FOF)Y', 'Pension', 0, 0, 0, -0.58)">
+                <td style="font-weight:bold; min-width:120px">东方红颐和积极养老五年(FOF)Y <small style="color:#666">[估值]</small></td>
+                <td class='text-right'>&yen;3,108</td>
+                <td class='text-right' style='color:#2ecc71'>-0.58%</td>
+                <td class='text-right' style='color:#2ecc71'>&yen;-18.03</td>
+                <td class='text-right' style='color:#2ecc71'>+3.61%</td>
+                <td class='text-right'>-</td>
+            </tr><tr class="clickable-row" onclick="deepDivePrompt('广发养老2050五年持有期混合(FOF)Y', 'Pension', 0, 0, 0, -1.1)">
+                <td style="font-weight:bold; min-width:120px">广发养老2050五年持有期混合(FOF)Y <small style="color:#666">[估值]</small></td>
+                <td class='text-right'>&yen;3,105</td>
+                <td class='text-right' style='color:#2ecc71'>-1.10%</td>
+                <td class='text-right' style='color:#2ecc71'>&yen;-34.15</td>
+                <td class='text-right' style='color:#2ecc71'>+3.50%</td>
+                <td class='text-right'>-</td>
+            </tr></tbody>
+            </table>
+        </div>
+
+        <div class="ai-report" id="ai-report"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // 投研级词典全量映射
+        const GLOSSARY = {
+            'US10Y': '美债10Y收益率。全球资产定价之锚，反映市场对长期通胀与无风险利率的预期。',
+            'DXY': '美元指数。衡量美元对一篮子货币的强度，其走强通常对新兴市场流动性构成压力。',
+            'VIX': '波动率指数（恐慌指数）。衡量标普500期权蕴含的隐含波动率，数值高企反映避险情绪浓厚。',
+            '基金': '集合投资工具。通过资产组合管理实现风险分散，由专业机构执行投资决策。',
+            '净值': '单位资产净值（NAV）。反映扣除运营成本后的资产公允价值，是业绩考核的核心依据。',
+            '持仓': '存续头寸。账户当前实际持有的各类资产比例与规模。',
+            '头寸': '存续头寸。账户当前实际持有的各类资产比例与规模。',
+            '回撤': '最大回撤（MDD）。资产净值从历史高点回落的百分比，是评估风险控制能力的关键指标。',
+            '阿尔法': '超额收益（Alpha）。独立于市场波动之外的获利能力，体现主动管理的选股溢价。',
+            '贝塔': '系统性收益（Beta）。与大盘波动相关的收益部分，反映组合对市场整体风险的暴露程度。',
+            '超额收益': '阿尔法（Alpha）。独立于市场波动之外的获利能力，体现主动管理的选股溢价。',
+            '布林带': '统计学价格区间。利用标准差刻画价格波动范围，辅助判断估值极端化（超买/超卖）。',
+            '网格信号': '量化执行纪律。基于预设区间进行的自动化低买高卖，旨在捕捉波动利润。',
+            '波动率': '收益率离散程度。量化资产价格波动的剧烈程度，是现代投资组合风险定价的核心。',
+            '再平衡': '资产权重纠偏。通过减持超配资产、增持低配资产，强制使组合回归目标风险水平。',
+            '宏观': '自上而下分析视角。包含利率政策、流动性环境、通胀周期等系统性基本面。',
+            '美债': '主权信用债。其利率水平定义了全球风险资产的折现率，是宏观对冲的重要变量。',
+            '美元指数': '全球流动性风向标。反映美元在全球贸易与储备中的相对强势程度。',
+            '基准': '业绩比较基准（Benchmark）。客观评价组合获利能力是否达标的参照系。'
+        };
+    
+        // 词典渲染引擎：加固版 (防止标签嵌套)
+        let aiHtml = marked.parse("[WARN] AI 审计未生成");
+        
+        const sortedTerms = Object.keys(GLOSSARY).sort((a, b) => b.length - a.length);
+        
+        // 使用临时容器进行节点级替换
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = aiHtml;
+
+        function walkAndReplace(node) {
+            if (node.nodeType === 3) { // 文本节点
+                let text = node.data;
+                let hasChange = false;
+                
+                sortedTerms.forEach(term => {
+                    if (text.includes(term)) {
+                        const regex = new RegExp(term, 'g');
+                        // 占位符处理
+                        text = text.replace(regex, `@@${term}@@`);
+                        hasChange = true;
+                    }
+                });
+
+                if (hasChange) {
+                    const newSpan = document.createElement('span');
+                    let finalHtml = text.replace(/@@(.*?)@@/g, (match, p1) => {
+                        return `<span class="glossary-term" data-tip="${GLOSSARY[p1]}">${p1}</span>`;
+                    });
+                    newSpan.innerHTML = finalHtml;
+                    node.parentNode.replaceChild(newSpan, node);
+                }
+            } else {
+                // 递归处理
+                for (let i = node.childNodes.length - 1; i >= 0; i--) {
+                    if (node.childNodes[i].className !== 'glossary-term') {
+                        walkAndReplace(node.childNodes[i]);
+                    }
+                }
+            }
+        }
+
+        walkAndReplace(tempDiv);
+        document.getElementById('ai-report').innerHTML = tempDiv.innerHTML;
+
+        const tooltip = document.getElementById('tooltip');
+        document.addEventListener('mouseover', e => {
+            if (e.target.classList.contains('glossary-term')) {
+                tooltip.innerText = e.target.getAttribute('data-tip');
+                tooltip.style.display = 'block'; tooltip.style.left = (e.clientX+10)+'px'; tooltip.style.top = (e.clientY+10)+'px';
+            } else { tooltip.style.display = 'none'; }
+        });
+
+        const ctx = document.getElementById('trendChart').getContext('2d');
+        new Chart(ctx, { type: 'line', data: { labels: ['01-14', '01-15', '01-16', '01-17'], datasets: [{ data: [16800.0, 16850.0, 16834.8, 16832.63], borderColor: '#d4af37', borderWidth: 2, pointRadius: 0, fill: false, tension: 0.4 }] }, options: { plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } }, responsive: true, maintainAspectRatio: false } });
+
+        function deepDivePrompt(n, s, u, v, d, r) {
+            const p = `请对基金【${n}】进行深度归因。板块：${s}, 涨跌：${r}%。宏观：10Y=${u}, VIX=${v}。`;
+            navigator.clipboard.writeText(p);
+            const t = document.getElementById('toast'); t.style.display='block';
+            setTimeout(() => { t.style.display='none'; window.open('https://gemini.google.com/app', '_blank'); }, 800);
+        }
+    </script>
+    <script>if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(function(){}); }</script>
+</body></html>
