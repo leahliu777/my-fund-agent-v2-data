@@ -4,27 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#5c6bc0">
+    <meta name="theme-color" content="#121212">
     <title>基金筛选 | Fund Screener</title>
-    <link rel="stylesheet" href="theme.css">
-    <link rel="stylesheet" href="spring-theme-fixed.css">
+    <link rel="stylesheet" href="modern-financial-theme.css">
     <style>
         .screener-filters { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 16px; }
         .screener-filters label { font-size: 12px; color: var(--text-muted); }
         .screener-filters input, .screener-filters select {
-            padding: 8px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.5);
-            background: rgba(255,255,255,0.5); font-size: 14px;
+            padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color);
+            background: var(--bg-tertiary); font-size: 14px; color: var(--text-primary);
         }
-        .screener-filters button { padding: 8px 20px; border-radius: 10px; background: rgba(92,107,192,0.5); border: 1px solid rgba(92,107,192,0.6); cursor: pointer; font-size: 14px; }
-        .screener-filters button:hover { background: rgba(92,107,192,0.7); }
+        .screener-filters button { padding: 8px 20px; border-radius: 8px; background: var(--accent-primary); border: none; cursor: pointer; font-size: 14px; color: #fff; }
+        .screener-filters button:hover { background: var(--accent-primary-hover); }
         .screener-result { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
         .screener-pagination { display: flex; align-items: center; gap: 12px; margin: 12px 0; flex-wrap: wrap; }
-        .screener-pagination button { padding: 6px 14px; border-radius: 8px; background: rgba(92,107,192,0.4); border: 1px solid rgba(92,107,192,0.5); cursor: pointer; font-size: 13px; }
+        .screener-pagination button { padding: 6px 14px; border-radius: 8px; background: var(--bg-tertiary); border: 1px solid var(--border-color); cursor: pointer; font-size: 13px; color: var(--text-primary); }
         .screener-pagination button:disabled { opacity: 0.5; cursor: not-allowed; }
         .screener-pagination span { font-size: 13px; color: var(--text-muted); }
         .screener-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        .screener-table th, .screener-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(0,0,0,0.08); }
-        .screener-table th { background: rgba(92,107,192,0.15); color: var(--primary); }
+        .screener-table th, .screener-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border-color-light); }
+        .screener-table th { background: var(--bg-tertiary); color: var(--accent-primary); }
         .screener-table a { color: var(--primary); text-decoration: none; }
         .screener-table a:hover { text-decoration: underline; }
         .fund-links { font-size: 11px; color: var(--text-muted); margin-left: 6px; }
@@ -67,7 +66,7 @@
             <div id="screenerError" class="screener-error" style="display:none;"></div>
             <div id="screenerTableWrap" style="overflow-x:auto;">
                 <table class="screener-table" id="screenerTable" style="display:none;">
-                    <thead><tr><th>基金代码</th><th>基金名称</th><th>基金类型</th></tr></thead>
+                    <thead><tr><th>综合分</th><th>基金代码</th><th>基金名称</th><th>基金类型</th></tr></thead>
                     <tbody id="screenerBody"></tbody>
                 </table>
             </div>
@@ -90,7 +89,7 @@
             var bodyEl = document.getElementById('screenerBody');
 
             function norm(f) {
-                return { code: f.code || f.c, name: f.name || f.n, type: f.type || f.t };
+                return { code: f.code || f.c, name: f.name || f.n, type: f.type || f.t, score: f.s != null ? f.s : (f.score != null ? f.score : 0) };
             }
 
             function loadFunds() {
@@ -143,6 +142,7 @@
                     if (kw && !(n.name || '').toLowerCase().includes(kw)) return false;
                     return true;
                 });
+                filteredList.sort(function (a, b) { return (b.s != null ? b.s : 0) - (a.s != null ? a.s : 0); });
                 currentPage = 1;
                 resultEl.textContent = '共 ' + filteredList.length + ' 只基金';
                 renderPage();
@@ -164,7 +164,8 @@
                         '<a href="' + urlSina + '" target="_blank" rel="noopener noreferrer" title="新浪财经">新浪</a>' +
                         '<a href="' + urlHexun + '" target="_blank" rel="noopener noreferrer" title="和讯基金">和讯</a>' +
                         '<button type="button" class="copy-btn" data-url="' + urlEast.replace(/"/g, '&quot;') + '" title="复制链接，可关闭 VPN 后粘贴打开">复制</button></span>';
-                    return '<tr><td>' + n.code + '</td><td><a href="' + urlEast + '" target="_blank" rel="noopener noreferrer">' + nameEsc + '</a>' + links + '</td><td>' + (n.type || '-') + '</td></tr>';
+                    var scoreVal = n.score != null ? n.score : '-';
+                    return '<tr><td>' + scoreVal + '</td><td>' + n.code + '</td><td><a href="' + urlEast + '" target="_blank" rel="noopener noreferrer">' + nameEsc + '</a>' + links + '</td><td>' + (n.type || '-') + '</td></tr>';
                 }).join('');
                 document.querySelectorAll('.fund-links .copy-btn').forEach(function (btn) {
                     btn.onclick = function () {
