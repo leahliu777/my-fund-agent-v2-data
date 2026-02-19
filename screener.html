@@ -27,6 +27,10 @@
         .screener-table th { background: rgba(92,107,192,0.15); color: var(--primary); }
         .screener-table a { color: var(--primary); text-decoration: none; }
         .screener-table a:hover { text-decoration: underline; }
+        .fund-links { font-size: 11px; color: var(--text-muted); margin-left: 6px; }
+        .fund-links a { margin-right: 6px; }
+        .fund-links .copy-btn { cursor: pointer; border: none; background: none; color: var(--primary); font-size: 11px; padding: 0; }
+        .fund-links .copy-btn:hover { text-decoration: underline; }
         .screener-loading { padding: 24px; text-align: center; color: var(--text-muted); }
         .screener-error { color: var(--danger); padding: 12px 0; }
     </style>
@@ -43,7 +47,7 @@
         <h1 class="page-title">基金筛选 (Fund Screener)</h1>
         <section class="card">
             <h2>按条件筛选基金</h2>
-            <p style="color:var(--text-muted);font-size:12px;margin:0 0 12px;">结合<a href="knowledge.html#industryHeatSection">行业热度</a>，在加仓时优先考虑热度高的行业相关基金。</p>
+            <p style="color:var(--text-muted);font-size:12px;margin:0 0 12px;">结合<a href="knowledge.html#industryHeatSection">行业热度</a>，在加仓时优先考虑热度高的行业相关基金。使用 VPN 时若主链接无法访问，可尝试备用链接或复制链接后关闭 VPN 再打开。</p>
             <div class="screener-filters">
                 <div>
                     <label>基金类型</label>
@@ -98,7 +102,7 @@
                         return r.text();
                     })
                     .then(function (text) {
-                        if (text.trim().indexOf('<') === 0) return Promise.reject('数据文件未部署（服务器返回 HTML）。请先运行 workflow 或本地执行: python data_importer.py');
+                        if (text.trim().indexOf('<') === 0) return Promise.reject('未配置');
                         return JSON.parse(text);
                     })
                     .then(function (data) {
@@ -120,7 +124,12 @@
                     .catch(function (err) {
                         loadingEl.style.display = 'none';
                         errorEl.style.display = 'block';
-                        errorEl.textContent = '基金数据暂不可用: ' + (err.message || err);
+                        var msg = (err.message || err) + '';
+                        if (msg === '未配置' || msg.indexOf('HTTP') === 0 || msg.indexOf('HTML') >= 0) {
+                            errorEl.innerHTML = '基金数据暂未配置，不影响其他功能。如需启用，可在 workflow 中运行 <code>python data_importer.py</code> 或本地执行后部署。';
+                        } else {
+                            errorEl.textContent = '基金数据暂不可用: ' + msg;
+                        }
                     });
             }
 
@@ -145,9 +154,26 @@
                 var pageData = filteredList.slice(start, start + PAGE_SIZE);
                 bodyEl.innerHTML = pageData.map(function (f) {
                     var n = norm(f);
-                    var url = 'https://fund.eastmoney.com/' + n.code + '.html';
-                    return '<tr><td>' + n.code + '</td><td><a href="' + url + '" target="_blank">' + (n.name || '-') + '</a></td><td>' + (n.type || '-') + '</td></tr>';
+                    var code = (n.code || '').toString().replace(/\..*$/, '').padStart(6, '0').slice(-6);
+                    var urlEast = 'https://fund.eastmoney.com/' + code + '.html';
+                    var urlSina = 'https://finance.sina.com.cn/fund/quotes/' + code + '/bc.shtml';
+                    var urlHexun = 'https://fund.hexun.com/' + code + '/';
+                    var nameEsc = (n.name || '-').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    var links = '<span class="fund-links">' +
+                        '<a href="' + urlEast + '" target="_blank" rel="noopener noreferrer" title="天天基金">天天</a>' +
+                        '<a href="' + urlSina + '" target="_blank" rel="noopener noreferrer" title="新浪财经">新浪</a>' +
+                        '<a href="' + urlHexun + '" target="_blank" rel="noopener noreferrer" title="和讯基金">和讯</a>' +
+                        '<button type="button" class="copy-btn" data-url="' + urlEast.replace(/"/g, '&quot;') + '" title="复制链接，可关闭 VPN 后粘贴打开">复制</button></span>';
+                    return '<tr><td>' + n.code + '</td><td><a href="' + urlEast + '" target="_blank" rel="noopener noreferrer">' + nameEsc + '</a>' + links + '</td><td>' + (n.type || '-') + '</td></tr>';
                 }).join('');
+                document.querySelectorAll('.fund-links .copy-btn').forEach(function (btn) {
+                    btn.onclick = function () {
+                        var u = this.getAttribute('data-url');
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            navigator.clipboard.writeText(u).then(function () { btn.textContent = '已复制'; setTimeout(function () { btn.textContent = '复制'; }, 1500); }).catch(function () { window.prompt('复制链接（关闭 VPN 后粘贴打开）：', u); });
+                        } else { window.prompt('复制链接（关闭 VPN 后粘贴打开）：', u); }
+                    };
+                });
                 tableEl.style.display = filteredList.length ? 'table' : 'none';
                 paginationEl.style.display = filteredList.length > PAGE_SIZE ? 'flex' : 'none';
                 paginationEl.innerHTML = '<button id="pgPrev" ' + (currentPage <= 1 ? 'disabled' : '') + '>上一页</button>' +

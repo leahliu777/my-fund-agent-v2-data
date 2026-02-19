@@ -129,7 +129,7 @@
         <!-- 1.5 行业热度监控 -->
         <section class="card" id="industryHeatSection">
             <h2>行业热度监控 (Sector Heat)</h2>
-            <p class="heat-desc">基于板块涨跌幅与资金流向的综合热度，辅助板块轮动决策。数据每日更新。</p>
+            <p class="heat-desc">基于板块涨跌幅与资金流向的综合热度，辅助板块轮动决策。数据每日更新。（可选功能，未配置时不影响其他页面）</p>
             <div id="industryHeatLoading" class="heat-loading">加载中…</div>
             <div id="industryHeatContent" class="heat-content" style="display:none;">
                 <div class="heat-summary" id="heatSummary"></div>
@@ -272,7 +272,7 @@
                         return r.text();
                     })
                     .then(function (text) {
-                        if (text.trim().indexOf('<') === 0) return Promise.reject('数据文件未部署（服务器返回 HTML）。请先运行 workflow 或本地执行: python industry_heat.py');
+                        if (text.trim().indexOf('<') === 0) return Promise.reject('未配置');
                         return JSON.parse(text);
                     })
                     .then(function (data) {
@@ -295,7 +295,12 @@
                     .catch(function (err) {
                         loading.style.display = 'none';
                         errorEl.style.display = 'block';
-                        errorEl.textContent = '行业热度数据暂不可用: ' + (err.message || err);
+                        var msg = (err.message || err) + '';
+                        if (msg === '未配置' || msg.indexOf('HTTP') === 0 || msg.indexOf('HTML') >= 0) {
+                            errorEl.innerHTML = '行业热度数据暂未配置，不影响其他功能。如需启用，可在 workflow 中运行 <code>python industry_heat.py</code> 或本地执行后部署。';
+                        } else {
+                            errorEl.textContent = '行业热度数据暂不可用: ' + msg;
+                        }
                     });
             }
         })();
