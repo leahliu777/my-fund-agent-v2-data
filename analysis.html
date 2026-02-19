@@ -20,7 +20,7 @@
         .card-bench { grid-column: auto; grid-row: auto; }
     }
     .dashboard-grid .card { margin: 0; }
-    .dashboard-grid .text-secondary { font-size: 11px; color: #888; margin-bottom: 4px; }
+    .dashboard-grid .text-secondary { font-size: 11px; color: #1a1a1a; margin-bottom: 4px; }
     .dashboard-grid .value { font-weight: bold; font-size: 1.5rem; color: var(--text); }
     .card-main-stats { grid-row: span 2; }
     .card-main-stats .value-lg { font-size: 1.75rem; }
@@ -37,7 +37,7 @@
     .bench-section:last-child { margin-bottom: 0; }
     .bench-title { font-weight: bold; color: var(--text); flex-shrink: 0; }
     .bench-metrics { display: flex; gap: 8px; align-items: center; min-width: 0; flex: 1; }
-    .bench-metrics-header { font-size: 11px; color: #888; }
+    .bench-metrics-header { font-size: 11px; color: #1a1a1a; }
     .metric-tag { padding: 2px 6px; border-radius: 4px; font-size: 0.9em; font-weight: 500; }
     .tag-me { background: rgba(92,107,192,0.2); color: var(--primary); }
     .tag-bench { background: rgba(0,0,0,0.1); color: var(--text-muted); }
@@ -83,7 +83,11 @@
 <div id="tooltip" class="tooltip"></div>
 <nav class="nav-tabs tab-nav"><a href="index.html" class="nav-tab">每日对账</a><a href="analysis.html" class="nav-tab active">深度归因</a><a href="history.html" class="nav-tab">历史回测</a><a href="knowledge.html" class="nav-tab">投资字典</a></nav>
 <div class="container">
-    <p style="color:#888; font-size:11px;">PERIOD: 7D | 2026-02-18 23:02:28</p>
+<<<<<<< HEAD
+    <p style="color:#1a1a1a; font-size:11px;">PERIOD: 7D | 2026-02-19 00:19:14</p>
+=======
+    <p style="color:#1a1a1a; font-size:11px;">PERIOD: 7D | 2026-02-19 00:05:58</p>
+>>>>>>> 04dc58689cb7659f9f454ae5c5a1df7704fa7e5d
     
     <h2>战略指挥室</h2>
     <div class="dashboard-grid">
@@ -94,7 +98,7 @@
             <div class="value"><span id="weekly_return"></span></div>
             <div class="text-secondary" style="margin-top:8px">今年以来</div>
             <div class="value"><span id="total_return"></span></div>
-            <div class="text-secondary" style="margin-top:8px">YTD收益</div>
+            <div class="text-secondary" style="margin-top:8px"><span class="glossary-term" data-tip="今年以来扣除增投/赎回后的纯市场收益率。">YTD收益</span></div>
             <div class="value"><span id="ytd_pnl_value"></span> (<span id="ytd_pnl_rate"></span>)</div>
         </div>
         <div class="card card-savings">
@@ -103,7 +107,7 @@
             <div class="goals-progress-bar"><div class="goals-progress-fill" style="width:50.0%"></div></div>
         </div>
         <div class="card card-drawdown">
-            <div class="text-secondary">当前回撤</div>
+            <div class="text-secondary"><span class="glossary-term" data-tip="净值从历史高点回落的百分比，衡量最大亏损幅度。">当前回撤</span></div>
             <div class="value" style="color:var(--text)">-1.5%</div>
             <div class="text-secondary" style="margin-top:4px">底线 -10%</div>
         </div>
@@ -112,13 +116,18 @@
             <div class="bench-card"><div class="bench-section">
         <div class="bench-row bench-row-header">
             <div class="bench-title">本周 (Weekly)</div>
-            <div class="bench-metrics bench-metrics-header text-secondary">我 | Alpha | 基准</div>
+            <div class="bench-metrics bench-metrics-header text-secondary">我 | <span class="glossary-term" data-tip="超额收益，衡量跑赢基准的能力。">Alpha</span> | 基准</div>
         </div>
         <div class="bench-row">
             <div class="bench-title">沪深300</div>
             <div class="bench-metrics">
-                <div class="bench-bar-mine" style="width:77.26524393173824%"></div>
-                <span class="bench-alpha positive">+10.5%</span>
+<<<<<<< HEAD
+                <div class="bench-bar-mine" style="width:72.47917405897142%"></div>
+                <span class="bench-alpha positive">+8.6%</span>
+=======
+                <div class="bench-bar-mine" style="width:72.84383156056057%"></div>
+                <span class="bench-alpha positive">+8.8%</span>
+>>>>>>> 04dc58689cb7659f9f454ae5c5a1df7704fa7e5d
                 <div class="bench-bar-bm" style="width:50.90500904470667%"></div>
                 <span class="metric-tag tag-bench">+0.4%</span>
             </div>
@@ -126,33 +135,52 @@
         <div class="bench-row">
             <div class="bench-title">纳斯达克100</div>
             <div class="bench-metrics">
-                <div class="bench-bar-mine" style="width:77.26524393173824%"></div>
-                <span class="bench-alpha positive">+11.8%</span>
-                <div class="bench-bar-bm" style="width:47.79456092612157%"></div>
-                <span class="metric-tag tag-bench">-0.9%</span>
+<<<<<<< HEAD
+                <div class="bench-bar-mine" style="width:72.47917405897142%"></div>
+                <span class="bench-alpha positive">+11.2%</span>
+                <div class="bench-bar-bm" style="width:44.394710081432834%"></div>
+                <span class="metric-tag tag-bench">-2.2%</span>
+=======
+                <div class="bench-bar-mine" style="width:72.84383156056057%"></div>
+                <span class="bench-alpha positive">+9.5%</span>
+                <div class="bench-bar-bm" style="width:49.15169441147044%"></div>
+                <span class="metric-tag tag-bench">-0.3%</span>
+>>>>>>> 04dc58689cb7659f9f454ae5c5a1df7704fa7e5d
             </div>
         </div>
     </div><div class="bench-section">
         <div class="bench-row bench-row-header">
             <div class="bench-title">年度长跑 (YTD)</div>
-            <div class="bench-metrics bench-metrics-header text-secondary">我 | Alpha | 基准</div>
+            <div class="bench-metrics bench-metrics-header text-secondary">我 | <span class="glossary-term" data-tip="超额收益，衡量跑赢基准的能力。">Alpha</span> | 基准</div>
         </div>
         <div class="bench-row">
             <div class="bench-title">沪深300</div>
             <div class="bench-metrics">
+<<<<<<< HEAD
+                <div class="bench-bar-mine" style="width:57.98483685896335%"></div>
+                <span class="bench-alpha positive">+2.6%</span>
+=======
                 <div class="bench-bar-mine" style="width:58.33009666232915%"></div>
-                <span class="bench-alpha positive">+2.9%</span>
-                <div class="bench-bar-bm" style="width:50.9622965014841%"></div>
-                <span class="metric-tag tag-bench">+0.4%</span>
+                <span class="bench-alpha positive">+2.8%</span>
+>>>>>>> 04dc58689cb7659f9f454ae5c5a1df7704fa7e5d
+                <div class="bench-bar-bm" style="width:51.421539643422804%"></div>
+                <span class="metric-tag tag-bench">+0.6%</span>
             </div>
         </div>
         <div class="bench-row">
             <div class="bench-title">纳斯达克100</div>
             <div class="bench-metrics">
+<<<<<<< HEAD
+                <div class="bench-bar-mine" style="width:57.98483685896335%"></div>
+                <span class="bench-alpha positive">+3.2%</span>
+                <div class="bench-bar-bm" style="width:50.0%"></div>
+                <span class="metric-tag tag-bench">+0.0%</span>
+=======
                 <div class="bench-bar-mine" style="width:58.33009666232915%"></div>
-                <span class="bench-alpha positive">+5.8%</span>
-                <div class="bench-bar-bm" style="width:43.931672503213115%"></div>
+                <span class="bench-alpha positive">+5.7%</span>
+                <div class="bench-bar-bm" style="width:44.12005534226844%"></div>
                 <span class="metric-tag tag-bench">-2.4%</span>
+>>>>>>> 04dc58689cb7659f9f454ae5c5a1df7704fa7e5d
             </div>
         </div>
     </div></div>
@@ -182,37 +210,45 @@
     </div>
     
     <div class="analysis-section md-box">
+<<<<<<< HEAD
+        <script type="text/template" id="ai-source">[WARN] AI 审计由于接口报错未生成: API 编码/接口异常</script>
+=======
         <script type="text/template" id="ai-source">## 1. 盈亏归因与 Alpha 分析
-*   **核心驱动：资源股与黄金的强势表现是本周超额收益的主要引擎。**
-    *   **行业层面**：组合中权重最高的 **Resource (资源)** 板块（占组合约32%）是本周收益的核心贡献者。结合重仓股明细，**紫金矿业 (+2.7%)** 与 **洛阳钼业 (+1.8%)** 的合计权重超过4.5%，其股价上涨对组合净值拉动显著。
-    *   **资产类别**：第一重仓 **实物黄金 (13.2%)** 在本周全球市场波动中发挥了关键的避险与对冲作用，其上涨直接贡献了可观的绝对收益，并有效对冲了其他风险资产的潜在下跌。
-    *   **Alpha 来源**：本周取得显著正 Alpha（+2.95% vs 沪深300， +5.76% vs 纳指100），原因明确：
-        1.  **行业配置 Alpha**：超配表现强劲的资源/黄金板块，低配或规避了本周疲软的科技股（纳指基准下跌-2.43%）。
-        2.  **资产配置 Alpha**：在权益资产之外，配置了约12.6%的债券基金（中长债+中短债），提供了稳定器和低相关性收益，这在市场震荡期尤为宝贵。
-        3.  **选股 Alpha**：在价值/资源板块内部，重仓的紫金、洛钼等标的跑赢了行业或大盘基准。
+*   **核心驱动：资源与防御板块主导超额收益。** 本周组合收益（+9.14%）远超两大基准，主要归功于 **Resource（资源）** 和 **Pension/Dividend（养老金/红利）** 两大板块的强势表现。穿透持仓显示，**实物黄金（Au9999，13.2%）** 是最大单一持仓，本周全球避险情绪升温及降息预期反复，推动金价上涨，是组合收益的核心贡献者。**紫金矿业、洛阳钼业**等资源股亦受益于商品价格反弹。
+*   **Alpha 来源解析：**
+    *   **对沪深300（+0.57%）的Alpha（+2.76%）：** 主要源于组合超配了与A股传统周期/金融板块相关性较低的 **黄金** 和 **全球定价的资源股**，同时通过债基组合（合计12.6%）提供了稳定收益，有效对冲了A股内部的结构性波动。
+    *   **对纳斯达克100（-2.35%）的Alpha（+5.68%）：** 超额收益极为显著。关键在于组合 **完全规避了本周全球科技股的剧烈回调**。我们的 **Tech（科技）** 板块权重仅13.6%（3008/22105），且主要为A股相关，受美股科技巨头下跌的直接冲击小。相反，黄金和债券的防御属性在风险资产抛售时凸显，形成了完美的负相关性对冲。
 
 ## 2. 宏观因子对持仓的冲击
-*   **对前三大重仓的具体影响分析：**
-    *   **实物黄金 (Au9999, 13.2%)**：当前宏观环境（地缘政治不确定性、市场对美联储降息路径的反复博弈）对黄金构成直接利好。美元与美债实际利率的波动是金价的核心驱动。若市场避险情绪升温或降息预期重燃，金价将继续获得支撑；反之，若美国经济数据持续强劲推高实际利率，金价将承压。**当前持仓是对冲尾部风险和货币贬值的有效工具。**
-    *   **中长期债基组合 (7.0%) & 中短债基金组合 (5.6%)**：国内货币政策维持宽松基调，对债市形成基本面支撑。经济数据（如CPI、社融）的强弱将影响长端利率的波动。**中短债受资金面影响更直接，流动性管理功能强；中长期债对经济预期和货币政策更敏感，目前配置提供了稳定的票息收益并降低了组合波动。**
+*   **美债利率与通胀预期反复：** 近期美国经济数据与联储官员表态令市场对降息路径产生分歧，利率预期波动加大。
+    *   **对实物黄金（最大持仓）：** 直接影响。利率预期上行通常利空黄金，但当前“滞胀”担忧（增长放缓+通胀粘性）及地缘风险，强化了黄金的货币属性和避险需求，抵消了部分利率压力。**影响：正面支撑，波动加大。**
+    *   **对中长期债基组合（第二持仓）：** 直接影响。利率预期上行压制债券价格。但组合中配置了中短债基金（第三持仓），久期风险可控。**影响：中性偏负，但已被短债对冲。**
+    *   **对紫金矿业/洛阳钼业（资源股持仓）：** 间接影响。利率环境影响美元和全球增长预期，进而影响铜、金等商品价格。当前“再通胀”交易与供应端故事支撑商品价格。**影响：震荡偏正面。**
+*   **人民币汇率与国内政策：** 国内稳增长政策预期对 **兴业银行、蓝筹价值股** 等构成短期情绪支撑，但基本面改善仍需数据验证。
 
 ## 3. 风险雷达 (波动率与回撤)
-*   **组合波动率 23.29%**：显著偏高，表明组合进攻性较强，这与超配周期性资源股和黄金有关。这既是高收益潜力的来源，也是主要风险点。
-*   **最大回撤 -1.55%**：控制良好，远低于波动率水平，说明**当前的资产搭配（股+债+商品）起到了有效的内部对冲作用**，平滑了净值曲线。
-*   **核心风险点**：
-    1.  **资源股回调风险**：资源品价格（铜、金等）受全球宏观需求预期影响大，若经济数据转弱或美元走强，板块可能出现快速回撤。
-    2.  **集中度风险**：黄金+资源股合计权重极高，导致组合表现与大宗商品周期高度绑定。
-    3.  **流动性风险**：部分持仓（如港股价值标的、个别股票）流动性可能弱于大盘，在极端行情下冲击成本较高。
+*   **组合波动率（23.29%）处于高位**，这主要由 **黄金和资源股的高波动属性** 贡献。虽然本周收益可观，但需清醒认识到，这是承担了较高风险（波动率）的结果。
+*   **最大回撤（-1.55%）控制尚可**，表明在上涨过程中，**债基和红利类资产的配置起到了重要的稳定器作用**，没有出现暴涨暴跌。
+*   **当前主要风险点：**
+    1.  **集中度风险：** 前三大持仓（黄金+长短债基）合计权重达25.8%，其表现对组合影响巨大。
+    2.  **宏观反转风险：** 若美国通胀数据大幅走弱，导致降息预期急剧升温，可能引发“股债双牛”，而黄金的避险吸引力会相对下降，导致组合跑输。
+    3.  **商品价格回调风险：** 资源股涨幅已大，随时可能因情绪或需求证伪而技术性回调。
 
 ## 4. 下周交易指令 (CIO 决议)
-**决议：维持战略配置，进行战术性再平衡与获利了结。**
-*   **止盈/减仓警示**：
-    1.  **对资源股进行部分获利了结**：鉴于资源板块短期涨幅较大且组合权重已极高，**指令：减持紫金矿业、洛阳钼业各0.5%-1%的仓位**，锁定部分利润，降低单一板块风险暴露。
-    2.  **审视黄金超配比例**：黄金仓位已达战术目标上限（13%）。**指令：暂不加仓，若金价快速冲高（如单周涨幅超3%），则启动减持1-2%仓位的预案。**
-*   **买入/加仓方向**：
-    1.  **增配稳健资产**：将上述减持资源股所得资金，**优先增配【中长期债基组合】1%的仓位**，以进一步降低组合整体波动率，契合“存钱进度50%”的稳健需求。
-    2.  **寻找错杀机会**：密切关注本周跑输的 **Tech (科技)** 板块。若市场情绪继续悲观导致优质科技成长股出现非理性下跌，**预留资金，准备小幅试探性加仓【核心成长股】或相关ETF，单笔加仓不超过组合市值的1%。**
-*   **风控底线**：**将最大回撤警戒线上移至 -3.0%**。若净值回撤触及-2.5%，自动启动全面检视，并准备减持波动最大的头寸。当前风控状态健康，但需为潜在波动做好准备。</script>
+**决议：部分止盈，锁定利润，结构调整。目标：降低波动率，为下一阶段（资金目标完成度50%→100%）储备弹药。**
+
+*   **止盈/减仓：**
+    1.  **减持部分实物黄金持仓。** 当前权重过高，且金价处于历史高位区域。**指令：将实物黄金持仓权重从13.2%降至8%-9%**，兑现部分利润，降低组合整体波动率。
+    2.  **审视并减持涨幅过大的资源股。** **指令：对紫金矿业、洛阳钼业进行技术面评估，若出现放量滞涨或跌破关键均线，执行减仓1/3。**
+*   **加仓/布局方向：**
+    1.  **增配中短债基金组合。** 在利率前景不明朗阶段，短久期资产是更好的现金管理工具。**指令：将黄金减持所得资金，优先增配中短债基金组合。**
+    2.  **试探性布局错杀的科技成长。** 纳斯达克100的急跌可能创造中长期买点，但不宜激进。**指令：可动用少量资金（例如组合总额的1-2%），通过“广发多因子”或“核心成长股”标的，分批低吸，作为左侧布局。**
+*   **持仓不动：**
+    *   **中长期债基、红利价值类持仓（兴业银行、港股价值等）维持不动。** 它们仍是组合的压舱石，提供股息和防御功能。
+    *   **整体仓位维持现状，暂不提升。** 在完成50%资金目标后，下半场应更注重风险控制与收益的可持续性，而非激进博取高收益。
+
+**总结：本周胜利源于正确的风险暴露（做多波动/避险资产）。下周行动核心是“收割”并“重新平衡”，将部分风险暴露转化为更稳健的资产，为最终目标保驾护航。**</script>
+>>>>>>> 04dc58689cb7659f9f454ae5c5a1df7704fa7e5d
         <div id="ai-target"></div>
     </div>
 </div>
@@ -225,7 +261,7 @@
     new Chart(ctx, {
         type: 'doughnut',
         data: { labels: ['Resource', 'Pension', 'Dividend', 'Tech'], datasets: [{ data: [7157.896368, 5999.896484, 5226.6106, 3008.008662], backgroundColor: ['hsl(140, 45%, 45%)', 'hsl(70, 45%, 45%)', 'hsl(0, 45%, 45%)', 'hsl(210, 45%, 45%)'], borderWidth: 0, hoverOffset: 15 }] },
-        options: { plugins: { legend: { position: 'bottom', labels: { color: '#888', font: { size: 12 } } } }, cutout: '70%', responsive: true, maintainAspectRatio: false }
+        options: { plugins: { legend: { position: 'bottom', labels: { color: '#1a1a1a', font: { size: 12 } } } }, cutout: '70%', responsive: true, maintainAspectRatio: false }
     });
 
     // 1. 词典配置
@@ -234,6 +270,8 @@
         'DXY': '美元指数。衡量美元对一篮子货币的强度，其走强通常对新兴市场流动性构成压力。',
         'VIX': '波动率指数（恐慌指数）。衡量标普500期权蕴含的隐含波动率，数值高企反映避险情绪浓厚。',
         '回撤': '最大回撤（MDD）。资产净值从历史高点回落的百分比，是评估风险控制能力的关键指标。',
+        '历史回撤': '净值从历史高点回落的百分比，衡量最大亏损幅度。',
+        '累计收益率': '从期初至今的复合收益百分比，反映长期投资表现。',
         '阿尔法': '超额收益（Alpha）。独立于市场波动之外的获利能力，体现主动管理的选股溢价。',
         '贝塔': '系统性收益（Beta）。与大盘波动相关的收益部分，反映组合对市场整体风险的暴露程度。',
         '波动率': '收益率离散程度。量化资产价格波动的剧烈程度，是现代投资组合风险定价的核心。',
@@ -282,8 +320,13 @@
     renderWithGlossary('ai-source', 'ai-target');
 
     // 5. 登录与数据脱敏
-    const privateData = {"current_mv": "¥22,105.22", "total_return": "+3.33%", "weekly_return": "+10.91%", "ytd_pnl_value": "¥+5,305", "ytd_pnl_rate": "+31.58%", "goal_target": "¥50,000", "goal_current": "¥25,000"};
-    const publicData = {"current_mv": "已隐藏", "total_return": "+3.33%", "weekly_return": "+10.91%", "ytd_pnl_value": "已隐藏", "ytd_pnl_rate": "+31.58%", "goal_target": "已隐藏", "goal_current": "已隐藏"};
+<<<<<<< HEAD
+    const privateData = {"current_mv": "¥22,075.67", "total_return": "+3.19%", "weekly_return": "+8.99%", "ytd_pnl_value": "¥+563", "ytd_pnl_rate": "+2.81%", "goal_target": "¥50,000", "goal_current": "¥25,000"};
+    const publicData = {"current_mv": "已隐藏", "total_return": "+3.19%", "weekly_return": "+8.99%", "ytd_pnl_value": "已隐藏", "ytd_pnl_rate": "+2.81%", "goal_target": "已隐藏", "goal_current": "已隐藏"};
+=======
+    const privateData = {"current_mv": "¥22,105.22", "total_return": "+3.33%", "weekly_return": "+9.14%", "ytd_pnl_value": "¥+593", "ytd_pnl_rate": "+2.96%", "goal_target": "¥50,000", "goal_current": "¥25,000"};
+    const publicData = {"current_mv": "已隐藏", "total_return": "+3.33%", "weekly_return": "+9.14%", "ytd_pnl_value": "已隐藏", "ytd_pnl_rate": "+2.96%", "goal_target": "已隐藏", "goal_current": "已隐藏"};
+>>>>>>> 04dc58689cb7659f9f454ae5c5a1df7704fa7e5d
     const PASSWORD_HASH = "608f4a69d48963560e8c0fcb2f6da1a51e87b117dcf1b3054038f7cbd8660def";
 
     async function sha256(message) {

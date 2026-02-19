@@ -10,19 +10,19 @@
    1. CSS变量定义
    ======================================== */
 :root {
-  /* 配色方案：晨雾灰蓝 */
-  --bg-gradient-1: #e8eaf6;
-  --bg-gradient-2: #c5cae9;
-  --bg-gradient-3: #b0bec5;
-  --bg-gradient-4: #90a4ae;
-  --bg-gradient-5: #78909c;
+  /* 配色方案：淡紫→灰蓝 静态渐变（参考玻璃拟态仪表盘） */
+  --bg-gradient-1: #e8e4f0;   /* 顶部：淡薰衣草紫 */
+  --bg-gradient-2: #d8d4e8;
+  --bg-gradient-3: #c8c8dc;
+  --bg-gradient-4: #b8b8d0;
+  --bg-gradient-5: #a8b0c8;   /* 底部：灰蓝色 */
   
-  /* 文字颜色 - 高对比度 */
+  /* 文字颜色 - 全部黑色便于阅读 */
   --text-primary: #1a1a1a;        /* 主文字：深黑色 */
-  --text-secondary: #424242;      /* 次要文字：深灰色 */
-  --text-tertiary: #616161;       /* 三级文字：中灰色 */
-  --text-muted: #757575;          /* 弱化文字：灰色 */
-  --text-on-glass: #2c2c2c;       /* 玻璃卡片上的文字 */
+  --text-secondary: #1a1a1a;      /* 次要文字：黑色 */
+  --text-tertiary: #1a1a1a;       /* 三级文字：黑色 */
+  --text-muted: #1a1a1a;          /* 弱化文字：黑色 */
+  --text-on-glass: #1a1a1a;       /* 玻璃卡片上的文字 */
   
   /* 强调色 */
   --accent-primary: #5c6bc0;      /* 主强调色：靛蓝 */
@@ -102,24 +102,18 @@ body {
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-normal);
   color: var(--text-primary);
-  background: linear-gradient(135deg,
+  /* 静态渐变：顶部淡紫 → 底部灰蓝，不随滚动或时间变化 */
+  background: linear-gradient(180deg,
     var(--bg-gradient-1) 0%,
-    var(--bg-gradient-2) 25%,
-    var(--bg-gradient-3) 50%,
-    var(--bg-gradient-4) 75%,
+    var(--bg-gradient-2) 30%,
+    var(--bg-gradient-3) 60%,
     var(--bg-gradient-5) 100%
   );
   background-attachment: fixed;
-  background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-}
-
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
 }
 
 /* ========================================

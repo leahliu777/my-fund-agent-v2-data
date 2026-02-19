@@ -8,7 +8,7 @@
     --up: #66bb6a;
     --down: #ef5350;
     --text: #333;
-    --text-muted: #666;
+    --text-muted: #1a1a1a;
     --border: rgba(255,255,255,0.5);
 }
 * { box-sizing: border-box; }
