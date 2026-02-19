@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#5c6bc0">
+    <title>基金筛选 | Fund Screener</title>
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="spring-theme-fixed.css">
+    <style>
+        .screener-filters { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 16px; }
+        .screener-filters label { font-size: 12px; color: var(--text-muted); }
+        .screener-filters input, .screener-filters select {
+            padding: 8px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.5); font-size: 14px;
+        }
+        .screener-filters button { padding: 8px 20px; border-radius: 10px; background: rgba(92,107,192,0.5); border: 1px solid rgba(92,107,192,0.6); cursor: pointer; font-size: 14px; }
+        .screener-filters button:hover { background: rgba(92,107,192,0.7); }
+        .screener-result { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+        .screener-pagination { display: flex; align-items: center; gap: 12px; margin: 12px 0; flex-wrap: wrap; }
+        .screener-pagination button { padding: 6px 14px; border-radius: 8px; background: rgba(92,107,192,0.4); border: 1px solid rgba(92,107,192,0.5); cursor: pointer; font-size: 13px; }
+        .screener-pagination button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .screener-pagination span { font-size: 13px; color: var(--text-muted); }
+        .screener-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .screener-table th, .screener-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(0,0,0,0.08); }
+        .screener-table th { background: rgba(92,107,192,0.15); color: var(--primary); }
+        .screener-table a { color: var(--primary); text-decoration: none; }
+        .screener-table a:hover { text-decoration: underline; }
+        .screener-loading { padding: 24px; text-align: center; color: var(--text-muted); }
+        .screener-error { color: var(--danger); padding: 12px 0; }
+    </style>
+</head>
+<body>
+    <nav class="nav-tabs tab-nav">
+        <a href="index.html" class="nav-tab">每日对账</a>
+        <a href="analysis.html" class="nav-tab">深度归因</a>
+        <a href="history.html" class="nav-tab">历史回测</a>
+        <a href="knowledge.html" class="nav-tab">投资字典</a>
+        <a href="screener.html" class="nav-tab active">基金筛选</a>
+    </nav>
+    <div class="container">
+        <h1 class="page-title">基金筛选 (Fund Screener)</h1>
+        <section class="card">
+            <h2>按条件筛选基金</h2>
+            <p style="color:var(--text-muted);font-size:12px;margin:0 0 12px;">结合<a href="knowledge.html#industryHeatSection">行业热度</a>，在加仓时优先考虑热度高的行业相关基金。</p>
+            <div class="screener-filters">
+                <div>
+                    <label>基金类型</label>
+                    <select id="filterType">
+                        <option value="">全部</option>
+                    </select>
+                </div>
+                <div>
+                    <label>名称关键词</label>
+                    <input type="text" id="filterKeyword" placeholder="如：科技、消费、医药">
+                </div>
+                <button type="button" id="btnSearch">筛选</button>
+            </div>
+            <div id="screenerResult" class="screener-result"></div>
+            <div id="screenerPagination" class="screener-pagination" style="display:none;"></div>
+            <div id="screenerLoading" class="screener-loading" style="display:none;">加载中…</div>
+            <div id="screenerError" class="screener-error" style="display:none;"></div>
+            <div id="screenerTableWrap" style="overflow-x:auto;">
+                <table class="screener-table" id="screenerTable" style="display:none;">
+                    <thead><tr><th>基金代码</th><th>基金名称</th><th>基金类型</th></tr></thead>
+                    <tbody id="screenerBody"></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+    <script>
+        (function () {
+            var PAGE_SIZE = 50;
+            var fundsData = null;
+            var filteredList = [];
+            var currentPage = 1;
+            var filterType = document.getElementById('filterType');
+            var filterKeyword = document.getElementById('filterKeyword');
+            var btnSearch = document.getElementById('btnSearch');
+            var resultEl = document.getElementById('screenerResult');
+            var paginationEl = document.getElementById('screenerPagination');
+            var loadingEl = document.getElementById('screenerLoading');
+            var errorEl = document.getElementById('screenerError');
+            var tableEl = document.getElementById('screenerTable');
+            var bodyEl = document.getElementById('screenerBody');
+
+            function norm(f) {
+                return { code: f.code || f.c, name: f.name || f.n, type: f.type || f.t };
+            }
+
+            function loadFunds() {
+                loadingEl.style.display = 'block';
+                errorEl.style.display = 'none';
+                fetch('funds_db.json')
+                    .then(function (r) {
+                        if (!r.ok) return Promise.reject('HTTP ' + r.status);
+                        return r.text();
+                    })
+                    .then(function (text) {
+                        if (text.trim().indexOf('<') === 0) return Promise.reject('数据文件未部署（服务器返回 HTML）。请先运行 workflow 或本地执行: python data_importer.py');
+                        return JSON.parse(text);
+                    })
+                    .then(function (data) {
+                        fundsData = data;
+                        loadingEl.style.display = 'none';
+                        var types = [];
+                        var seen = {};
+                        var funds = data.funds || [];
+                        funds.forEach(function (f) {
+                            var t = norm(f).type;
+                            if (t && !seen[t]) { seen[t] = true; types.push(t); }
+                        });
+                        types.sort();
+                        filterType.innerHTML = '<option value="">全部</option>' + types.map(function (t) {
+                            return '<option value="' + t + '">' + t + '</option>';
+                        }).join('');
+                        runFilter();
+                    })
+                    .catch(function (err) {
+                        loadingEl.style.display = 'none';
+                        errorEl.style.display = 'block';
+                        errorEl.textContent = '基金数据暂不可用: ' + (err.message || err);
+                    });
+            }
+
+            function runFilter() {
+                if (!fundsData || !fundsData.funds) return;
+                var typeVal = (filterType.value || '').trim();
+                var kw = (filterKeyword.value || '').trim().toLowerCase();
+                filteredList = fundsData.funds.filter(function (f) {
+                    var n = norm(f);
+                    if (typeVal && n.type !== typeVal) return false;
+                    if (kw && !(n.name || '').toLowerCase().includes(kw)) return false;
+                    return true;
+                });
+                currentPage = 1;
+                resultEl.textContent = '共 ' + filteredList.length + ' 只基金';
+                renderPage();
+            }
+
+            function renderPage() {
+                var totalPages = Math.max(1, Math.ceil(filteredList.length / PAGE_SIZE));
+                var start = (currentPage - 1) * PAGE_SIZE;
+                var pageData = filteredList.slice(start, start + PAGE_SIZE);
+                bodyEl.innerHTML = pageData.map(function (f) {
+                    var n = norm(f);
+                    var url = 'https://fund.eastmoney.com/' + n.code + '.html';
+                    return '<tr><td>' + n.code + '</td><td><a href="' + url + '" target="_blank">' + (n.name || '-') + '</a></td><td>' + (n.type || '-') + '</td></tr>';
+                }).join('');
+                tableEl.style.display = filteredList.length ? 'table' : 'none';
+                paginationEl.style.display = filteredList.length > PAGE_SIZE ? 'flex' : 'none';
+                paginationEl.innerHTML = '<button id="pgPrev" ' + (currentPage <= 1 ? 'disabled' : '') + '>上一页</button>' +
+                    '<span>第 ' + currentPage + ' / ' + totalPages + ' 页</span>' +
+                    '<button id="pgNext" ' + (currentPage >= totalPages ? 'disabled' : '') + '>下一页</button>';
+                var prevBtn = document.getElementById('pgPrev');
+                var nextBtn = document.getElementById('pgNext');
+                if (prevBtn) prevBtn.onclick = function () { if (currentPage > 1) { currentPage--; renderPage(); } };
+                if (nextBtn) nextBtn.onclick = function () { if (currentPage < totalPages) { currentPage++; renderPage(); } };
+            }
+
+            btnSearch.addEventListener('click', runFilter);
+            filterKeyword.addEventListener('keypress', function (e) { if (e.key === 'Enter') runFilter(); });
+            loadFunds();
+        })();
+    </script>
+    <script>if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(function(){}); }</script>
+</body>
+</html>

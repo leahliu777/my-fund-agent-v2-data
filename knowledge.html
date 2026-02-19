@@ -69,6 +69,35 @@
         .term-badge { display: inline-block; font-weight: bold; font-size: 14px; margin-bottom: 8px; padding: 4px 0; color: var(--text); }
         .term-desc { color: var(--text-muted); font-size: 13px; line-height: 1.7; margin: 0; }
         @media (max-width: 600px) { .dict-grid { grid-template-columns: 1fr; } }
+
+        /* 行业热度 */
+        .heat-desc { color: var(--text-muted); font-size: 12px; margin: 0 0 12px; }
+        .heat-loading { color: var(--text-muted); font-size: 13px; padding: 12px 0; }
+        .heat-error { color: var(--danger); font-size: 13px; padding: 12px 0; }
+        .heat-summary { margin-bottom: 16px; font-size: 13px; }
+        .heat-summary .hot-tag { color: var(--up); margin-right: 8px; }
+        .heat-summary .cold-tag { color: var(--down); margin-right: 8px; }
+        .heat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 8px;
+        }
+        .heat-cell {
+            padding: 8px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            text-align: center;
+            background: rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.5);
+            transition: transform 0.2s;
+        }
+        .heat-cell:hover { transform: scale(1.02); }
+        .heat-cell.hot { background: rgba(102, 187, 106, 0.35); border-color: rgba(102, 187, 106, 0.5); }
+        .heat-cell.cold { background: rgba(239, 83, 80, 0.25); border-color: rgba(239, 83, 80, 0.4); }
+        .heat-cell .name { font-weight: bold; margin-bottom: 4px; }
+        .heat-cell .pct { font-size: 11px; }
+        .heat-cell .pct.up { color: var(--up); }
+        .heat-cell .pct.down { color: var(--down); }
     </style>
 </head>
 <body>
@@ -77,6 +106,7 @@
         <a href="analysis.html" class="nav-tab">深度归因</a>
         <a href="history.html" class="nav-tab">历史回测</a>
         <a href="knowledge.html" class="nav-tab active">投资字典</a>
+        <a href="screener.html" class="nav-tab">基金筛选</a>
     </nav>
     <div class="container">
         <h1 class="page-title">投资大脑</h1>
@@ -94,6 +124,18 @@
             </div>
             <button type="button" class="btn-refresh" id="btnRefresh">立即刷新数据</button>
             <div id="status" role="status"></div>
+        </section>
+
+        <!-- 1.5 行业热度监控 -->
+        <section class="card" id="industryHeatSection">
+            <h2>行业热度监控 (Sector Heat)</h2>
+            <p class="heat-desc">基于板块涨跌幅与资金流向的综合热度，辅助板块轮动决策。数据每日更新。</p>
+            <div id="industryHeatLoading" class="heat-loading">加载中…</div>
+            <div id="industryHeatContent" class="heat-content" style="display:none;">
+                <div class="heat-summary" id="heatSummary"></div>
+                <div class="heat-grid" id="heatGrid"></div>
+            </div>
+            <div id="industryHeatError" class="heat-error" style="display:none;"></div>
         </section>
 
         <!-- 2. 宏观雷达说明书 -->
@@ -214,6 +256,50 @@
         </section>
     </div>
 
+    <script>
+        (function () {
+            // 行业热度：从同目录加载 industry_heat.json
+            var heatSection = document.getElementById('industryHeatSection');
+            if (heatSection) {
+                var loading = document.getElementById('industryHeatLoading');
+                var content = document.getElementById('industryHeatContent');
+                var errorEl = document.getElementById('industryHeatError');
+                var summaryEl = document.getElementById('heatSummary');
+                var gridEl = document.getElementById('heatGrid');
+                fetch('industry_heat.json')
+                    .then(function (r) {
+                        if (!r.ok) return Promise.reject('HTTP ' + r.status);
+                        return r.text();
+                    })
+                    .then(function (text) {
+                        if (text.trim().indexOf('<') === 0) return Promise.reject('数据文件未部署（服务器返回 HTML）。请先运行 workflow 或本地执行: python industry_heat.py');
+                        return JSON.parse(text);
+                    })
+                    .then(function (data) {
+                        loading.style.display = 'none';
+                        content.style.display = 'block';
+                        var updated = data.updated_at || '';
+                        var hot = (data.summary && data.summary.hot) || [];
+                        var cold = (data.summary && data.summary.cold) || [];
+                        summaryEl.innerHTML = '<span class="hot-tag">🔥 热度: ' + hot.slice(0, 5).join('、') + '</span>' +
+                            '<span class="cold-tag">❄️ 退潮: ' + cold.slice(0, 5).join('、') + '</span>' +
+                            (updated ? '<span style="color:var(--text-muted);font-size:11px;"> · ' + updated + '</span>' : '');
+                        var items = data.items || [];
+                        gridEl.innerHTML = items.slice(0, 40).map(function (x) {
+                            var pctClass = (x.change_pct || 0) >= 0 ? 'up' : 'down';
+                            var pctStr = (x.change_pct != null) ? (x.change_pct >= 0 ? '+' : '') + x.change_pct.toFixed(2) + '%' : '-';
+                            var cellClass = (x.heat_score || 50) > 50 ? 'hot' : ((x.heat_score || 50) < 50 ? 'cold' : '');
+                            return '<div class="heat-cell ' + cellClass + '"><div class="name">' + (x.name || '') + '</div><div class="pct ' + pctClass + '">' + pctStr + '</div></div>';
+                        }).join('');
+                    })
+                    .catch(function (err) {
+                        loading.style.display = 'none';
+                        errorEl.style.display = 'block';
+                        errorEl.textContent = '行业热度数据暂不可用: ' + (err.message || err);
+                    });
+            }
+        })();
+    </script>
     <script>
         (function () {
             var STORAGE_KEY = 'fund_agent_gh_token';
