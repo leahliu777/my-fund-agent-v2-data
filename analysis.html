@@ -23,13 +23,13 @@
     .dashboard-grid .value { font-weight: bold; font-size: 1.5rem; color: var(--text); }
     .card-main-stats { grid-row: span 2; }
     .card-main-stats .value-lg { font-size: 1.75rem; }
-    .goals-progress-bar { height: 8px; background: rgba(0,0,0,0.1); border-radius: 4px; overflow: hidden; margin-top: 8px; }
+    .goals-progress-bar { height: 8px; background: var(--bg-tertiary); border-radius: 4px; overflow: hidden; margin-top: 8px; }
     .goals-progress-fill { height: 100%; background: var(--primary); border-radius: 4px; }
     .card-drawdown { border-left: 4px solid var(--down); }
-    .card-drawdown.alert { border-left-color: var(--danger); box-shadow: 0 0 0 1px rgba(239,83,80,0.25); }
+    .card-drawdown.alert { border-left-color: var(--danger); box-shadow: 0 0 0 1px rgba(245,67,67,0.25); }
     .card-bench { grid-column: 2 / span 2; grid-row: 2; }
-    .bench-card { background: rgba(255,255,255,0.2); border-radius: 12px; padding: 12px; margin-top: 8px; border: 1px solid rgba(255,255,255,0.4); }
-    .bench-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px dashed rgba(0,0,0,0.15); font-size: 13px; }
+    .bench-card { background: var(--bg-tertiary); border-radius: 8px; padding: 12px; margin-top: 8px; border: 1px solid var(--border-color); }
+    .bench-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px dashed var(--border-color-light); font-size: 13px; }
     .bench-row:last-child { border-bottom: none; }
     .bench-row-header { border-bottom-color: transparent; padding-top: 0; }
     .bench-section { margin-bottom: 14px; }
@@ -39,25 +39,25 @@
     .bench-metrics-header { font-size: 11px; color: var(--text-tertiary); }
     .metric-tag { padding: 2px 6px; border-radius: 4px; font-size: 0.9em; font-weight: 500; }
     .tag-me { background: rgba(74,144,226,0.2); color: var(--accent-primary); }
-    .tag-bench { background: rgba(0,0,0,0.1); color: var(--text-muted); }
+    .tag-bench { background: var(--bg-tertiary); color: var(--text-secondary); }
     .bench-bar-mine { flex: 1 1 0; min-width: 20px; max-width: 80px; height: 6px; background: var(--primary); border-radius: 3px; }
-    .bench-bar-bm { flex: 1 1 0; min-width: 20px; max-width: 80px; height: 6px; background: rgba(0,0,0,0.2); border-radius: 3px; }
+    .bench-bar-bm { flex: 1 1 0; min-width: 20px; max-width: 80px; height: 6px; background: var(--bg-elevated); border-radius: 3px; }
     .bench-alpha { flex: 0 0 48px; text-align: center; font-weight: 600; font-size: 12px; }
     .bench-alpha.positive { color: var(--down); }
     .bench-alpha.negative { color: var(--up); }
     @media (max-width: 600px) {
         .bench-row { flex-direction: column; align-items: flex-start; gap: 6px; padding: 10px 0; font-size: 12px; }
-        .bench-metrics { width: 100%; justify-content: space-between; background: rgba(255,255,255,0.2); padding: 6px 8px; border-radius: 8px; }
+        .bench-metrics { width: 100%; justify-content: space-between; background: var(--bg-tertiary); padding: 6px 8px; border-radius: 8px; }
         .metric-tag { font-size: 0.85em; }
         .bench-bar-mine, .bench-bar-bm { max-width: none; }
     }
-    .goals-diagnosis { color: var(--danger); font-size: 13px; padding: 10px 14px; margin: 0 0 24px 0; background: rgba(239,83,80,0.1); border-radius: 0 6px 6px 0; border-left: 4px solid var(--danger); }
+    .goals-diagnosis { color: var(--danger); font-size: 13px; padding: 10px 14px; margin: 0 0 24px 0; background: var(--color-up-bg); border-radius: 0 6px 6px 0; border-left: 4px solid var(--danger); }
 
     /* Markdown / AI 报告 */
     .md-box { line-height: 1.8; color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important; }
-    .md-box table { width: 100%; border-collapse: collapse; margin: 20px 0; background: rgba(255,255,255,0.2); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.4); }
+    .md-box table { width: 100%; border-collapse: collapse; margin: 20px 0; background: var(--bg-tertiary); border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
     .md-box th { background: rgba(74,144,226,0.2); color: var(--accent-primary); padding: 12px; text-align: left; font-size: 12px; }
-    .md-box td { padding: 12px; border-bottom: 1px solid rgba(0,0,0,0.08); font-size: 12px; color: var(--text); }
+    .md-box td { padding: 12px; border-bottom: 1px solid var(--border-color-light); font-size: 12px; color: var(--text-primary); }
     .md-box ul { list-style: none; padding-left: 10px; }
     .md-box li { margin-bottom: 12px; color: var(--text-muted); line-height: 1.8; position: relative; padding-left: 20px; font-size: 14px; }
     .md-box li::before { content: "•"; color: var(--primary); position: absolute; left: 0; font-weight: bold; }
@@ -82,11 +82,7 @@
 <div id="tooltip" class="tooltip"></div>
 <nav class="nav-tabs tab-nav"><a href="index.html" class="nav-tab">每日对账</a><a href="analysis.html" class="nav-tab active">深度归因</a><a href="history.html" class="nav-tab">历史回测</a><a href="knowledge.html" class="nav-tab">投资字典</a><a href="screener.html" class="nav-tab">基金筛选</a></nav>
 <div class="container">
-<<<<<<< HEAD
-    <p style="color:var(--text-tertiary); font-size:11px;">PERIOD: 7D | 2026-02-20 00:22:05</p>
-=======
-    <p style="color:#1a1a1a; font-size:11px;">PERIOD: 7D | 2026-02-20 00:36:38</p>
->>>>>>> cd1da83252a4f0003c56133f86c03beb5c370240
+    <p style="color:var(--text-tertiary); font-size:11px;">PERIOD: 7D | 2026-02-20 01:43:51</p>
     
     <h2>战略指挥室</h2>
     <div class="dashboard-grid">
@@ -130,9 +126,9 @@
             <div class="bench-title">纳斯达克100</div>
             <div class="bench-metrics">
                 <div class="bench-bar-mine" style="width:74.34336480098725%"></div>
-                <span class="bench-alpha positive">+11.2%</span>
-                <div class="bench-bar-bm" style="width:46.2411004534201%"></div>
-                <span class="metric-tag tag-bench">-1.5%</span>
+                <span class="bench-alpha positive">+11.4%</span>
+                <div class="bench-bar-bm" style="width:45.893856837668935%"></div>
+                <span class="metric-tag tag-bench">-1.6%</span>
             </div>
         </div>
     </div><div class="bench-section">
@@ -153,9 +149,9 @@
             <div class="bench-title">纳斯达克100</div>
             <div class="bench-metrics">
                 <div class="bench-bar-mine" style="width:58.47225180985495%"></div>
-                <span class="bench-alpha positive">+6.1%</span>
-                <div class="bench-bar-bm" style="width:43.11262140959043%"></div>
-                <span class="metric-tag tag-bench">-2.8%</span>
+                <span class="bench-alpha positive">+6.3%</span>
+                <div class="bench-bar-bm" style="width:42.76908172697909%"></div>
+                <span class="metric-tag tag-bench">-2.9%</span>
             </div>
         </div>
     </div></div>
@@ -186,50 +182,48 @@
     
     <div class="analysis-section md-box">
         <script type="text/template" id="ai-source">## 1. 本周表现审计
-- **表现归因**：本周收益+9.74%，远超沪深300(+0.57%)与纳斯达克100(-2.75%)，Alpha显著。主要归功于**资源类**（黄金、矿业股）与**高股息**资产在宏观不确定性下的强劲表现。
-- **风险审视**：单周近10%的收益远超组合23.29%的年化波动率常态，属异常高波动回报，需警惕其可持续性。
+- **表现归因**：本周收益+9.74%，远超两大基准（沪深300 +0.57%，纳指100 -2.89%），Alpha显著。主要归功于**资源（Resource）** 和**红利（Dividend）** 板块的超额表现，与本周市场避险及高股息偏好风格高度契合。
+- **风险审视**：单周近10%的收益远超组合23.29%的年化波动率常态，属异常高波动回报，可持续性存疑，需警惕均值回归。
 
 ## 2. 资产配置X光
-- **行业分布**：组合高度集中于**资源(32.4%)、养老金/高股息(27.1%)**，合计占比近60%。防御性、价值型风格突出，成长性（科技仅13.6%）严重不足。
-- **集中度风险**：前十大持仓合计权重仅40.3%，整体分散。但**行业层面过度集中**于上游周期与固收替代品，对经济复苏或科技行情响应不足。
+- **行业分布**：组合高度集中于**资源（32.4%）、养老金/保险（27.1%）、红利（23.6%）** 三大防御性板块，合计占比超83%。风格极度偏向**价值、红利、避险**。
+- **风险诊断**：**过度集中风险显著**。对成长（尤其是科技）板块暴露严重不足（仅13.6%），组合风格单一，在市场风险偏好转向时可能大幅跑输。
 
 ## 3. 宏观因子敏感度
-- **通胀/避险敏感度高**：重仓实物黄金、矿业股，组合显著受益于通胀预期上升或地缘风险。
-- **利率敏感度中性偏正面**：债基组合（12.6%）与高股息资产构成一定保护，但权重不高。
-- **汇率风险**：持有港股标的，暴露于港元/人民币汇率波动。
+- **利率敏感度**：高。持有超12.6%的债基组合，对利率上行敏感。但资源股（紫金、洛钼）部分对冲该风险。
+- **通胀敏感度**：极高。实物黄金（13.2%）与资源股构成核心通胀对冲头寸，组合整体受益于通胀预期上行。
+- **汇率敏感度**：低。资产以人民币计价为主，港股价值标的占比极小，汇率风险敞口有限。
 
 ## 4. 核心风险指标审计
-- **波动率(23.29%)**：显著高于主流宽基指数（沪深300约20%），显示组合风格激进（集中于周期股）。
-- **最大回撤(-1.55%)**：控制优秀，与本周强势表现及防御性配置有关，但**波动与回撤数据短期背离**，需观察在下跌市中的真实防御力。
-- **结论**：风险指标处于个人投资者可接受的“中高风险、高回报”区间上沿，需关注波动率是否持续攀升。
+- **波动率（23.29%）**：处于**偏高**水平，接近权益基金平均水平，与集中配置周期性资源股有关。
+- **最大回撤（-1.55%）**：**控制极佳**。得益于黄金、债基的稳定器作用及近期行情配合。
+- **综合评估**：风险指标呈现“高波动、低回撤”的异常组合，暗示近期运气成分较大。当前波动率已超出个人投资者常见舒适区（15%-20%）。
 
 ## 5. 行业/板块热力图
-- **市场热点**：AI算力、半导体、新能源新技术等**成长板块**热度回升；资源品（铜、金）因宏观预期维持强势。
-- **持仓匹配度**：组合完美抓住了**资源品**热点，但完全踏空**科技成长**板块行情。风格与市场出现割裂，一半是海水（持仓），一半是火焰（市场）。
+- **市场热点**：**人工智能、半导体、新能源**等成长赛道热度反复；**高股息、资源品（铜、金、油）** 是当前持续的避险主线。
+- **持仓匹配度**：持仓完美匹配“高股息、资源品”这条**冷避险主线**，但完全错失“科技成长”这条**热进攻主线**。组合与市场一半的热点脱节。
 
 ## 6. 潜在机会提示
-1. **科技成长（工具）**：可小仓位配置**科创50ETF(588000)**或**华夏半导体芯片ETF(159995)**，以捕捉科技反弹行情，平衡组合风格。
-2. **消费/医药（左侧布局）**：关注超跌的**消费ETF(159928)**或**医疗ETF(512170)**，作为经济复苏预期的提前布局，目前估值具备安全边际。
+1. **科创/半导体ETF（如588000）**：市场对科技自主可控和AI产业趋势关注度持续，您的组合在此领域配置空白，可小仓位布局以平衡风格。
+2. **港股互联网ETF（如513330）**：估值处于历史低位，与您持有的港股价值标的形成互补，可作为博弈港股修复的弹性工具。
 
 ## 7. 潜在风险预警
-- **风格极端化风险**：组合与市场成长风格严重脱节，若资源品行情逆转或科技股持续走强，将面临巨大**相对收益损失**压力。
-- **黄金回调风险**：实物黄金（第一重仓）短期涨幅巨大，对美联储利率政策极度敏感，存在技术性回调压力。
-- **个股流动性风险**：紫金矿业、洛阳钼业等个股持仓市值较低，但占组合权重不轻，个股波动对组合影响被放大。
+- **风格逆转风险（灰犀牛）**：组合严重依赖“资源+红利”风格。若全球通胀预期降温或市场风险偏好显著转向成长，组合将面临大幅回调压力。
+- **个股集中风险**：前十大持仓虽权重分散，但**紫金矿业、洛阳钼业**同属周期性矿业股，受商品价格波动影响大，存在关联性风险。
 
 ## 8. 持仓优化建议
-- **整体策略**：**持有**为主，进行**结构性调仓**，而非大幅增减仓。
-- **具体操作**：
-    1. **减仓**：考虑小幅减持部分**实物黄金**（如1-2%权重），锁定部分利润，降低单一资产风险。
-    2. **加仓**：将减仓资金用于增配**科技成长类ETF**（见第6点），初始权重控制在3-5%，以平衡风格。
+- **减仓**：**实物黄金**。当前占比过高（13.2%），其避险功能与资源股部分重叠。可获利了结部分，锁定利润。
+- **加仓**：**科技成长类基金**（如您持仓中的“广发多因子”或新增科创ETF）。将科技板块配置提升至20%左右，以降低风格集中度。
+- **持有**：债基组合、红利及价值股核心仓位，作为组合稳定器。
 
 ## 9. 下周行动计划
-1. **执行调仓**：执行上述“减部分黄金，加科技ETF”的操作，完成组合风格再平衡的第一步。
-2. **设定观察清单**：将消费ETF、医疗ETF加入观察，设定价格提醒，等待更佳买点。
-3. **监控波动率**：密切跟踪组合波动率是否因加入科技资产而失控，确保其稳定在25%以内。
+1. **执行再平衡**：将实物黄金持仓权重降至8%以内，释放出的资金。
+2. **试探性布局**：将上述资金的50%用于买入科创50ETF（588000），初始权重控制在组合的3-5%。
+3. **设置观察清单**：将港股互联网ETF加入观察，若恒生指数跌破关键支撑，则考虑分批买入。
 
 ## 10. 分析师信心指数
-**信心指数：6/10**
-- **解读**：对组合的防御能力和当前持仓结构在中性市场中保持谨慎乐观，但对组合能否适应可能出现的市场风格切换信心不足，需通过调仓提升适应性。</script>
+**信心指数：6**
+市场处于风格拉锯期，您的组合在防御端构筑坚实，但在进攻端完全缺席。短期或继续受益于避险情绪，但中长期跑输风险正在累积。本周操作核心是“防守中增添一丝进攻”。</script>
         <div id="ai-target"></div>
     </div>
 </div>
@@ -241,7 +235,7 @@
     const ctx = document.getElementById('assetDonut').getContext('2d');
     new Chart(ctx, {
         type: 'doughnut',
-        data: { labels: ['Resource', 'Pension', 'Dividend', 'Tech'], datasets: [{ data: [7157.896368, 5999.896484, 5226.6106, 3008.008662], backgroundColor: ['hsl(140, 45%, 45%)', 'hsl(70, 45%, 45%)', 'hsl(0, 45%, 45%)', 'hsl(210, 45%, 45%)'], borderWidth: 0, hoverOffset: 15 }] },
+        data: { labels: ['Resource', 'Pension', 'Dividend', 'Tech'], datasets: [{ data: [7157.896368, 5999.896484, 5226.6106, 3008.008662], backgroundColor: ['#00c853', '#5ba3f5', '#4a90e2', '#ffa726'], borderWidth: 0, hoverOffset: 15 }] },
         options: { plugins: { legend: { position: 'bottom', labels: { color: '#e8e8e8', font: { size: 12 } } } }, cutout: '70%', responsive: true, maintainAspectRatio: false }
     });
 
