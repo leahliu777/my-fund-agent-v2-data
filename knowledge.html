@@ -97,6 +97,7 @@
         .heat-cell .pct { font-size: 11px; }
         .heat-cell .pct.up { color: var(--up); }
         .heat-cell .pct.down { color: var(--down); }
+        .industry-heat-treemap { width: 100%; height: 480px; margin-top: 16px; border-radius: var(--radius-md); overflow: hidden; background: var(--bg-tertiary); }
     </style>
 </head>
 <body>
@@ -129,11 +130,11 @@
         <!-- 1.5 行业热度监控 -->
         <section class="card" id="industryHeatSection">
             <h2>行业热度监控 (Sector Heat)</h2>
-            <p class="heat-desc">基于板块涨跌幅与资金流向的综合热度，辅助板块轮动决策。数据每日更新。（可选功能，未配置时不影响其他页面）</p>
+            <p class="heat-desc">基于 Relative Volume 算法：当日动量 + 中期趋势 + 相对成交额。辅助板块轮动决策。数据每日更新。（可选功能，未配置时不影响其他页面）</p>
             <div id="industryHeatLoading" class="heat-loading">加载中…</div>
             <div id="industryHeatContent" class="heat-content" style="display:none;">
                 <div class="heat-summary" id="heatSummary"></div>
-                <div class="heat-grid" id="heatGrid"></div>
+                <div id="industry-heat-treemap" class="industry-heat-treemap"></div>
             </div>
             <div id="industryHeatError" class="heat-error" style="display:none;"></div>
         </section>
@@ -256,53 +257,85 @@
         </section>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <script>
         (function () {
-            // 行业热度：从同目录加载 industry_heat.json
             var heatSection = document.getElementById('industryHeatSection');
-            if (heatSection) {
-                var loading = document.getElementById('industryHeatLoading');
-                var content = document.getElementById('industryHeatContent');
-                var errorEl = document.getElementById('industryHeatError');
-                var summaryEl = document.getElementById('heatSummary');
-                var gridEl = document.getElementById('heatGrid');
-                fetch('industry_heat.json')
-                    .then(function (r) {
-                        if (!r.ok) return Promise.reject('HTTP ' + r.status);
-                        return r.text();
-                    })
-                    .then(function (text) {
-                        if (text.trim().indexOf('<') === 0) return Promise.reject('未配置');
-                        return JSON.parse(text);
-                    })
-                    .then(function (data) {
-                        loading.style.display = 'none';
-                        content.style.display = 'block';
-                        var updated = data.updated_at || '';
-                        var hot = (data.summary && data.summary.hot) || [];
-                        var cold = (data.summary && data.summary.cold) || [];
-                        summaryEl.innerHTML = '<span class="hot-tag">🔥 热度: ' + hot.slice(0, 5).join('、') + '</span>' +
-                            '<span class="cold-tag">❄️ 退潮: ' + cold.slice(0, 5).join('、') + '</span>' +
-                            (updated ? '<span style="color:var(--text-muted);font-size:11px;"> · ' + updated + '</span>' : '');
-                        var items = data.items || [];
-                        gridEl.innerHTML = items.slice(0, 40).map(function (x) {
-                            var pctClass = (x.change_pct || 0) >= 0 ? 'up' : 'down';
-                            var pctStr = (x.change_pct != null) ? (x.change_pct >= 0 ? '+' : '') + x.change_pct.toFixed(2) + '%' : '-';
-                            var cellClass = (x.heat_score || 50) > 50 ? 'hot' : ((x.heat_score || 50) < 50 ? 'cold' : '');
-                            return '<div class="heat-cell ' + cellClass + '"><div class="name">' + (x.name || '') + '</div><div class="pct ' + pctClass + '">' + pctStr + '</div></div>';
-                        }).join('');
-                    })
-                    .catch(function (err) {
-                        loading.style.display = 'none';
-                        errorEl.style.display = 'block';
-                        var msg = (err.message || err) + '';
-                        if (msg === '未配置' || msg.indexOf('HTTP') === 0 || msg.indexOf('HTML') >= 0) {
-                            errorEl.innerHTML = '行业热度数据暂未配置，不影响其他功能。如需启用，可在 workflow 中运行 <code>python industry_heat.py</code> 或本地执行后部署。';
-                        } else {
-                            errorEl.textContent = '行业热度数据暂不可用: ' + msg;
-                        }
-                    });
-            }
+            if (!heatSection) return;
+            var loading = document.getElementById('industryHeatLoading');
+            var content = document.getElementById('industryHeatContent');
+            var errorEl = document.getElementById('industryHeatError');
+            var summaryEl = document.getElementById('heatSummary');
+            var treemapEl = document.getElementById('industry-heat-treemap');
+            fetch('industry_heat.json')
+                .then(function (r) {
+                    if (!r.ok) return Promise.reject('HTTP ' + r.status);
+                    return r.text();
+                })
+                .then(function (text) {
+                    if (text.trim().indexOf('<') === 0) return Promise.reject('未配置');
+                    return JSON.parse(text);
+                })
+                .then(function (data) {
+                    loading.style.display = 'none';
+                    content.style.display = 'block';
+                    var updated = data.updated_at || '';
+                    var hot = (data.summary && data.summary.hot) || [];
+                    var cold = (data.summary && data.summary.cold) || [];
+                    summaryEl.innerHTML = '<span class="hot-tag">🔥 热度: ' + hot.slice(0, 5).join('、') + '</span>' +
+                        '<span class="cold-tag">❄️ 退潮: ' + cold.slice(0, 5).join('、') + '</span>' +
+                        '<span style="color:var(--text-muted);font-size:11px;margin-left:8px;">冷→热</span>' +
+                        (updated ? '<span style="color:var(--text-muted);font-size:11px;"> · ' + updated + '</span>' : '');
+                    var items = data.items || [];
+                    var treemapData = [{
+                        name: '行业热度',
+                        children: items.slice(0, 60).map(function (x) {
+                            return { name: x.name || '', value: Math.max(1, (x.heat_score || 50)) };
+                        })
+                    }];
+                    if (typeof echarts !== 'undefined' && treemapEl) {
+                        var myChart = echarts.init(treemapEl, 'dark');
+                        myChart.setOption({
+                            backgroundColor: 'transparent',
+                            tooltip: {
+                                formatter: function (info) {
+                                    var v = info.value;
+                                    var n = info.name;
+                                    var item = items.find(function (x) { return x.name === n; });
+                                    var pct = item && item.change_pct != null ? (item.change_pct >= 0 ? '+' : '') + item.change_pct.toFixed(2) + '%' : '';
+                                    return '<div style="font-weight:bold;">' + n + '</div>热度: ' + v + ' / 100' + (pct ? '<br>涨跌: ' + pct : '');
+                                }
+                            },
+                            series: [{
+                                type: 'treemap',
+                                data: treemapData,
+                                leafDepth: 1,
+                                roam: false,
+                                label: { show: true, formatter: '{b}', color: '#e8e8e8', fontSize: 12 },
+                                upperLabel: { show: false },
+                                itemStyle: { borderColor: '#1a1a1a', borderWidth: 2, gapWidth: 2 },
+                                levels: [{
+                                    itemStyle: { borderWidth: 2, gapWidth: 2, borderColor: '#1a1a1a' },
+                                    color: ['#1a5276', '#2471a3', '#3498db', '#52be80', '#f4d03f', '#e74c3c'],
+                                    colorMappingBy: 'value',
+                                    visualMin: 0,
+                                    visualMax: 100
+                                }]
+                            }]
+                        });
+                        window.addEventListener('resize', function () { myChart.resize(); });
+                    }
+                })
+                .catch(function (err) {
+                    loading.style.display = 'none';
+                    errorEl.style.display = 'block';
+                    var msg = (err.message || err) + '';
+                    if (msg === '未配置' || msg.indexOf('HTTP') === 0 || msg.indexOf('HTML') >= 0) {
+                        errorEl.innerHTML = '行业热度数据暂未配置，不影响其他功能。如需启用，可在 workflow 中运行 <code>python industry_heat.py</code> 或本地执行后部署。';
+                    } else {
+                        errorEl.textContent = '行业热度数据暂不可用: ' + msg;
+                    }
+                });
         })();
     </script>
     <script>
