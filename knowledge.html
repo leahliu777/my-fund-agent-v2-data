@@ -100,6 +100,7 @@
     </style>
 </head>
 <body>
+    <div id="tooltip" class="tooltip"></div>
     <nav class="nav-tabs tab-nav">
         <a href="index.html" class="nav-tab">每日对账</a>
         <a href="analysis.html" class="nav-tab">深度归因</a>
@@ -150,7 +151,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>十年美债 (US10Y)</td>
+                        <td><span class="glossary-term" data-tip="美债10Y收益率。全球资产定价之锚，反映市场对长期通胀与无风险利率的预期。">十年美债 (US10Y)</span></td>
                         <td>全球资产定价之锚</td>
                         <td><span class="danger">&gt; 4.3%</span> 危险，压制A股 | <span class="safe">&lt; 3.8%</span> 利好</td>
                     </tr>
@@ -303,6 +304,21 @@
                     });
             }
         })();
+    </script>
+    <script>
+        document.addEventListener('mousemove', function (e) {
+            var tooltip = document.getElementById('tooltip');
+            if (e.target.classList && e.target.classList.contains('glossary-term')) {
+                tooltip.innerText = e.target.getAttribute('data-tip') || '';
+                tooltip.style.display = 'block';
+                var x = e.clientX + 10;
+                if (x + 290 > window.innerWidth) x = e.clientX - 300;
+                tooltip.style.left = x + 'px';
+                tooltip.style.top = (e.clientY + 10) + 'px';
+            } else {
+                tooltip.style.display = 'none';
+            }
+        });
     </script>
     <script>
         (function () {

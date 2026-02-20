@@ -35,6 +35,7 @@
     </style>
 </head>
 <body>
+    <div id="tooltip" class="tooltip"></div>
     <nav class="nav-tabs tab-nav">
         <a href="index.html" class="nav-tab">每日对账</a>
         <a href="analysis.html" class="nav-tab">深度归因</a>
@@ -46,7 +47,7 @@
         <h1 class="page-title">基金筛选 (Fund Screener)</h1>
         <section class="card">
             <h2>按条件筛选基金</h2>
-            <p style="color:var(--text-muted);font-size:12px;margin:0 0 12px;">结合<a href="knowledge.html#industryHeatSection">行业热度</a>，在加仓时优先考虑热度高的行业相关基金。使用 VPN 时若主链接无法访问，可尝试备用链接或复制链接后关闭 VPN 再打开。</p>
+            <p style="color:var(--text-muted);font-size:12px;margin:0 0 12px;">结合<a href="knowledge.html#industryHeatSection"><span class="glossary-term" data-tip="根据市场资金流向与行业轮动，量化各行业当前热度，用于辅助择时与行业配置。">行业热度</span></a>，在加仓时优先考虑热度高的行业相关基金。使用 VPN 时若主链接无法访问，可尝试备用链接或复制链接后关闭 VPN 再打开。</p>
             <div class="screener-filters">
                 <div>
                     <label>基金类型</label>
@@ -66,7 +67,7 @@
             <div id="screenerError" class="screener-error" style="display:none;"></div>
             <div id="screenerTableWrap" style="overflow-x:auto;">
                 <table class="screener-table" id="screenerTable" style="display:none;">
-                    <thead><tr><th>综合分</th><th>基金代码</th><th>基金名称</th><th>基金类型</th></tr></thead>
+                    <thead><tr><th><span class="glossary-term" data-tip="综合评分，结合行业热度、历史表现等维度的量化得分，用于排序筛选。">综合分</span></th><th>基金代码</th><th>基金名称</th><th>基金类型</th></tr></thead>
                     <tbody id="screenerBody"></tbody>
                 </table>
             </div>
@@ -188,6 +189,19 @@
 
             btnSearch.addEventListener('click', runFilter);
             filterKeyword.addEventListener('keypress', function (e) { if (e.key === 'Enter') runFilter(); });
+            document.addEventListener('mousemove', function (e) {
+                var tooltip = document.getElementById('tooltip');
+                if (e.target.classList && e.target.classList.contains('glossary-term')) {
+                    tooltip.innerText = e.target.getAttribute('data-tip') || '';
+                    tooltip.style.display = 'block';
+                    var x = e.clientX + 10;
+                    if (x + 290 > window.innerWidth) x = e.clientX - 300;
+                    tooltip.style.left = x + 'px';
+                    tooltip.style.top = (e.clientY + 10) + 'px';
+                } else {
+                    tooltip.style.display = 'none';
+                }
+            });
             loadFunds();
         })();
     </script>

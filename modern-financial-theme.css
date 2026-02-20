@@ -809,6 +809,27 @@ tr:hover {
   }
 }
 
+/* 投资字典悬浮提示 */
+.tooltip {
+  position: fixed;
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  padding: 15px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-color);
+  display: none;
+  z-index: 3000;
+  font-size: 14px;
+  max-width: 280px;
+  box-shadow: var(--shadow-lg);
+}
+.glossary-term {
+  border-bottom: 1px dashed var(--accent-primary);
+  cursor: help;
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+
 /* 页面标题 */
 .page-title {
   font-size: var(--font-size-xl);
