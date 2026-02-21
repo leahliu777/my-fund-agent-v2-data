@@ -4,6 +4,8 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#121212">
 <link rel="stylesheet" href="modern-financial-theme.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <style>
     /* 深度归因页面专属 */
     .dashboard-grid {
@@ -69,6 +71,9 @@
     .mask-pierced-mv table th:nth-child(3), .mask-pierced-mv table td:nth-child(3) { filter: blur(6px); user-select: none; pointer-events: none; }
     .tooltip { position: fixed; background: var(--bg-elevated); color: var(--text-primary); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); display: none; z-index: 3000; font-size: 14px; max-width: 250px; box-shadow: var(--shadow-lg); }
     .chart-container { position: relative; height: 300px; margin: 20px 0; }
+    /* 即时互动：结论旁提问图标 */
+    .ask-conclusion { display: inline-flex; align-items: center; margin-left: 8px; cursor: pointer; color: var(--accent-primary); font-size: 14px; vertical-align: middle; }
+    .ask-conclusion:hover { opacity: 0.8; }
 </style>
 </head><body>
 <div id="loginStatus" onclick="handleStatusClick()"><span id="statusText"></span></div>
@@ -83,7 +88,7 @@
 <div id="tooltip" class="tooltip"></div>
 <nav class="nav-tabs tab-nav"><a href="index.html" class="nav-tab">每日对账</a><a href="analysis.html" class="nav-tab active">深度归因</a><a href="history.html" class="nav-tab">历史回测</a><a href="knowledge.html" class="nav-tab">投资字典</a><a href="screener.html" class="nav-tab">基金筛选</a></nav>
 <div class="container">
-    <p style="color:var(--text-tertiary); font-size:11px;">PERIOD: 7D | 2026-02-21 01:07:43</p>
+    <p style="color:var(--text-tertiary); font-size:11px;">PERIOD: 7D | 2026-02-21 21:33:35</p>
     
     <h2>战略指挥室</h2>
     <div class="dashboard-grid">
@@ -117,8 +122,8 @@
         <div class="bench-row">
             <div class="bench-title">沪深300</div>
             <div class="bench-metrics">
-                <div class="bench-bar-mine" style="width:73.68895707727265%"></div>
-                <span class="bench-alpha positive">+9.1%</span>
+                <div class="bench-bar-mine" style="width:73.89672555250915%"></div>
+                <span class="bench-alpha positive">+9.2%</span>
                 <div class="bench-bar-bm" style="width:50.90500904470667%"></div>
                 <span class="metric-tag tag-bench">+0.4%</span>
             </div>
@@ -126,9 +131,9 @@
         <div class="bench-row">
             <div class="bench-title">纳斯达克100</div>
             <div class="bench-metrics">
-                <div class="bench-bar-mine" style="width:73.68895707727265%"></div>
+                <div class="bench-bar-mine" style="width:73.89672555250915%"></div>
                 <span class="bench-alpha positive">+8.2%</span>
-                <div class="bench-bar-bm" style="width:53.17613308042306%"></div>
+                <div class="bench-bar-bm" style="width:53.29122355154123%"></div>
                 <span class="metric-tag tag-bench">+1.3%</span>
             </div>
         </div>
@@ -140,7 +145,7 @@
         <div class="bench-row">
             <div class="bench-title">沪深300</div>
             <div class="bench-metrics">
-                <div class="bench-bar-mine" style="width:58.28679653118619%"></div>
+                <div class="bench-bar-mine" style="width:58.482872596739135%"></div>
                 <span class="bench-alpha positive">+2.5%</span>
                 <div class="bench-bar-bm" style="width:52.14684692678431%"></div>
                 <span class="metric-tag tag-bench">+0.9%</span>
@@ -149,10 +154,10 @@
         <div class="bench-row">
             <div class="bench-title">纳斯达克100</div>
             <div class="bench-metrics">
-                <div class="bench-bar-mine" style="width:58.28679653118619%"></div>
+                <div class="bench-bar-mine" style="width:58.482872596739135%"></div>
                 <span class="bench-alpha positive">+5.4%</span>
-                <div class="bench-bar-bm" style="width:44.864886124026874%"></div>
-                <span class="metric-tag tag-bench">-2.1%</span>
+                <div class="bench-bar-bm" style="width:44.976198413860125%"></div>
+                <span class="metric-tag tag-bench">-2.0%</span>
             </div>
         </div>
     </div></div>
@@ -162,7 +167,7 @@
     
     <h2>组合底层穿透</h2>
     <div class="card">
-        <div class="chart-container"><canvas id="assetDonut"></canvas></div>
+        <div id="assetDonut" class="chart-container" style="height:300px"></div>
         <script type="text/template" id="xray-source">#### 组合底层穿透 - 重仓标的 TOP 10 (量化增强版)
 
 > 注：穿透权重基于最新披露的基金重仓股数据自动计算；本周涨跌与收益贡献需行情接口支持。
@@ -171,66 +176,67 @@
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | 1 | 实物黄金 (Au9999) | ¥2,831 | 13.2% | +1.9% | +0.25% | 核心重仓 |
 | 2 | 其他债基/混合基金 | ¥2,127 | 9.9% | — | — | 核心重仓 |
-| 3 | 其他优质资产 | ¥1,818 | 8.5% | — | — | 核心重仓 |
-| 4 | 宁德时代 | ¥992 | 4.6% | — | — | 核心重仓 |
-| 5 | 美的集团 | ¥959 | 4.5% | — | — | 核心重仓 |
-| 6 | 芯原股份 | ¥850 | 4.0% | — | — | 核心重仓 |
-| 7 | 三环集团 | ¥748 | 3.5% | — | — | 核心重仓 |
-| 8 | 紫金矿业 | ¥673 | 3.1% | — | — | 核心重仓 |
-| 9 | 中际旭创 | ¥661 | 3.1% | — | — | 核心重仓 |
-| 10 | 招商银行 | ¥531 | 2.5% | — | — | 卫星配置 |
+| 3 | 其他优质资产 | ¥1,131 | 5.3% | — | — | 核心重仓 |
+| 4 | 洛阳钼业 | ¥1,078 | 5.0% | — | — | 核心重仓 |
+| 5 | 宁德时代 | ¥992 | 4.6% | — | — | 核心重仓 |
+| 6 | 美的集团 | ¥959 | 4.5% | — | — | 核心重仓 |
+| 7 | 芯原股份 | ¥850 | 4.0% | — | — | 核心重仓 |
+| 8 | 紫金矿业 | ¥827 | 3.9% | — | — | 核心重仓 |
+| 9 | 三环集团 | ¥748 | 3.5% | — | — | 核心重仓 |
+| 10 | 山东威达 | ¥706 | 3.3% | — | — | 核心重仓 |
 </script>
         <div id="xray-target" class="md-box"></div>
     </div>
     
     <div class="analysis-section md-box">
         <script type="text/template" id="ai-source">## 1. 本周表现审计
-- 本周收益+9.48%，远超沪深300(+0.86%)与纳斯达克100(-2.05%)，Alpha显著。
-- 主要归因于**黄金**板块贡献（+0.25%），是唯一有明确收益贡献的板块。
-- 组合波动率23.29%偏高，但最大回撤仅-1.55%，显示本周进攻性强且回撤控制有效。
+- 本周收益+9.56%，表现极为突出，远超沪深300(+0.86%)与纳斯达克100(-2.01%)，获取显著Alpha。
+- 主要归因于核心重仓资产实物黄金(+1.9%)贡献了+0.25%的收益，是本周组合上涨的主要拉动者。
+- 累计收益(+3.39%)与YTD收益(+3.00%)同步，表明本周是年内收益的主要来源，需审视其可持续性。
 
 ## 2. 资产配置X光
-- **行业分布失衡**：组合严重超配周期品（有色+黄金合计33.6%），显著低配消费（低配11pp）及其他板块。
-- **收益来源单一**：本周收益几乎全部由实物黄金贡献，其他重仓股（如宁德、美的、芯原等）本周无贡献，组合依赖单一资产驱动。
-- **风格漂移显著**：相对于基准，组合已从均衡配置大幅偏向大宗商品周期风格，风险集中。
+- 行业分布严重偏向防御与周期：固收+高股息占37%，黄金+有色占38%，科技成长（AI算力+半导体+软件）仅占12.2%。
+- 穿透持仓显示，前十大重仓均为个股或实物资产，但权重分散（最高13.2%），无单一标的过度集中风险。
+- 风格漂移显著：严重超配黄金(+18pp)和有色(+15pp)，严重低配消费(-15pp)和其他(-12pp)，组合风格与主流基准差异巨大。
+- 本周仅黄金贡献正收益，其他主要板块（有色、高股息、AI算力）收益贡献为0，组合上涨动力单一。
 
 ## 3. 宏观因子敏感度
-- **对大宗商品高度敏感**：有色/黄金占比34%，组合表现与商品价格（尤其是金价）高度正相关。
-- **对利率敏感**：高股息/固收占比33%，若利率上行，此部分资产可能面临估值压力。
-- **核心结论**：组合宏观风险敞口高度集中于“商品价格”与“利率”两个因子，同向波动风险大。
+- **利率敏感度高**：高股息/固收占比37%，若利率上行，这部分资产价格可能承压。
+- **大宗商品敏感度高**：有色/黄金占比38%，组合表现与铜、金等商品价格高度正相关，通胀交易属性强。
+- 组合整体对经济增长（β）敏感度低，对宏观政策（利率）和通胀（商品）敏感度高，属于特定宏观情景下的配置。
 
 ## 4. 核心风险指标审计
-- **波动率（23.29%）**：处于高位，远超普通稳健型组合，显示持仓风格激进。
-- **最大回撤（-1.55%）**：当前控制良好，但高波动率环境下，未来回撤扩大的潜在风险高。
-- **是否在舒适区**：若您的风险承受能力高，可接受；若追求稳健，当前波动率已超出舒适区。
+- 组合波动率高达23.29%，远高于典型平衡型组合（通常<15%），显示高风险特征。
+- 最大回撤仅-1.55%，与高波动率形成反差，可能因近期单边上涨行情所致，该回撤数据参考性有限。
+- 风险指标（高波动、低近期回撤）表明组合处于高弹性的进攻状态，但需警惕波动率向回撤的转化。
 
 ## 5. 行业/板块热力图
-- **市场热点**：根据本周表现，**黄金**是唯一有显著正收益的板块，为当前市场避险或上涨主线。
-- **市场冷点**：消费、科技（AI算力、软件）、高股息等板块本周无贡献，相对低迷。
-- **持仓匹配度**：组合完美匹配了当前最热的黄金板块，但完全错过了其他板块的潜在轮动机会，配置极端。
+- **热门板块**：黄金、有色等资源品是当前市场热点，与全球再通胀及避险情绪相关，您的组合在此严重超配。
+- **冷门板块**：消费、医药及部分科技软件板块相对低迷，您的组合在此严重低配。
+- **匹配度**：持仓与当前市场热点高度匹配，这解释了本周的超额收益。但“追热点”风格显著，需警惕风格反转风险。
 
 ## 6. 潜在机会提示
-- **关注消费板块**：组合已严重低配（-11pp），若后续有稳增长政策或消费数据回暖，存在补涨与均衡配置机会。
-- **关注科技（半导体/AI）调整后的机会**：作为长期成长主线，近期调整后估值压力有所释放，可小仓位布局以分散当前过重的周期风险。
+- **半导体设备/材料**：在AI算力需求与国产替代长期逻辑下，半导体板块内部，设备与材料环节景气度确定性更高，可寻找相关细分领域ETF或基金进行补充。
+- **医药生物（创新药）**：板块经历长期调整，估值处于历史低位，且与当前组合相关性低，可作为潜在的风格对冲与长期布局方向，关注相关行业指数基金。
 
 ## 7. 潜在风险预警
-- **“灰犀牛”风险：商品价格逆转**。组合三分之一仓位押注有色与黄金，一旦美元走强或通胀预期降温导致商品价格回调，组合将面临显著回撤。
-- **流动性风险**：部分穿透持仓（如“其他债基/混合基金”、“其他优质资产”）透明度低，底层资产不明，在极端市场下可能放大波动。
-- **风格极端化风险**：过度偏离基准，若市场风格从周期转向成长或消费，组合将大幅跑输。
+- **宏观反转风险**：组合盈利高度依赖“通胀+避险”逻辑。若美国通胀数据放缓、降息预期推迟或地缘风险缓和，可能导致黄金、有色板块快速回调。
+- **利率上行风险**：组合中37%的高股息与固收资产对利率敏感，若国内经济预期转好推动利率上行，将侵蚀这部分资产价值。
+- **风格极端化风险**：对黄金、有色的超配和对消费、科技的极端低配，使组合暴露于巨大的风格轮动风险中，一旦市场热点切换，可能面临大幅回撤。
 
 ## 8. 持仓优化建议
-- **减仓**：**黄金与有色相关标的**。鉴于已超配且本周涨幅较大，可部分获利了结，降低组合对单一因子的过度暴露。
-- **持有/观察**：**高股息与固收部分**，作为组合稳定器，在利率方向明朗前可持有。
-- **加仓/布局**：**低配的消费板块**或**调整后的科技龙头**，以逐步实现风格再平衡。
+- **减仓**：考虑部分止盈**实物黄金**，其超配幅度最大（+18pp），且本周已贡献主要收益，锁定利润以降低组合的单一宏观风险敞口。
+- **调仓**：将部分黄金或有色仓位，向当前严重低配且估值合理的**消费**或**医药**板块偏移，以平衡风格，降低组合波动。
+- **持有**：**高股息/固收**部分作为组合稳定器暂可持有，但需密切关注利率政策动向。
 
 ## 9. 下周行动计划
-- 执行**再平衡**：将黄金/有色部分仓位获利了结，使合计权重下降至25%以内。
-- **研究并试探性买入**一只消费行业ETF或基金，初始仓位控制在5%左右。
-- **复盘**“其他债基/混合基金”等不透明资产的底层持仓，评估其真实风险。
+- 执行对**实物黄金**的减仓操作，降低其仓位3-5个百分点，将部分利润落袋。
+- 研究并选定1只**消费**或**医药**行业指数基金，作为潜在买入标的，做好调仓准备。
+- 重点关注美国PCE通胀数据及国内PMI数据，评估其对“通胀交易”逻辑的潜在冲击。
 
 ## 10. 分析师信心指数
 - **信心指数：6**
-- **解读**：组合本周表现强劲，但极端配置在快速变化的市场中可持续性存疑，需主动管理以应对潜在风格切换，故信心中性偏谨慎。
+- 解读：组合与当前市场风口高度契合，短期动能仍在，但极端配置已将风险推高，对宏观数据的敏感度达到临界点，下周需高度警惕波动放大。
 
 ## 11. CIO 总结陈词
 
@@ -238,24 +244,72 @@
 
 - 抱团警示：底层个股 实物黄金 (Au9999) 的穿透总暴露已达组合的 13.2%，分散投资效果正在失效。
 - 超额收益审计：黄金 虽然贡献了盈利（+0.25%），但仍跑输行业基准约 1.8%，需重点观察该板块下基金 创金合信中证红利低波指数C 的调仓动向。
-- 行动触发点：当前 固收 暴露为 18%，尚未触及预警线；若下周 大宗商品价格 出现剧烈波动，建议关注组合回撤。</script>
+- 行动触发点：当前 固收 暴露为 18%，尚未触及预警线；若下周 大宗商品价格 出现剧烈波动，建议关注组合回撤。
+
+## 12. 实战建议与压力测试
+
+## 实战建议与压力测试
+
+**1. 现状诊断：你只是在“假装投资”**
+- 你的“躺平”和“模拟策略”数据完全一致，总收益+0.19%，最大回撤0.10%。这意味着你的策略本质上就是躺平，没产生任何超额价值。
+- **极端生存考验**：你经历的最大波动，仅相当于浮亏约22元。这连一顿像样的外卖钱都算不上，说明你的组合要么近乎全现金，要么配置极度保守，**根本没有暴露在市场风险中**。
+- **赚钱的性价比**：夏普比率为0，年化波动为0。直白说，你承担了近乎零的风险，也获得了近乎零的收益（0.19%更多是运气或分红），性价比为零。这不是投资，这是“资金存放”。
+
+**2. 调仓建议：立刻停止自我安慰**
+- 当前“躺平”与“模拟策略”无差异，但“躺平尚可”是假象。你的组合对市场波动几乎无感，在通胀面前实际购买力在持续缩水。
+- **核心换仓理由**：你必须首先明确自己的风险承受能力，然后将部分现金置换为能真正捕捉经济增长的资产（如宽基指数ETF、债券基金等），构建一个**有实际波动和收益潜力的组合**。当前2.21万的市值，是进行资产配置学习和实战的绝佳起点，而非终点。
+
+**3. 压力测试警示：你的“防弹衣”可能还没上战场**
+- 由于你的组合目前近乎零风险，在2008、2015、2022等历史极端年份**均无有效测试数据**。这本身就是最大的风险——你完全不知道自己组合在真实风暴中的表现。
+- **必须提出的警示**：基于你当前近乎空仓的状态，如果遇到2015年那样的杠杆牛市崩盘，你的潜在浮亏理论上也接近¥0。但这绝非好事，它只证明你**完全错过了市场机会**。真正的问题是：当市场反弹时，你仍将置身事外。你需要问自己：**“我构建这个组合，到底是为了避免一切亏损，还是为了在承担合理风险后获取长期回报？”**</script>
         <div id="ai-target"></div>
     </div>
 </div>
 
+<!-- 即时互动：悬浮 Chatbot -->
+<div id="chat-root" class="fixed bottom-6 right-6 z-[9999] flex flex-col items-end gap-2">
+    <div id="chat-panel" class="hidden w-[360px] max-w-[calc(100vw-32px)] rounded-xl border border-gray-600 bg-[var(--bg-secondary)] shadow-xl overflow-hidden" style="height:420px; max-height:70vh;">
+        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-600 bg-[var(--bg-tertiary)]">
+            <span class="font-semibold text-[var(--text)]">针对报告提问</span>
+            <button id="chat-close" class="text-gray-400 hover:text-white">✕</button>
+        </div>
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-3 text-sm" style="min-height:200px;"></div>
+        <div class="p-3 border-t border-gray-600">
+            <textarea id="chat-input" rows="2" class="w-full rounded-lg border border-gray-600 bg-[var(--bg-tertiary)] text-[var(--text)] p-3 resize-none focus:ring-2 focus:ring-[var(--accent-primary)]" placeholder="输入问题，如：为什么本周回撤较大？"></textarea>
+            <button id="chat-send" class="mt-2 w-full py-2 rounded-lg bg-[var(--accent-primary)] text-white font-medium hover:opacity-90">发送</button>
+        </div>
+    </div>
+    <button id="chat-toggle" class="flex items-center justify-center w-14 h-14 rounded-full bg-[var(--accent-primary)] text-white shadow-lg hover:opacity-90" title="针对报告提问">💬</button>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // 1. 渲染圆环图
-    const ctx = document.getElementById('assetDonut').getContext('2d');
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: { labels: ['Resource', 'Pension', 'Dividend', 'Tech'], datasets: [{ data: [7157.896368, 5999.896484, 5226.6106, 3008.008662], backgroundColor: ['#00c853', '#5ba3f5', '#4a90e2', '#ffa726'], borderWidth: 0, hoverOffset: 15 }] },
-        options: { plugins: { legend: { position: 'bottom', labels: { color: '#e8e8e8', font: { size: 12 } } } }, cutout: '70%', responsive: true, maintainAspectRatio: false }
-    });
+    window.REPORT_CONTEXT = {"current_mv": 22118.28854, "total_return": 3.393149038695653, "weekly_return": 9.558690221003662, "hold_metrics": {"total_return_pct": 0.19, "max_drawdown_pct": 0.1, "sharpe_ratio": 0.0, "volatility_pct": 0.0, "label": "躺平（当前持仓不动）"}, "stress_test_results": {"2008": {"return_pct": null, "max_drawdown_pct": null, "note": "无该年数据"}, "2015": {"return_pct": null, "max_drawdown_pct": null, "note": "无该年数据"}, "2022": {"return_pct": null, "max_drawdown_pct": null, "note": "无该年数据"}}, "strategy_metrics": {"total_return_pct": 0.19, "max_drawdown_pct": 0.1, "sharpe_ratio": 0.0, "volatility_pct": 0.0, "label": "模拟策略（当前与躺平一致）"}, "sectors": [{"label": "Resource", "value": 7157.896368, "color": "#00c853"}, {"label": "Pension", "value": 5999.896484, "color": "#5ba3f5"}, {"label": "Dividend", "value": 5226.6106, "color": "#4a90e2"}, {"label": "Tech", "value": 3008.008662, "color": "#ffa726"}]};
+</script>
+<script>
+    // 1. Plotly 交互式圆环图（悬停、缩放、下载）
+    const pieData = [{
+        labels: ['Resource', 'Pension', 'Dividend', 'Tech'],
+        values: [7157.896368, 5999.896484, 5226.6106, 3008.008662],
+        type: 'pie',
+        hole: 0.7,
+        marker: { colors: ['#00c853', '#5ba3f5', '#4a90e2', '#ffa726'] },
+        textinfo: 'label+percent',
+        hovertemplate: '%{label}: %{value:.1f}%<extra></extra>'
+    }];
+    const pieLayout = {
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        font: { color: '#e8e8e8', size: 12 },
+        showlegend: true,
+        legend: { orientation: 'h', y: -0.15, font: { color: '#e8e8e8' } },
+        margin: { t: 20, b: 60, l: 20, r: 20 },
+        height: 300
+    };
+    Plotly.newPlot('assetDonut', pieData, pieLayout, { responsive: true, displayModeBar: true, modeBarButtonsToRemove: ['lasso2d', 'select2d'] });
 
     // 1. 词典配置（core + pending，来自 glossary_manager）
-    const GLOSSARY = {"ETF": "ETF是打包一篮子资产的交易所交易基金，像一盒精选巧克力让你一次尝遍多种口味。", "FOF": "FOF是投资于其他基金的基金，帮你一键买入一篮子基金组合。它就像基金世界的专业买手，替你精选并搭配多个基金构建投资菜单。", "战术调仓": "战术调仓是投资者根据短期市场预测调整持仓以增强回报或控制风险的行为，这就像船长根据实时风浪微调航向，而非固守原定航线。", "Alpha": "Alpha是投资组合超越基准回报的超额收益。它好比赛车中车手凭借技术而非快车取得的额外优势。", "CIO": "首席投资官是公司投资决策的最终负责人，如同船长在金融市场中为投资组合掌舵导航。", "GPU": "GPU是驱动人工智能和复杂图形任务的核心处理器。它就像金融市场的做市商，同时处理海量交易指令，确保高效执行。", "TOP": "TOP是追踪台湾股市表现的基准指数，如同美股投资者观察标普500来把握市场脉搏。", "压舱石": "压舱石是投资组合中用于抵御市场波动的稳健资产，它如同远洋货轮的压舱石，在风浪中维持船身稳定。", "因子敏感度": "因子敏感度衡量投资组合对特定风险因子的暴露程度，就像体检报告显示你对不同过敏原的反应强度。", "夏普": "夏普比率衡量每承担一单位风险所获得的超额回报。就像衡量一辆车的燃油效率，它告诉你每消耗一升油能跑多远。", "抱团": "抱团是投资者集中买入少数热门资产导致其价格脱离基本面的群体行为；这就像粉丝抢购演唱会门票，无关歌手实力而纯粹因为害怕错过。", "资产配置": "资产配置是决定投资组合中各类资产比例的过程，如同规划一场晚宴的菜单，你需要平衡营养、口味与风险，确保无论主菜是否合胃口，沙拉和甜点都能稳定整体体验。", "超额收益": "超额收益是投资组合回报超过基准回报的部分，如同赛车手在标准圈速上额外争取到的领先优势。", "AI": "AI是让机器模拟人类智能的技术，它像一位不知疲倦的分析师，能瞬间处理海量数据并给出洞察。", "灰犀牛": "灰犀牛指那些概率极高、冲击巨大的潜在危机，它就像远处尘土飞扬中一头缓缓冲来的犀牛，人们往往因它行动看似缓慢而忽视，直到被撞倒才后悔莫及。", "风格漂移": "风格漂移是基金经理偏离其宣称的投资策略，就像承诺只做川菜的厨师开始偷偷加入法餐元素。", "US10Y": "美债10Y收益率。全球资产定价之锚，反映市场对长期通胀与无风险利率的预期。", "DXY": "美元指数。衡量美元对一篮子货币的强度，其走强通常对新兴市场流动性构成压力。", "VIX": "波动率指数（恐慌指数）。衡量标普500期权蕴含的隐含波动率，数值高企反映避险情绪浓厚。", "YTD": "今年以来（Year to Date）。从年初至今的累计收益或指标，用于跨周期比较。", "回撤": "最大回撤（MDD）。资产净值从历史高点回落的百分比，是评估风险控制能力的关键指标。", "历史回撤": "净值从历史高点回落的百分比，衡量最大亏损幅度。", "累计收益率": "从期初至今的复合收益百分比，反映长期投资表现。", "阿尔法": "超额收益（Alpha）。独立于市场波动之外的获利能力，体现主动管理的选股溢价。", "贝塔": "系统性收益（Beta）。与大盘波动相关的收益部分，反映组合对市场整体风险的暴露程度。", "波动率": "收益率离散程度。量化资产价格波动的剧烈程度，是现代投资组合风险定价的核心。", "再平衡": "资产权重纠偏。通过减持超配资产、增持低配资产，强制使组合回归目标风险水平。", "基准": "业绩比较基准（Benchmark）。客观评价组合获利能力是否达标的参照系。", "夏普比率": "风险调整后的收益效率，高夏普即收益拿得相对安稳。", "最大回撤": "特定时间内从巅峰到谷底的最惨跌幅，定义痛苦阈值与风险底线。", "区间收益率": "选定区间内，扣除增投/赎回后的投资回报率。", "年化收益率": "将区间收益率按年化折算，便于跨周期比较。", "胜率": "盈利交易日占比，如 60% 表示 10 天中有 6 天赚钱。", "盈亏比": "平均盈利日收益 ÷ 平均亏损日收益，衡量盈亏不对称性。", "真实收益": "(期末市值 - 期初市值) - 净流入，排除增投/赎回后的纯投资回报。", "净流入": "期间买入总额 - 卖出总额，正数表示净投入资金。", "行业热度": "根据市场资金流向与行业轮动，量化各行业当前热度，用于辅助择时与行业配置。", "综合分": "综合评分，结合行业热度、历史表现等维度的量化得分，用于排序筛选。"};
+    const GLOSSARY = {"ETF": "ETF是打包一篮子资产的交易所交易基金，像一盒精选巧克力让你一次尝遍多种口味。", "FOF": "FOF是投资于其他基金的基金，帮你一键买入一篮子基金组合。它就像基金世界的专业买手，替你精选并搭配多个基金构建投资菜单。", "战术调仓": "战术调仓是投资者根据短期市场预测调整持仓以增强回报或控制风险的行为，这就像船长根据实时风浪微调航向，而非固守原定航线。", "Alpha": "Alpha是投资组合超越基准回报的超额收益。它好比赛车中车手凭借技术而非快车取得的额外优势。", "CIO": "首席投资官是公司投资决策的最终负责人，如同船长在金融市场中为投资组合掌舵导航。", "GPU": "GPU是驱动人工智能和复杂图形任务的核心处理器。它就像金融市场的做市商，同时处理海量交易指令，确保高效执行。", "TOP": "TOP是追踪台湾股市表现的基准指数，如同美股投资者观察标普500来把握市场脉搏。", "压舱石": "压舱石是投资组合中用于抵御市场波动的稳健资产，它如同远洋货轮的压舱石，在风浪中维持船身稳定。", "因子敏感度": "因子敏感度衡量投资组合对特定风险因子的暴露程度，就像体检报告显示你对不同过敏原的反应强度。", "夏普": "夏普比率衡量每承担一单位风险所获得的超额回报。就像衡量一辆车的燃油效率，它告诉你每消耗一升油能跑多远。", "抱团": "抱团是投资者集中买入少数热门资产导致其价格脱离基本面的群体行为；这就像粉丝抢购演唱会门票，无关歌手实力而纯粹因为害怕错过。", "资产配置": "资产配置是决定投资组合中各类资产比例的过程，如同规划一场晚宴的菜单，你需要平衡营养、口味与风险，确保无论主菜是否合胃口，沙拉和甜点都能稳定整体体验。", "超额收益": "超额收益是投资组合回报超过基准回报的部分，如同赛车手在标准圈速上额外争取到的领先优势。", "AI": "AI是让机器模拟人类智能的技术，它像一位不知疲倦的分析师，能瞬间处理海量数据并给出洞察。", "灰犀牛": "灰犀牛指那些概率极高、冲击巨大的潜在危机，它就像远处尘土飞扬中一头缓缓冲来的犀牛，人们往往因它行动看似缓慢而忽视，直到被撞倒才后悔莫及。", "风格漂移": "风格漂移是基金经理偏离其宣称的投资策略，就像承诺只做川菜的厨师开始偷偷加入法餐元素。", "止盈": "止盈是设定一个目标价位并在达到时卖出以锁定利润的交易策略；这就像在派对高潮时离场，确保你带着美好回忆而非一片狼藉回家。", "US10Y": "美债10Y收益率。全球资产定价之锚，反映市场对长期通胀与无风险利率的预期。", "DXY": "美元指数。衡量美元对一篮子货币的强度，其走强通常对新兴市场流动性构成压力。", "VIX": "波动率指数（恐慌指数）。衡量标普500期权蕴含的隐含波动率，数值高企反映避险情绪浓厚。", "YTD": "今年以来（Year to Date）。从年初至今的累计收益或指标，用于跨周期比较。", "回撤": "最大回撤（MDD）。资产净值从历史高点回落的百分比，是评估风险控制能力的关键指标。", "历史回撤": "净值从历史高点回落的百分比，衡量最大亏损幅度。", "累计收益率": "从期初至今的复合收益百分比，反映长期投资表现。", "阿尔法": "超额收益（Alpha）。独立于市场波动之外的获利能力，体现主动管理的选股溢价。", "贝塔": "系统性收益（Beta）。与大盘波动相关的收益部分，反映组合对市场整体风险的暴露程度。", "波动率": "收益率离散程度。量化资产价格波动的剧烈程度，是现代投资组合风险定价的核心。", "再平衡": "资产权重纠偏。通过减持超配资产、增持低配资产，强制使组合回归目标风险水平。", "基准": "业绩比较基准（Benchmark）。客观评价组合获利能力是否达标的参照系。", "夏普比率": "风险调整后的收益效率，高夏普即收益拿得相对安稳。", "最大回撤": "特定时间内从巅峰到谷底的最惨跌幅，定义痛苦阈值与风险底线。", "区间收益率": "选定区间内，扣除增投/赎回后的投资回报率。", "年化收益率": "将区间收益率按年化折算，便于跨周期比较。", "胜率": "盈利交易日占比，如 60% 表示 10 天中有 6 天赚钱。", "盈亏比": "平均盈利日收益 ÷ 平均亏损日收益，衡量盈亏不对称性。", "真实收益": "(期末市值 - 期初市值) - 净流入，排除增投/赎回后的纯投资回报。", "净流入": "期间买入总额 - 卖出总额，正数表示净投入资金。", "行业热度": "根据市场资金流向与行业轮动，量化各行业当前热度，用于辅助择时与行业配置。", "综合分": "综合评分，结合行业热度、历史表现等维度的量化得分，用于排序筛选。"};
 
     // 2. 词典渲染引擎 (防止标签嵌套)
     const sortedTerms = Object.keys(GLOSSARY).sort((a, b) => b.length - a.length);
@@ -298,9 +352,86 @@
     renderWithGlossary('xray-source', 'xray-target');
     renderWithGlossary('ai-source', 'ai-target');
 
+    // 即时互动：为关键结论添加 data-context 与「针对此结论提问」图标
+    (function injectAskIcons() {
+        const target = document.getElementById('ai-target');
+        if (!target || !window.REPORT_CONTEXT) return;
+        const sections = [
+            { key: '盈亏真相', title: '盈亏真相', contextKey: 'weekly_return' },
+            { key: '压力测试', title: '实战建议与压力测试', contextKey: 'stress_test_results' },
+            { key: 'CIO 总结', title: 'CIO 总结陈词', contextKey: 'hold_metrics' },
+            { key: '实战建议', title: '实战建议与压力测试', contextKey: 'stress_test_results' }
+        ];
+        target.querySelectorAll('h2').forEach(h2 => {
+            const text = (h2.textContent || '').trim();
+            for (const s of sections) {
+                if (text.indexOf(s.key) !== -1) {
+                    const ctx = { section: s.title, ...window.REPORT_CONTEXT };
+                    h2.setAttribute('data-context', JSON.stringify(ctx));
+                    const icon = document.createElement('span');
+                    icon.className = 'ask-conclusion';
+                    icon.title = '针对此结论提问';
+                    icon.textContent = '💬';
+                    icon.onclick = () => {
+                        document.getElementById('chat-panel').classList.remove('hidden');
+                        document.getElementById('chat-input').placeholder = '关于【' + s.title + '】，我的问题是…';
+                        document.getElementById('chat-input').focus();
+                    };
+                    h2.appendChild(icon);
+                    break;
+                }
+            }
+        });
+    })();
+
+    // 即时互动：Chat 面板与 /chat 请求
+    (function initChat() {
+        const panel = document.getElementById('chat-panel');
+        const toggle = document.getElementById('chat-toggle');
+        const closeBtn = document.getElementById('chat-close');
+        const input = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('chat-send');
+        const messages = document.getElementById('chat-messages');
+        const API_BASE = 'http://localhost:8000';
+        toggle.addEventListener('click', () => panel.classList.toggle('hidden'));
+        closeBtn.addEventListener('click', () => panel.classList.add('hidden'));
+        function appendMsg(role, text) {
+            const div = document.createElement('div');
+            div.className = role === 'user' ? 'text-right' : 'text-left';
+            const bubble = document.createElement('div');
+            bubble.className = 'inline-block max-w-[85%] rounded-lg px-3 py-2 ' + (role === 'user' ? 'bg-[var(--accent-primary)] text-white' : 'bg-[var(--bg-tertiary)] text-[var(--text)]');
+            bubble.textContent = text;
+            div.appendChild(bubble);
+            messages.appendChild(div);
+            messages.scrollTop = messages.scrollHeight;
+        }
+        sendBtn.addEventListener('click', async () => {
+            const q = (input.value || '').trim();
+            if (!q) return;
+            input.value = '';
+            appendMsg('user', q);
+            messages.appendChild(Object.assign(document.createElement('div'), { className: 'text-gray-400 text-sm', textContent: '思考中…' }));
+            try {
+                const res = await fetch(API_BASE + '/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question: q, context_data: window.REPORT_CONTEXT || { } })
+                });
+                const last = messages.lastElementChild;
+                if (last && last.textContent === '思考中…') last.remove();
+                const data = await res.json();
+                appendMsg('assistant', data.answer || '无回复');
+            } catch (e) {
+                if (messages.lastElementChild && messages.lastElementChild.textContent === '思考中…') messages.lastElementChild.remove();
+                appendMsg('assistant', '请求失败：' + (e.message || '请确认已运行 python main.py 或 uvicorn api_service:app --port 8000'));
+            }
+        });
+        input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendBtn.click(); } });
+    })();
+
     // 5. 登录与数据脱敏
-    const privateData = {"current_mv": "¥22,101.51", "total_return": "+3.31%", "weekly_return": "+9.48%", "ytd_pnl_value": "¥+589", "ytd_pnl_rate": "+2.92%", "goal_target": "¥50,000", "goal_current": "¥25,000"};
-    const publicData = {"current_mv": "已隐藏", "total_return": "+3.31%", "weekly_return": "+9.48%", "ytd_pnl_value": "已隐藏", "ytd_pnl_rate": "+2.92%", "goal_target": "已隐藏", "goal_current": "已隐藏"};
+    const privateData = {"current_mv": "¥22,118.29", "total_return": "+3.39%", "weekly_return": "+9.56%", "ytd_pnl_value": "¥+606", "ytd_pnl_rate": "+3.00%", "goal_target": "¥50,000", "goal_current": "¥25,000"};
+    const publicData = {"current_mv": "已隐藏", "total_return": "+3.39%", "weekly_return": "+9.56%", "ytd_pnl_value": "已隐藏", "ytd_pnl_rate": "+3.00%", "goal_target": "已隐藏", "goal_current": "已隐藏"};
     const PASSWORD_HASH = "608f4a69d48963560e8c0fcb2f6da1a51e87b117dcf1b3054038f7cbd8660def";
 
     async function sha256(message) {
