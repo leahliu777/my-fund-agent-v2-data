@@ -175,7 +175,22 @@
             </table>
         </section>
 
-        <!-- 3. 基金术语字典 · 卡片矩阵 -->
+        <!-- 2.5 动态术语词典（来自 core_glossary + pending_glossary，周报/日报扫描自动更新） -->
+        <section class="card" id="dynamicGlossarySection">
+            <h2>动态术语词典 (Glossary)</h2>
+            <p class="heat-desc">核心词典优先，周报/日报中出现的未收录术语由 AI 自动生成解释并存入待审核列表。数据来自 <code>glossary.json</code>，由 fund_analyst / enhanced_agent 在生成报告时更新。</p>
+            <div id="glossaryLoading" class="heat-loading">加载中…</div>
+            <div id="glossaryContent" style="display:none;">
+                <h3 class="dict-section-title">核心词典 (Core)</h3>
+                <div id="glossaryCore" class="dict-grid"></div>
+                <h3 class="dict-section-title">新增出现的术语 (AI 生成，待审核)</h3>
+                <div id="glossaryPending" class="dict-grid"></div>
+                <p id="glossaryUpdated" style="font-size:11px;color:var(--text-muted);margin-top:12px;"></p>
+            </div>
+            <div id="glossaryError" class="heat-error" style="display:none;"></div>
+        </section>
+
+        <!-- 3. 基金术语字典 · 卡片矩阵（静态分类） -->
         <section class="card">
             <h2>基金术语字典 (Fund Dictionary)</h2>
 
@@ -260,6 +275,44 @@
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <script>
         (function () {
+            var loading = document.getElementById('glossaryLoading');
+            var content = document.getElementById('glossaryContent');
+            var errorEl = document.getElementById('glossaryError');
+            var coreEl = document.getElementById('glossaryCore');
+            var pendingEl = document.getElementById('glossaryPending');
+            var updatedEl = document.getElementById('glossaryUpdated');
+            if (!loading || !content) return;
+            fetch('glossary.json')
+                .then(function (r) {
+                    if (!r.ok) return Promise.reject('HTTP ' + r.status);
+                    return r.json();
+                })
+                .then(function (data) {
+                    loading.style.display = 'none';
+                    content.style.display = 'block';
+                    var core = data.core || {};
+                    var pending = data.pending || {};
+                    function renderTerms(terms, container) {
+                        if (!container) return;
+                        container.innerHTML = Object.keys(terms).length === 0
+                            ? '<p style="color:var(--text-muted);font-size:13px;">暂无</p>'
+                            : Object.entries(terms).map(function (e) {
+                                return '<div class="term-card"><div class="term-badge">' + e[0] + '</div><p class="term-desc">' + e[1] + '</p></div>';
+                            }).join('');
+                    }
+                    renderTerms(core, coreEl);
+                    renderTerms(pending, pendingEl);
+                    if (data.updated_at) updatedEl.textContent = '更新时间: ' + data.updated_at;
+                })
+                .catch(function (err) {
+                    loading.style.display = 'none';
+                    errorEl.style.display = 'block';
+                    errorEl.textContent = 'glossary.json 暂未生成，运行 fund_analyst.py 或 enhanced_agent.py 后将自动创建。';
+                });
+        })();
+    </script>
+    <script>
+        (function () {
             var heatSection = document.getElementById('industryHeatSection');
             if (!heatSection) return;
             var loading = document.getElementById('industryHeatLoading');
@@ -287,10 +340,21 @@
                         '<span style="color:var(--text-muted);font-size:11px;margin-left:8px;">冷→热</span>' +
                         (updated ? '<span style="color:var(--text-muted);font-size:11px;"> · ' + updated + '</span>' : '');
                     var items = data.items || [];
+                    var displayItems = items.slice(0, 80);
+                    var heatMin = displayItems.length ? Math.min.apply(null, displayItems.map(function (x) { return x.heat_score || 0; })) : 0;
+                    var heatMax = displayItems.length ? Math.max.apply(null, displayItems.map(function (x) { return x.heat_score || 100; })) : 100;
+                    if (heatMax <= heatMin) heatMax = heatMin + 1;
                     var treemapData = [{
                         name: '行业热度',
-                        children: items.slice(0, 60).map(function (x) {
-                            return { name: x.name || '', value: Math.max(1, (x.heat_score || 50)) };
+                        children: displayItems.map(function (x) {
+                            var score = Math.max(0, Math.min(100, x.heat_score || 50));
+                            var pct = x.change_pct != null ? x.change_pct : null;
+                            return {
+                                name: x.name || '',
+                                value: Math.max(1, score),
+                                heat_score: score,
+                                change_pct: pct
+                            };
                         })
                     }];
                     if (typeof echarts !== 'undefined' && treemapEl) {
@@ -311,15 +375,25 @@
                                 data: treemapData,
                                 leafDepth: 1,
                                 roam: false,
-                                label: { show: true, formatter: '{b}', color: '#e8e8e8', fontSize: 12 },
+                                label: {
+                                    show: true,
+                                    formatter: function (params) {
+                                        var score = params.data.heat_score != null ? params.data.heat_score : params.value;
+                                        var pct = params.data.change_pct;
+                                        var pctStr = pct != null ? (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%' : '';
+                                        return (params.name || '') + '\n' + score.toFixed(0) + (pctStr ? ' ' + pctStr : '');
+                                    },
+                                    color: '#e8e8e8',
+                                    fontSize: 11
+                                },
                                 upperLabel: { show: false },
                                 itemStyle: { borderColor: '#1a1a1a', borderWidth: 2, gapWidth: 2 },
                                 levels: [{
                                     itemStyle: { borderWidth: 2, gapWidth: 2, borderColor: '#1a1a1a' },
-                                    color: ['#1a5276', '#2471a3', '#3498db', '#52be80', '#f4d03f', '#e74c3c'],
                                     colorMappingBy: 'value',
-                                    visualMin: 0,
-                                    visualMax: 100
+                                    visualMin: heatMin,
+                                    visualMax: heatMax,
+                                    color: ['#1a5276', '#2471a3', '#3498db', '#52be80', '#f4d03f', '#e74c3c']
                                 }]
                             }]
                         });
