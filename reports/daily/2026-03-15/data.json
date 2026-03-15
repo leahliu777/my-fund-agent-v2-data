@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-03-15 17:02:42",
+  "update_time": "2026-03-15 22:56:58",
   "rate_a": -1.06,
   "rate_b": -0.72,
   "weather": "🌫️ 横盘震荡",
@@ -9,6 +9,6 @@
     "dxy": "100.4"
   },
   "grid_count": 1,
-  "total_pnl": 580.58,
-  "daily_pnl": -225.3
+  "total_pnl": 541.76,
+  "daily_pnl": -224.81
 }
