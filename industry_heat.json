@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-27 09:31:13",
+  "updated_at": "2026-03-27 15:12:06",
   "items": [
     {
       "name": "锂矿概念",
@@ -261,14 +261,14 @@
       "heat_score": 61.1
     },
     {
-      "name": "橡胶助剂",
+      "name": "其他小金属",
       "type": "industry",
       "change_pct": 3.16,
       "volume": null,
       "heat_score": 61.1
     },
     {
-      "name": "其他小金属",
+      "name": "橡胶助剂",
       "type": "industry",
       "change_pct": 3.16,
       "volume": null,
