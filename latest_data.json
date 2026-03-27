@@ -1,14 +1,14 @@
 {
-  "update_time": "2026-03-27 12:16:23",
-  "rate_a": 0.53,
-  "rate_b": 0.6,
+  "update_time": "2026-03-27 14:46:21",
+  "rate_a": 0.76,
+  "rate_b": 0.65,
   "weather": "🌫️ 横盘震荡",
   "macro": {
     "us10y": "4.42%",
-    "vix": "2793.4",
-    "dxy": "99.8"
+    "vix": "2787.6",
+    "dxy": "99.9"
   },
   "grid_count": 1,
-  "total_pnl": -533.81,
-  "daily_pnl": 121.27
+  "total_pnl": -511.36,
+  "daily_pnl": 161.39
 }
