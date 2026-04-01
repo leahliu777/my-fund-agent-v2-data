@@ -1,20 +1,6 @@
 {
-  "updated_at": "2026-04-01 07:02:22",
+  "updated_at": "2026-04-01 09:48:54",
   "items": [
-    {
-      "name": "医疗研发外包",
-      "type": "industry",
-      "change_pct": 7.49,
-      "volume": null,
-      "heat_score": 76.2
-    },
-    {
-      "name": "洗护用品",
-      "type": "industry",
-      "change_pct": 7.36,
-      "volume": null,
-      "heat_score": 75.8
-    },
     {
       "name": "重组蛋白",
       "type": "concept",
@@ -198,6 +184,20 @@
       "heat_score": 64.6
     },
     {
+      "name": "医疗研发外包",
+      "type": "industry",
+      "change_pct": 7.49,
+      "volume": null,
+      "heat_score": 64.5
+    },
+    {
+      "name": "洗护用品",
+      "type": "industry",
+      "change_pct": 7.36,
+      "volume": null,
+      "heat_score": 64.5
+    },
+    {
       "name": "印制电路板",
       "type": "industry",
       "change_pct": 4.15,
@@ -231,6 +231,13 @@
       "change_pct": 3.95,
       "volume": null,
       "heat_score": 63.8
+    },
+    {
+      "name": "医药生物",
+      "type": "industry",
+      "change_pct": 3.87,
+      "volume": null,
+      "heat_score": 63.5
     },
     {
       "name": "病原体防治",
@@ -387,14 +394,14 @@
       "heat_score": 61.7
     },
     {
-      "name": "体外诊断概念",
+      "name": "流感",
       "type": "concept",
       "change_pct": 3.33,
       "volume": null,
       "heat_score": 61.7
     },
     {
-      "name": "流感",
+      "name": "体外诊断概念",
       "type": "concept",
       "change_pct": 3.33,
       "volume": null,
@@ -520,14 +527,14 @@
       "heat_score": 60.4
     },
     {
-      "name": "空间计算",
+      "name": "蓝宝石",
       "type": "concept",
       "change_pct": 2.96,
       "volume": null,
       "heat_score": 60.4
     },
     {
-      "name": "蓝宝石",
+      "name": "空间计算",
       "type": "concept",
       "change_pct": 2.96,
       "volume": null,
@@ -553,19 +560,10 @@
       "change_pct": 2.93,
       "volume": null,
       "heat_score": 60.3
-    },
-    {
-      "name": "自动化设备",
-      "type": "industry",
-      "change_pct": 2.92,
-      "volume": null,
-      "heat_score": 60.2
     }
   ],
   "summary": {
     "hot": [
-      "医疗研发外包",
-      "洗护用品",
       "重组蛋白",
       "医美耗材",
       "CRO",
@@ -573,7 +571,9 @@
       "食用菌",
       "综合电力设备商",
       "CAR-T细胞疗法",
-      "化学制剂"
+      "化学制剂",
+      "创新药",
+      "玻纤制造"
     ],
     "cold": [
       "油气开采Ⅲ",
