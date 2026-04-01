@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-01 09:48:54",
+  "updated_at": "2026-04-01 15:56:10",
   "items": [
     {
       "name": "重组蛋白",
@@ -9,39 +9,11 @@
       "heat_score": 74.9
     },
     {
-      "name": "医美耗材",
-      "type": "industry",
-      "change_pct": 6.25,
-      "volume": null,
-      "heat_score": 71.9
-    },
-    {
       "name": "CRO",
       "type": "concept",
       "change_pct": 6.25,
       "volume": null,
       "heat_score": 71.9
-    },
-    {
-      "name": "其他生物制品",
-      "type": "industry",
-      "change_pct": 5.65,
-      "volume": null,
-      "heat_score": 69.8
-    },
-    {
-      "name": "食用菌",
-      "type": "industry",
-      "change_pct": 5.65,
-      "volume": null,
-      "heat_score": 69.8
-    },
-    {
-      "name": "综合电力设备商",
-      "type": "industry",
-      "change_pct": 5.55,
-      "volume": null,
-      "heat_score": 69.4
     },
     {
       "name": "CAR-T细胞疗法",
@@ -51,32 +23,11 @@
       "heat_score": 69.3
     },
     {
-      "name": "化学制剂",
-      "type": "industry",
-      "change_pct": 5.24,
-      "volume": null,
-      "heat_score": 68.3
-    },
-    {
       "name": "创新药",
       "type": "concept",
       "change_pct": 5.24,
       "volume": null,
       "heat_score": 68.3
-    },
-    {
-      "name": "玻纤制造",
-      "type": "industry",
-      "change_pct": 5.04,
-      "volume": null,
-      "heat_score": 67.6
-    },
-    {
-      "name": "医疗服务",
-      "type": "industry",
-      "change_pct": 5.03,
-      "volume": null,
-      "heat_score": 67.6
     },
     {
       "name": "CPO概念",
@@ -86,46 +37,11 @@
       "heat_score": 67.6
     },
     {
-      "name": "集成电路制造",
-      "type": "industry",
-      "change_pct": 4.94,
-      "volume": null,
-      "heat_score": 67.3
-    },
-    {
-      "name": "生物制品",
-      "type": "industry",
-      "change_pct": 4.83,
-      "volume": null,
-      "heat_score": 66.9
-    },
-    {
-      "name": "化学制药",
-      "type": "industry",
-      "change_pct": 4.68,
-      "volume": null,
-      "heat_score": 66.4
-    },
-    {
       "name": "阿兹海默",
       "type": "concept",
       "change_pct": 4.42,
       "volume": null,
       "heat_score": 65.5
-    },
-    {
-      "name": "光伏加工设备",
-      "type": "industry",
-      "change_pct": 4.39,
-      "volume": null,
-      "heat_score": 65.4
-    },
-    {
-      "name": "分立器件",
-      "type": "industry",
-      "change_pct": 4.36,
-      "volume": null,
-      "heat_score": 65.3
     },
     {
       "name": "减肥药",
@@ -135,18 +51,18 @@
       "heat_score": 65.3
     },
     {
-      "name": "宠物食品",
-      "type": "industry",
-      "change_pct": 4.34,
-      "volume": null,
-      "heat_score": 65.2
-    },
-    {
       "name": "免疫治疗",
       "type": "concept",
       "change_pct": 4.35,
       "volume": null,
       "heat_score": 65.2
+    },
+    {
+      "name": "医美耗材",
+      "type": "industry",
+      "change_pct": 6.25,
+      "volume": null,
+      "heat_score": 65.0
     },
     {
       "name": "单抗概念",
@@ -163,25 +79,11 @@
       "heat_score": 64.8
     },
     {
-      "name": "医疗美容",
-      "type": "industry",
-      "change_pct": 4.19,
-      "volume": null,
-      "heat_score": 64.7
-    },
-    {
       "name": "昨日打二板以上表现",
       "type": "concept",
       "change_pct": 4.19,
       "volume": null,
       "heat_score": 64.7
-    },
-    {
-      "name": "酒店",
-      "type": "industry",
-      "change_pct": 4.16,
-      "volume": null,
-      "heat_score": 64.6
     },
     {
       "name": "医疗研发外包",
@@ -198,46 +100,11 @@
       "heat_score": 64.5
     },
     {
-      "name": "印制电路板",
-      "type": "industry",
-      "change_pct": 4.15,
-      "volume": null,
-      "heat_score": 64.5
-    },
-    {
       "name": "痘病毒防治",
       "type": "concept",
       "change_pct": 4.04,
       "volume": null,
       "heat_score": 64.1
-    },
-    {
-      "name": "游戏Ⅲ",
-      "type": "industry",
-      "change_pct": 4.0,
-      "volume": null,
-      "heat_score": 64.0
-    },
-    {
-      "name": "游戏Ⅱ",
-      "type": "industry",
-      "change_pct": 4.0,
-      "volume": null,
-      "heat_score": 64.0
-    },
-    {
-      "name": "其他自动化设备",
-      "type": "industry",
-      "change_pct": 3.95,
-      "volume": null,
-      "heat_score": 63.8
-    },
-    {
-      "name": "医药生物",
-      "type": "industry",
-      "change_pct": 3.87,
-      "volume": null,
-      "heat_score": 63.5
     },
     {
       "name": "病原体防治",
@@ -247,39 +114,11 @@
       "heat_score": 63.5
     },
     {
-      "name": "元件",
-      "type": "industry",
-      "change_pct": 3.8,
-      "volume": null,
-      "heat_score": 63.3
-    },
-    {
       "name": "病毒防治",
       "type": "concept",
       "change_pct": 3.79,
       "volume": null,
       "heat_score": 63.3
-    },
-    {
-      "name": "个护小家电",
-      "type": "industry",
-      "change_pct": 3.69,
-      "volume": null,
-      "heat_score": 62.9
-    },
-    {
-      "name": "疫苗",
-      "type": "industry",
-      "change_pct": 3.67,
-      "volume": null,
-      "heat_score": 62.8
-    },
-    {
-      "name": "个护用品",
-      "type": "industry",
-      "change_pct": 3.65,
-      "volume": null,
-      "heat_score": 62.8
     },
     {
       "name": "百元股",
@@ -310,46 +149,11 @@
       "heat_score": 62.5
     },
     {
-      "name": "激光设备",
-      "type": "industry",
-      "change_pct": 3.55,
-      "volume": null,
-      "heat_score": 62.4
-    },
-    {
-      "name": "航空运输",
-      "type": "industry",
-      "change_pct": 3.51,
-      "volume": null,
-      "heat_score": 62.3
-    },
-    {
-      "name": "诊断服务",
-      "type": "industry",
-      "change_pct": 3.49,
-      "volume": null,
-      "heat_score": 62.2
-    },
-    {
-      "name": "房产租赁经纪",
-      "type": "industry",
-      "change_pct": 3.48,
-      "volume": null,
-      "heat_score": 62.2
-    },
-    {
       "name": "精准诊断",
       "type": "concept",
       "change_pct": 3.5,
       "volume": null,
       "heat_score": 62.2
-    },
-    {
-      "name": "体外诊断",
-      "type": "industry",
-      "change_pct": 3.44,
-      "volume": null,
-      "heat_score": 62.0
     },
     {
       "name": "医疗设备",
@@ -408,6 +212,13 @@
       "heat_score": 61.7
     },
     {
+      "name": "食用菌",
+      "type": "industry",
+      "change_pct": 5.65,
+      "volume": null,
+      "heat_score": 61.6
+    },
+    {
       "name": "基因测序",
       "type": "concept",
       "change_pct": 3.32,
@@ -434,6 +245,13 @@
       "change_pct": 3.27,
       "volume": null,
       "heat_score": 61.4
+    },
+    {
+      "name": "医疗美容",
+      "type": "industry",
+      "change_pct": 4.19,
+      "volume": null,
+      "heat_score": 61.1
     },
     {
       "name": "医疗耗材",
@@ -492,6 +310,13 @@
       "heat_score": 60.7
     },
     {
+      "name": "综合电力设备商",
+      "type": "industry",
+      "change_pct": 5.55,
+      "volume": null,
+      "heat_score": 60.6
+    },
+    {
       "name": "辅助生殖",
       "type": "concept",
       "change_pct": 3.04,
@@ -511,6 +336,13 @@
       "change_pct": 2.99,
       "volume": null,
       "heat_score": 60.5
+    },
+    {
+      "name": "其他生物制品",
+      "type": "industry",
+      "change_pct": 5.65,
+      "volume": null,
+      "heat_score": 60.4
     },
     {
       "name": "集成电路封测",
@@ -560,20 +392,188 @@
       "change_pct": 2.93,
       "volume": null,
       "heat_score": 60.3
+    },
+    {
+      "name": "玻纤制造",
+      "type": "industry",
+      "change_pct": 5.04,
+      "volume": null,
+      "heat_score": 60.2
+    },
+    {
+      "name": "酒店",
+      "type": "industry",
+      "change_pct": 4.16,
+      "volume": null,
+      "heat_score": 60.2
+    },
+    {
+      "name": "自动化设备",
+      "type": "industry",
+      "change_pct": 2.92,
+      "volume": null,
+      "heat_score": 60.2
+    },
+    {
+      "name": "氨纶",
+      "type": "industry",
+      "change_pct": 2.92,
+      "volume": null,
+      "heat_score": 60.2
+    },
+    {
+      "name": "机器视觉",
+      "type": "concept",
+      "change_pct": 2.92,
+      "volume": null,
+      "heat_score": 60.2
+    },
+    {
+      "name": "苹果概念",
+      "type": "concept",
+      "change_pct": 2.91,
+      "volume": null,
+      "heat_score": 60.2
+    },
+    {
+      "name": "基金重仓",
+      "type": "concept",
+      "change_pct": 2.91,
+      "volume": null,
+      "heat_score": 60.2
+    },
+    {
+      "name": "半导体",
+      "type": "industry",
+      "change_pct": 2.89,
+      "volume": null,
+      "heat_score": 60.1
+    },
+    {
+      "name": "玻璃玻纤",
+      "type": "industry",
+      "change_pct": 2.88,
+      "volume": null,
+      "heat_score": 60.1
+    },
+    {
+      "name": "肝素概念",
+      "type": "concept",
+      "change_pct": 2.89,
+      "volume": null,
+      "heat_score": 60.1
+    },
+    {
+      "name": "医疗器械概念",
+      "type": "concept",
+      "change_pct": 2.89,
+      "volume": null,
+      "heat_score": 60.1
+    },
+    {
+      "name": "钼",
+      "type": "industry",
+      "change_pct": 2.85,
+      "volume": null,
+      "heat_score": 60.0
+    },
+    {
+      "name": "高带宽内存",
+      "type": "concept",
+      "change_pct": 2.86,
+      "volume": null,
+      "heat_score": 60.0
+    },
+    {
+      "name": "医美概念",
+      "type": "concept",
+      "change_pct": 2.86,
+      "volume": null,
+      "heat_score": 60.0
+    },
+    {
+      "name": "合成生物",
+      "type": "concept",
+      "change_pct": 2.85,
+      "volume": null,
+      "heat_score": 60.0
+    },
+    {
+      "name": "医疗服务",
+      "type": "industry",
+      "change_pct": 5.03,
+      "volume": null,
+      "heat_score": 59.9
+    },
+    {
+      "name": "航空机场",
+      "type": "industry",
+      "change_pct": 2.84,
+      "volume": null,
+      "heat_score": 59.9
+    },
+    {
+      "name": "半导体材料",
+      "type": "industry",
+      "change_pct": 2.83,
+      "volume": null,
+      "heat_score": 59.9
+    },
+    {
+      "name": "东数西算",
+      "type": "concept",
+      "change_pct": 2.83,
+      "volume": null,
+      "heat_score": 59.9
+    },
+    {
+      "name": "F5G概念",
+      "type": "concept",
+      "change_pct": 2.83,
+      "volume": null,
+      "heat_score": 59.9
+    },
+    {
+      "name": "特色药",
+      "type": "concept",
+      "change_pct": 2.82,
+      "volume": null,
+      "heat_score": 59.9
+    },
+    {
+      "name": "生物疫苗",
+      "type": "concept",
+      "change_pct": 2.8,
+      "volume": null,
+      "heat_score": 59.8
+    },
+    {
+      "name": "激光雷达",
+      "type": "concept",
+      "change_pct": 2.8,
+      "volume": null,
+      "heat_score": 59.8
+    },
+    {
+      "name": "英伟达概念",
+      "type": "concept",
+      "change_pct": 2.79,
+      "volume": null,
+      "heat_score": 59.8
     }
   ],
   "summary": {
     "hot": [
       "重组蛋白",
-      "医美耗材",
       "CRO",
-      "其他生物制品",
-      "食用菌",
-      "综合电力设备商",
       "CAR-T细胞疗法",
-      "化学制剂",
       "创新药",
-      "玻纤制造"
+      "CPO概念",
+      "阿兹海默",
+      "减肥药",
+      "免疫治疗",
+      "医美耗材",
+      "单抗概念"
     ],
     "cold": [
       "油气开采Ⅲ",
