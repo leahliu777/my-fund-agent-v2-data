@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-02 09:38:10",
+  "updated_at": "2026-04-02 15:38:54",
   "items": [
     {
       "name": "昨日连板",
@@ -16,39 +16,11 @@
       "heat_score": 72.0
     },
     {
-      "name": "油气开采Ⅱ",
-      "type": "industry",
-      "change_pct": 4.19,
-      "volume": null,
-      "heat_score": 64.7
-    },
-    {
-      "name": "通信线缆及配套",
-      "type": "industry",
-      "change_pct": 3.56,
-      "volume": null,
-      "heat_score": 62.5
-    },
-    {
-      "name": "动物保健Ⅱ",
-      "type": "industry",
-      "change_pct": 3.17,
-      "volume": null,
-      "heat_score": 61.1
-    },
-    {
       "name": "资源开采概念",
       "type": "concept",
       "change_pct": 3.12,
       "volume": null,
       "heat_score": 60.9
-    },
-    {
-      "name": "石油石化",
-      "type": "industry",
-      "change_pct": 2.99,
-      "volume": null,
-      "heat_score": 60.5
     },
     {
       "name": "油田服务",
@@ -65,13 +37,6 @@
       "heat_score": 59.6
     },
     {
-      "name": "熟食",
-      "type": "industry",
-      "change_pct": 2.72,
-      "volume": null,
-      "heat_score": 59.5
-    },
-    {
       "name": "SPD概念",
       "type": "concept",
       "change_pct": 2.72,
@@ -84,27 +49,6 @@
       "change_pct": 5.47,
       "volume": null,
       "heat_score": 59.3
-    },
-    {
-      "name": "油品石化贸易",
-      "type": "industry",
-      "change_pct": 2.63,
-      "volume": null,
-      "heat_score": 59.2
-    },
-    {
-      "name": "锂",
-      "type": "industry",
-      "change_pct": 2.42,
-      "volume": null,
-      "heat_score": 58.5
-    },
-    {
-      "name": "医药流通",
-      "type": "industry",
-      "change_pct": 2.39,
-      "volume": null,
-      "heat_score": 58.4
     },
     {
       "name": "昨日打二板以上表现",
@@ -135,9 +79,9 @@
       "heat_score": 57.8
     },
     {
-      "name": "医药商业",
+      "name": "油气开采Ⅱ",
       "type": "industry",
-      "change_pct": 2.22,
+      "change_pct": 4.19,
       "volume": null,
       "heat_score": 57.8
     },
@@ -149,18 +93,11 @@
       "heat_score": 57.6
     },
     {
-      "name": "粮食种植",
+      "name": "通信线缆及配套",
       "type": "industry",
-      "change_pct": 2.05,
+      "change_pct": 3.56,
       "volume": null,
-      "heat_score": 57.2
-    },
-    {
-      "name": "其他石化",
-      "type": "industry",
-      "change_pct": 2.04,
-      "volume": null,
-      "heat_score": 57.1
+      "heat_score": 56.8
     },
     {
       "name": "重组蛋白",
@@ -170,27 +107,6 @@
       "heat_score": 56.8
     },
     {
-      "name": "肉鸡养殖",
-      "type": "industry",
-      "change_pct": 1.9,
-      "volume": null,
-      "heat_score": 56.6
-    },
-    {
-      "name": "水产饲料",
-      "type": "industry",
-      "change_pct": 1.82,
-      "volume": null,
-      "heat_score": 56.4
-    },
-    {
-      "name": "线下药店",
-      "type": "industry",
-      "change_pct": 1.7,
-      "volume": null,
-      "heat_score": 56.0
-    },
-    {
       "name": "动物保健Ⅲ",
       "type": "industry",
       "change_pct": 3.17,
@@ -198,16 +114,16 @@
       "heat_score": 55.9
     },
     {
-      "name": "炼化及贸易",
+      "name": "动物保健Ⅱ",
       "type": "industry",
-      "change_pct": 1.67,
+      "change_pct": 3.17,
       "volume": null,
-      "heat_score": 55.8
+      "heat_score": 55.9
     },
     {
-      "name": "其他医疗服务",
+      "name": "石油石化",
       "type": "industry",
-      "change_pct": 1.66,
+      "change_pct": 2.99,
       "volume": null,
       "heat_score": 55.8
     },
@@ -226,44 +142,37 @@
       "heat_score": 55.6
     },
     {
+      "name": "熟食",
+      "type": "industry",
+      "change_pct": 2.72,
+      "volume": null,
+      "heat_score": 55.4
+    },
+    {
+      "name": "油品石化贸易",
+      "type": "industry",
+      "change_pct": 2.63,
+      "volume": null,
+      "heat_score": 54.6
+    },
+    {
+      "name": "航运港口",
+      "type": "industry",
+      "change_pct": 1.1,
+      "volume": null,
+      "heat_score": 54.5
+    },
+    {
       "name": "国有大型银行Ⅲ",
       "type": "industry",
       "change_pct": 1.53,
       "volume": null,
-      "heat_score": 55.4
+      "heat_score": 54.4
     },
     {
       "name": "生猪养殖",
       "type": "industry",
       "change_pct": 1.42,
-      "volume": null,
-      "heat_score": 55.0
-    },
-    {
-      "name": "养殖业",
-      "type": "industry",
-      "change_pct": 1.31,
-      "volume": null,
-      "heat_score": 54.6
-    },
-    {
-      "name": "能源金属",
-      "type": "industry",
-      "change_pct": 1.24,
-      "volume": null,
-      "heat_score": 54.3
-    },
-    {
-      "name": "食用菌",
-      "type": "industry",
-      "change_pct": 1.19,
-      "volume": null,
-      "heat_score": 54.2
-    },
-    {
-      "name": "化学制剂",
-      "type": "industry",
-      "change_pct": 1.17,
       "volume": null,
       "heat_score": 54.1
     },
@@ -275,6 +184,13 @@
       "heat_score": 54.1
     },
     {
+      "name": "医药流通",
+      "type": "industry",
+      "change_pct": 2.39,
+      "volume": null,
+      "heat_score": 54.0
+    },
+    {
       "name": "猪肉概念",
       "type": "concept",
       "change_pct": 1.14,
@@ -282,25 +198,25 @@
       "heat_score": 54.0
     },
     {
-      "name": "航运港口",
+      "name": "肉鸡养殖",
       "type": "industry",
-      "change_pct": 1.1,
+      "change_pct": 1.9,
       "volume": null,
-      "heat_score": 53.9
+      "heat_score": 53.8
     },
     {
-      "name": "其他生物制品",
+      "name": "医药商业",
       "type": "industry",
-      "change_pct": 1.05,
+      "change_pct": 2.22,
       "volume": null,
       "heat_score": 53.7
     },
     {
-      "name": "化学制药",
+      "name": "其他石化",
       "type": "industry",
-      "change_pct": 1.04,
+      "change_pct": 2.04,
       "volume": null,
-      "heat_score": 53.6
+      "heat_score": 53.7
     },
     {
       "name": "昨日涨停",
@@ -308,6 +224,13 @@
       "change_pct": 1.0,
       "volume": null,
       "heat_score": 53.5
+    },
+    {
+      "name": "锂",
+      "type": "industry",
+      "change_pct": 2.42,
+      "volume": null,
+      "heat_score": 53.4
     },
     {
       "name": "昨日涨停_含一字",
@@ -324,25 +247,25 @@
       "heat_score": 53.3
     },
     {
-      "name": "燃气Ⅲ",
+      "name": "炼化及贸易",
       "type": "industry",
-      "change_pct": 0.9,
+      "change_pct": 1.67,
       "volume": null,
-      "heat_score": 53.1
+      "heat_score": 53.2
     },
     {
-      "name": "燃气Ⅱ",
+      "name": "养殖业",
       "type": "industry",
-      "change_pct": 0.9,
+      "change_pct": 1.31,
       "volume": null,
-      "heat_score": 53.1
+      "heat_score": 53.2
     },
     {
-      "name": "动力煤",
+      "name": "粮食种植",
       "type": "industry",
-      "change_pct": 0.89,
+      "change_pct": 2.05,
       "volume": null,
-      "heat_score": 53.1
+      "heat_score": 53.0
     },
     {
       "name": "特色药",
@@ -359,6 +282,13 @@
       "heat_score": 52.9
     },
     {
+      "name": "动力煤",
+      "type": "industry",
+      "change_pct": 0.89,
+      "volume": null,
+      "heat_score": 52.8
+    },
+    {
       "name": "减肥药",
       "type": "concept",
       "change_pct": 0.81,
@@ -371,6 +301,20 @@
       "change_pct": 0.8,
       "volume": null,
       "heat_score": 52.8
+    },
+    {
+      "name": "水产饲料",
+      "type": "industry",
+      "change_pct": 1.82,
+      "volume": null,
+      "heat_score": 52.7
+    },
+    {
+      "name": "食用菌",
+      "type": "industry",
+      "change_pct": 1.19,
+      "volume": null,
+      "heat_score": 52.7
     },
     {
       "name": "中药概念",
@@ -392,6 +336,13 @@
       "change_pct": 0.74,
       "volume": null,
       "heat_score": 52.6
+    },
+    {
+      "name": "线下药店",
+      "type": "industry",
+      "change_pct": 1.7,
+      "volume": null,
+      "heat_score": 52.4
     },
     {
       "name": "煤化工",
@@ -499,6 +450,13 @@
       "heat_score": 51.8
     },
     {
+      "name": "其他医疗服务",
+      "type": "industry",
+      "change_pct": 1.66,
+      "volume": null,
+      "heat_score": 51.7
+    },
+    {
       "name": "炼油化工",
       "type": "industry",
       "change_pct": 0.49,
@@ -511,6 +469,20 @@
       "change_pct": 0.49,
       "volume": null,
       "heat_score": 51.7
+    },
+    {
+      "name": "燃气Ⅲ",
+      "type": "industry",
+      "change_pct": 0.9,
+      "volume": null,
+      "heat_score": 51.6
+    },
+    {
+      "name": "燃气Ⅱ",
+      "type": "industry",
+      "change_pct": 0.9,
+      "volume": null,
+      "heat_score": 51.6
     },
     {
       "name": "焦炭Ⅲ",
@@ -548,6 +520,20 @@
       "heat_score": 51.5
     },
     {
+      "name": "能源金属",
+      "type": "industry",
+      "change_pct": 1.24,
+      "volume": null,
+      "heat_score": 51.4
+    },
+    {
+      "name": "化学制剂",
+      "type": "industry",
+      "change_pct": 1.17,
+      "volume": null,
+      "heat_score": 51.4
+    },
+    {
       "name": "医药生物",
       "type": "industry",
       "change_pct": 0.41,
@@ -560,20 +546,34 @@
       "change_pct": 0.4,
       "volume": null,
       "heat_score": 51.4
+    },
+    {
+      "name": "流感",
+      "type": "concept",
+      "change_pct": 0.39,
+      "volume": null,
+      "heat_score": 51.4
+    },
+    {
+      "name": "银行",
+      "type": "industry",
+      "change_pct": 0.37,
+      "volume": null,
+      "heat_score": 51.3
     }
   ],
   "summary": {
     "hot": [
       "昨日连板",
       "昨日连板_含一字",
-      "油气开采Ⅱ",
-      "通信线缆及配套",
-      "动物保健Ⅱ",
       "资源开采概念",
-      "石油石化",
       "油田服务",
       "国际工程",
-      "熟食"
+      "SPD概念",
+      "油服工程",
+      "昨日打二板以上表现",
+      "肝素概念",
+      "油气及炼化工程"
     ],
     "cold": [
       "期货",
