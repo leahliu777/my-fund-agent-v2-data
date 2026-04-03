@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-03 09:31:59",
+  "updated_at": "2026-04-03 15:02:06",
   "items": [
     {
       "name": "金融信息服务",
@@ -135,14 +135,14 @@
       "heat_score": 51.5
     },
     {
-      "name": "电子化学品Ⅲ",
+      "name": "电子化学品Ⅱ",
       "type": "industry",
       "change_pct": 0.34,
       "volume": null,
       "heat_score": 51.2
     },
     {
-      "name": "电子化学品Ⅱ",
+      "name": "电子化学品Ⅲ",
       "type": "industry",
       "change_pct": 0.34,
       "volume": null,
@@ -471,14 +471,14 @@
       "heat_score": 48.5
     },
     {
-      "name": "磨具磨料",
+      "name": "纺织鞋类制造",
       "type": "industry",
       "change_pct": -0.45,
       "volume": null,
       "heat_score": 48.4
     },
     {
-      "name": "纺织鞋类制造",
+      "name": "磨具磨料",
       "type": "industry",
       "change_pct": -0.45,
       "volume": null,
