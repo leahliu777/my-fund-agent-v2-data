@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-04 06:39:43",
+  "updated_at": "2026-04-04 09:09:55",
   "items": [
     {
       "name": "金融信息服务",
@@ -7,6 +7,13 @@
       "change_pct": 4.9,
       "volume": null,
       "heat_score": 67.2
+    },
+    {
+      "name": "激光设备",
+      "type": "industry",
+      "change_pct": 3.52,
+      "volume": null,
+      "heat_score": 62.3
     },
     {
       "name": "CPO概念",
@@ -63,13 +70,6 @@
       "change_pct": 1.81,
       "volume": null,
       "heat_score": 56.3
-    },
-    {
-      "name": "激光设备",
-      "type": "industry",
-      "change_pct": 3.52,
-      "volume": null,
-      "heat_score": 56.1
     },
     {
       "name": "昨日打二板以上表现",
@@ -565,6 +565,7 @@
   "summary": {
     "hot": [
       "金融信息服务",
+      "激光设备",
       "CPO概念",
       "通信线缆及配套",
       "光学元件",
@@ -572,8 +573,7 @@
       "通信网络设备及器件",
       "激光雷达",
       "半导体材料",
-      "F5G概念",
-      "激光设备"
+      "F5G概念"
     ],
     "cold": [
       "公路货运",
