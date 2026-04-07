@@ -1,590 +1,590 @@
 {
-  "updated_at": "2026-04-07 04:19:13",
+  "updated_at": "2026-04-07 06:56:35",
   "items": [
     {
-      "name": "昨日连板_含一字",
-      "type": "concept",
-      "change_pct": 6.29,
+      "name": "体育Ⅲ",
+      "type": "industry",
+      "change_pct": 8.67,
       "volume": null,
-      "heat_score": 72.0
+      "heat_score": 80.3
+    },
+    {
+      "name": "体育Ⅱ",
+      "type": "industry",
+      "change_pct": 8.67,
+      "volume": null,
+      "heat_score": 80.3
+    },
+    {
+      "name": "氮肥",
+      "type": "industry",
+      "change_pct": 8.55,
+      "volume": null,
+      "heat_score": 79.9
+    },
+    {
+      "name": "有机硅",
+      "type": "industry",
+      "change_pct": 7.31,
+      "volume": null,
+      "heat_score": 75.6
     },
     {
       "name": "煤化工",
       "type": "industry",
-      "change_pct": 6.2,
+      "change_pct": 7.24,
       "volume": null,
-      "heat_score": 71.7
+      "heat_score": 75.3
     },
     {
-      "name": "动物保健Ⅲ",
+      "name": "稀土",
       "type": "industry",
-      "change_pct": 6.04,
+      "change_pct": 6.28,
       "volume": null,
-      "heat_score": 71.1
+      "heat_score": 72.0
     },
     {
-      "name": "动物保健Ⅱ",
+      "name": "其他化学原料",
       "type": "industry",
-      "change_pct": 6.04,
+      "change_pct": 6.22,
       "volume": null,
-      "heat_score": 71.1
+      "heat_score": 71.8
+    },
+    {
+      "name": "昨日连板_含一字",
+      "type": "concept",
+      "change_pct": 6.1,
+      "volume": null,
+      "heat_score": 71.3
+    },
+    {
+      "name": "昨日打二板以上表现",
+      "type": "concept",
+      "change_pct": 6.0,
+      "volume": null,
+      "heat_score": 71.0
     },
     {
       "name": "昨日连板",
+      "type": "concept",
+      "change_pct": 5.67,
+      "volume": null,
+      "heat_score": 69.8
+    },
+    {
+      "name": "国际工程",
+      "type": "industry",
+      "change_pct": 5.63,
+      "volume": null,
+      "heat_score": 69.7
+    },
+    {
+      "name": "草甘膦",
       "type": "concept",
       "change_pct": 5.63,
       "volume": null,
       "heat_score": 69.7
     },
     {
-      "name": "国际工程",
+      "name": "化学原料",
       "type": "industry",
-      "change_pct": 5.4,
+      "change_pct": 5.16,
       "volume": null,
-      "heat_score": 68.9
+      "heat_score": 68.1
     },
     {
-      "name": "昨日打二板以上表现",
-      "type": "concept",
+      "name": "粘胶",
+      "type": "industry",
       "change_pct": 5.12,
       "volume": null,
       "heat_score": 67.9
     },
     {
-      "name": "其他化学原料",
+      "name": "动物保健Ⅲ",
       "type": "industry",
-      "change_pct": 4.95,
+      "change_pct": 4.94,
       "volume": null,
       "heat_score": 67.3
     },
     {
-      "name": "体育Ⅲ",
+      "name": "动物保健Ⅱ",
       "type": "industry",
-      "change_pct": 4.79,
+      "change_pct": 4.94,
       "volume": null,
-      "heat_score": 66.8
-    },
-    {
-      "name": "体育Ⅱ",
-      "type": "industry",
-      "change_pct": 4.79,
-      "volume": null,
-      "heat_score": 66.8
+      "heat_score": 67.3
     },
     {
       "name": "锦纶",
       "type": "industry",
-      "change_pct": 4.71,
+      "change_pct": 4.92,
       "volume": null,
-      "heat_score": 66.5
+      "heat_score": 67.2
     },
     {
-      "name": "草甘膦",
+      "name": "有机硅概念",
       "type": "concept",
-      "change_pct": 4.72,
+      "change_pct": 4.87,
       "volume": null,
-      "heat_score": 66.5
+      "heat_score": 67.0
     },
     {
-      "name": "氮肥",
+      "name": "农药",
       "type": "industry",
-      "change_pct": 7.72,
+      "change_pct": 4.58,
       "volume": null,
-      "heat_score": 66.3
+      "heat_score": 66.0
+    },
+    {
+      "name": "化工原料",
+      "type": "concept",
+      "change_pct": 4.56,
+      "volume": null,
+      "heat_score": 66.0
     },
     {
       "name": "农药兽药",
       "type": "concept",
-      "change_pct": 4.3,
+      "change_pct": 4.53,
       "volume": null,
-      "heat_score": 65.0
+      "heat_score": 65.9
+    },
+    {
+      "name": "金融信息服务",
+      "type": "industry",
+      "change_pct": 4.49,
+      "volume": null,
+      "heat_score": 65.7
     },
     {
       "name": "涤纶",
+      "type": "industry",
+      "change_pct": 4.43,
+      "volume": null,
+      "heat_score": 65.5
+    },
+    {
+      "name": "农化制品",
+      "type": "industry",
+      "change_pct": 4.42,
+      "volume": null,
+      "heat_score": 65.5
+    },
+    {
+      "name": "娱乐用品",
+      "type": "industry",
+      "change_pct": 4.38,
+      "volume": null,
+      "heat_score": 65.3
+    },
+    {
+      "name": "钛白粉",
+      "type": "industry",
+      "change_pct": 4.35,
+      "volume": null,
+      "heat_score": 65.2
+    },
+    {
+      "name": "纺织化学制品",
+      "type": "industry",
+      "change_pct": 4.31,
+      "volume": null,
+      "heat_score": 65.1
+    },
+    {
+      "name": "氯碱",
+      "type": "industry",
+      "change_pct": 4.25,
+      "volume": null,
+      "heat_score": 64.9
+    },
+    {
+      "name": "煤化工概念",
+      "type": "concept",
+      "change_pct": 4.27,
+      "volume": null,
+      "heat_score": 64.9
+    },
+    {
+      "name": "聚氨酯",
       "type": "industry",
       "change_pct": 4.2,
       "volume": null,
       "heat_score": 64.7
     },
     {
-      "name": "金融信息服务",
+      "name": "氨纶",
       "type": "industry",
-      "change_pct": 4.13,
+      "change_pct": 4.18,
       "volume": null,
-      "heat_score": 64.5
+      "heat_score": 64.6
     },
     {
-      "name": "有机硅概念",
-      "type": "concept",
+      "name": "化学纤维",
+      "type": "industry",
+      "change_pct": 4.17,
+      "volume": null,
+      "heat_score": 64.6
+    },
+    {
+      "name": "复合肥",
+      "type": "industry",
+      "change_pct": 4.09,
+      "volume": null,
+      "heat_score": 64.3
+    },
+    {
+      "name": "炼油化工",
+      "type": "industry",
       "change_pct": 4.07,
       "volume": null,
       "heat_score": 64.2
     },
     {
-      "name": "农药",
+      "name": "油品石化贸易",
       "type": "industry",
-      "change_pct": 3.94,
+      "change_pct": 4.05,
       "volume": null,
-      "heat_score": 63.8
+      "heat_score": 64.2
     },
     {
-      "name": "化学原料",
+      "name": "钨",
+      "type": "industry",
+      "change_pct": 4.01,
+      "volume": null,
+      "heat_score": 64.0
+    },
+    {
+      "name": "肉制品",
+      "type": "industry",
+      "change_pct": 3.89,
+      "volume": null,
+      "heat_score": 63.6
+    },
+    {
+      "name": "环氧丙烷",
+      "type": "concept",
+      "change_pct": 3.9,
+      "volume": null,
+      "heat_score": 63.6
+    },
+    {
+      "name": "炼化及贸易",
+      "type": "industry",
+      "change_pct": 3.87,
+      "volume": null,
+      "heat_score": 63.5
+    },
+    {
+      "name": "纯碱",
+      "type": "industry",
+      "change_pct": 3.84,
+      "volume": null,
+      "heat_score": 63.4
+    },
+    {
+      "name": "水产养殖",
+      "type": "industry",
+      "change_pct": 3.81,
+      "volume": null,
+      "heat_score": 63.3
+    },
+    {
+      "name": "文娱用品",
       "type": "industry",
       "change_pct": 3.78,
       "volume": null,
       "heat_score": 63.2
     },
     {
-      "name": "钨",
-      "type": "industry",
-      "change_pct": 3.73,
-      "volume": null,
-      "heat_score": 63.1
-    },
-    {
-      "name": "有机硅",
-      "type": "industry",
-      "change_pct": 6.65,
-      "volume": null,
-      "heat_score": 63.0
-    },
-    {
-      "name": "氨纶",
-      "type": "industry",
-      "change_pct": 3.7,
-      "volume": null,
-      "heat_score": 63.0
-    },
-    {
-      "name": "鸡肉概念",
+      "name": "磷化工",
       "type": "concept",
+      "change_pct": 3.76,
+      "volume": null,
+      "heat_score": 63.2
+    },
+    {
+      "name": "无机盐",
+      "type": "industry",
       "change_pct": 3.69,
       "volume": null,
       "heat_score": 62.9
     },
     {
-      "name": "肉鸡养殖",
+      "name": "其他石化",
       "type": "industry",
-      "change_pct": 3.62,
+      "change_pct": 3.64,
       "volume": null,
       "heat_score": 62.7
     },
     {
-      "name": "化学纤维",
+      "name": "化学工程",
+      "type": "industry",
+      "change_pct": 3.63,
+      "volume": null,
+      "heat_score": 62.7
+    },
+    {
+      "name": "炭黑",
       "type": "industry",
       "change_pct": 3.61,
       "volume": null,
       "heat_score": 62.6
     },
     {
-      "name": "农化制品",
+      "name": "其他种植业",
       "type": "industry",
-      "change_pct": 3.61,
-      "volume": null,
-      "heat_score": 62.6
-    },
-    {
-      "name": "粘胶",
-      "type": "industry",
-      "change_pct": 3.57,
+      "change_pct": 3.56,
       "volume": null,
       "heat_score": 62.5
     },
     {
-      "name": "肉制品",
+      "name": "文字媒体",
+      "type": "industry",
+      "change_pct": 3.51,
+      "volume": null,
+      "heat_score": 62.3
+    },
+    {
+      "name": "油气及炼化工程",
       "type": "industry",
       "change_pct": 3.5,
       "volume": null,
       "heat_score": 62.2
     },
     {
+      "name": "其他化学制品",
+      "type": "industry",
+      "change_pct": 3.46,
+      "volume": null,
+      "heat_score": 62.1
+    },
+    {
+      "name": "工业气体",
+      "type": "concept",
+      "change_pct": 3.44,
+      "volume": null,
+      "heat_score": 62.0
+    },
+    {
+      "name": "基础化工",
+      "type": "industry",
+      "change_pct": 3.4,
+      "volume": null,
+      "heat_score": 61.9
+    },
+    {
+      "name": "农业综合Ⅲ",
+      "type": "industry",
+      "change_pct": 3.39,
+      "volume": null,
+      "heat_score": 61.9
+    },
+    {
+      "name": "农业综合Ⅱ",
+      "type": "industry",
+      "change_pct": 3.39,
+      "volume": null,
+      "heat_score": 61.9
+    },
+    {
+      "name": "化学制品",
+      "type": "industry",
+      "change_pct": 3.37,
+      "volume": null,
+      "heat_score": 61.8
+    },
+    {
+      "name": "钛白粉概念",
+      "type": "concept",
+      "change_pct": 3.37,
+      "volume": null,
+      "heat_score": 61.8
+    },
+    {
+      "name": "鸡肉概念",
+      "type": "concept",
+      "change_pct": 3.33,
+      "volume": null,
+      "heat_score": 61.7
+    },
+    {
+      "name": "供销社概念",
+      "type": "concept",
+      "change_pct": 3.32,
+      "volume": null,
+      "heat_score": 61.6
+    },
+    {
+      "name": "微盘股",
+      "type": "concept",
+      "change_pct": 3.31,
+      "volume": null,
+      "heat_score": 61.6
+    },
+    {
       "name": "畜禽饲料",
       "type": "industry",
-      "change_pct": 3.43,
-      "volume": null,
-      "heat_score": 62.0
-    },
-    {
-      "name": "化工原料",
-      "type": "concept",
-      "change_pct": 3.42,
-      "volume": null,
-      "heat_score": 62.0
-    },
-    {
-      "name": "复合肥",
-      "type": "industry",
-      "change_pct": 3.3,
+      "change_pct": 3.28,
       "volume": null,
       "heat_score": 61.5
     },
     {
-      "name": "水产养殖",
+      "name": "电商服务",
       "type": "industry",
-      "change_pct": 3.23,
+      "change_pct": 3.28,
       "volume": null,
-      "heat_score": 61.3
+      "heat_score": 61.5
     },
     {
-      "name": "猪肉概念",
+      "name": "焦炭Ⅱ",
+      "type": "industry",
+      "change_pct": 3.27,
+      "volume": null,
+      "heat_score": 61.4
+    },
+    {
+      "name": "焦炭Ⅲ",
+      "type": "industry",
+      "change_pct": 3.27,
+      "volume": null,
+      "heat_score": 61.4
+    },
+    {
+      "name": "彩票概念",
       "type": "concept",
       "change_pct": 3.24,
       "volume": null,
       "heat_score": 61.3
     },
     {
-      "name": "炼油化工",
-      "type": "industry",
-      "change_pct": 3.2,
+      "name": "生态农业",
+      "type": "concept",
+      "change_pct": 3.24,
+      "volume": null,
+      "heat_score": 61.3
+    },
+    {
+      "name": "降解塑料",
+      "type": "concept",
+      "change_pct": 3.19,
       "volume": null,
       "heat_score": 61.2
     },
     {
-      "name": "纺织化学制品",
-      "type": "industry",
-      "change_pct": 3.18,
-      "volume": null,
-      "heat_score": 61.1
-    },
-    {
-      "name": "煤化工概念",
+      "name": "滨海新区",
       "type": "concept",
-      "change_pct": 3.13,
+      "change_pct": 3.14,
       "volume": null,
       "heat_score": 61.0
     },
     {
-      "name": "粮食种植",
+      "name": "粮油加工",
       "type": "industry",
-      "change_pct": 3.09,
+      "change_pct": 3.11,
       "volume": null,
-      "heat_score": 60.8
+      "heat_score": 60.9
     },
     {
-      "name": "养殖业",
+      "name": "肉鸡养殖",
       "type": "industry",
+      "change_pct": 3.06,
+      "volume": null,
+      "heat_score": 60.7
+    },
+    {
+      "name": "石油石化",
+      "type": "industry",
+      "change_pct": 3.05,
+      "volume": null,
+      "heat_score": 60.7
+    },
+    {
+      "name": "盲盒经济",
+      "type": "concept",
       "change_pct": 3.07,
       "volume": null,
       "heat_score": 60.7
     },
     {
-      "name": "生猪养殖",
-      "type": "industry",
-      "change_pct": 3.04,
+      "name": "微盘精选",
+      "type": "concept",
+      "change_pct": 3.03,
       "volume": null,
       "heat_score": 60.6
     },
     {
-      "name": "炭黑",
+      "name": "种子",
       "type": "industry",
-      "change_pct": 3.04,
+      "change_pct": 2.99,
       "volume": null,
-      "heat_score": 60.6
+      "heat_score": 60.5
     },
     {
-      "name": "环氧丙烷",
+      "name": "综合包装",
+      "type": "industry",
+      "change_pct": 2.99,
+      "volume": null,
+      "heat_score": 60.5
+    },
+    {
+      "name": "粮食种植",
+      "type": "industry",
+      "change_pct": 2.99,
+      "volume": null,
+      "heat_score": 60.5
+    },
+    {
+      "name": "体育产业",
       "type": "concept",
       "change_pct": 2.96,
       "volume": null,
       "heat_score": 60.4
     },
     {
-      "name": "其他种植业",
+      "name": "其他化学纤维",
       "type": "industry",
       "change_pct": 2.95,
       "volume": null,
       "heat_score": 60.3
     },
     {
-      "name": "钛白粉",
+      "name": "磷肥及磷化工",
       "type": "industry",
       "change_pct": 2.93,
       "volume": null,
       "heat_score": 60.3
     },
     {
-      "name": "化学工程",
-      "type": "industry",
-      "change_pct": 2.92,
-      "volume": null,
-      "heat_score": 60.2
-    },
-    {
-      "name": "聚氨酯",
-      "type": "industry",
-      "change_pct": 2.91,
-      "volume": null,
-      "heat_score": 60.2
-    },
-    {
-      "name": "粮油加工",
-      "type": "industry",
-      "change_pct": 2.82,
-      "volume": null,
-      "heat_score": 59.9
-    },
-    {
-      "name": "炼化及贸易",
-      "type": "industry",
-      "change_pct": 2.79,
-      "volume": null,
-      "heat_score": 59.8
-    },
-    {
-      "name": "水泥制品",
-      "type": "industry",
-      "change_pct": 2.73,
-      "volume": null,
-      "heat_score": 59.6
-    },
-    {
-      "name": "生态农业",
+      "name": "猪肉概念",
       "type": "concept",
-      "change_pct": 2.75,
+      "change_pct": 2.94,
       "volume": null,
-      "heat_score": 59.6
-    },
-    {
-      "name": "滨海新区",
-      "type": "concept",
-      "change_pct": 2.72,
-      "volume": null,
-      "heat_score": 59.5
-    },
-    {
-      "name": "微盘股",
-      "type": "concept",
-      "change_pct": 2.71,
-      "volume": null,
-      "heat_score": 59.5
-    },
-    {
-      "name": "供销社概念",
-      "type": "concept",
-      "change_pct": 2.69,
-      "volume": null,
-      "heat_score": 59.4
-    },
-    {
-      "name": "氯碱",
-      "type": "industry",
-      "change_pct": 2.66,
-      "volume": null,
-      "heat_score": 59.3
-    },
-    {
-      "name": "其他石化",
-      "type": "industry",
-      "change_pct": 2.66,
-      "volume": null,
-      "heat_score": 59.3
-    },
-    {
-      "name": "磷化工",
-      "type": "concept",
-      "change_pct": 2.66,
-      "volume": null,
-      "heat_score": 59.3
-    },
-    {
-      "name": "转基因",
-      "type": "concept",
-      "change_pct": 2.65,
-      "volume": null,
-      "heat_score": 59.3
-    },
-    {
-      "name": "综合包装",
-      "type": "industry",
-      "change_pct": 2.64,
-      "volume": null,
-      "heat_score": 59.2
-    },
-    {
-      "name": "其他化学制品",
-      "type": "industry",
-      "change_pct": 2.63,
-      "volume": null,
-      "heat_score": 59.2
-    },
-    {
-      "name": "农林牧渔",
-      "type": "industry",
-      "change_pct": 2.61,
-      "volume": null,
-      "heat_score": 59.1
-    },
-    {
-      "name": "基础化工",
-      "type": "industry",
-      "change_pct": 2.59,
-      "volume": null,
-      "heat_score": 59.1
-    },
-    {
-      "name": "化学制品",
-      "type": "industry",
-      "change_pct": 2.52,
-      "volume": null,
-      "heat_score": 58.8
-    },
-    {
-      "name": "微盘精选",
-      "type": "concept",
-      "change_pct": 2.52,
-      "volume": null,
-      "heat_score": 58.8
-    },
-    {
-      "name": "燃料电池",
-      "type": "industry",
-      "change_pct": 2.48,
-      "volume": null,
-      "heat_score": 58.7
-    },
-    {
-      "name": "文字媒体",
-      "type": "industry",
-      "change_pct": 2.48,
-      "volume": null,
-      "heat_score": 58.7
-    },
-    {
-      "name": "北交所概念",
-      "type": "concept",
-      "change_pct": 2.49,
-      "volume": null,
-      "heat_score": 58.7
-    },
-    {
-      "name": "种子",
-      "type": "industry",
-      "change_pct": 2.47,
-      "volume": null,
-      "heat_score": 58.6
-    },
-    {
-      "name": "油品石化贸易",
-      "type": "industry",
-      "change_pct": 2.46,
-      "volume": null,
-      "heat_score": 58.6
-    },
-    {
-      "name": "农业综合Ⅲ",
-      "type": "industry",
-      "change_pct": 2.45,
-      "volume": null,
-      "heat_score": 58.6
-    },
-    {
-      "name": "农业综合Ⅱ",
-      "type": "industry",
-      "change_pct": 2.45,
-      "volume": null,
-      "heat_score": 58.6
-    },
-    {
-      "name": "工业气体",
-      "type": "concept",
-      "change_pct": 2.47,
-      "volume": null,
-      "heat_score": 58.6
-    },
-    {
-      "name": "纯碱",
-      "type": "industry",
-      "change_pct": 2.44,
-      "volume": null,
-      "heat_score": 58.5
-    },
-    {
-      "name": "集成电路制造",
-      "type": "industry",
-      "change_pct": 2.43,
-      "volume": null,
-      "heat_score": 58.5
-    },
-    {
-      "name": "渔业",
-      "type": "industry",
-      "change_pct": 2.43,
-      "volume": null,
-      "heat_score": 58.5
-    },
-    {
-      "name": "园林工程",
-      "type": "industry",
-      "change_pct": 2.37,
-      "volume": null,
-      "heat_score": 58.3
-    },
-    {
-      "name": "粮食概念",
-      "type": "concept",
-      "change_pct": 2.35,
-      "volume": null,
-      "heat_score": 58.2
-    },
-    {
-      "name": "降解塑料",
-      "type": "concept",
-      "change_pct": 2.34,
-      "volume": null,
-      "heat_score": 58.2
-    },
-    {
-      "name": "2025三季报预减",
-      "type": "concept",
-      "change_pct": 2.31,
-      "volume": null,
-      "heat_score": 58.1
-    },
-    {
-      "name": "林业Ⅲ",
-      "type": "industry",
-      "change_pct": 2.3,
-      "volume": null,
-      "heat_score": 58.0
-    },
-    {
-      "name": "林业Ⅱ",
-      "type": "industry",
-      "change_pct": 2.3,
-      "volume": null,
-      "heat_score": 58.0
-    },
-    {
-      "name": "代糖概念",
-      "type": "concept",
-      "change_pct": 2.27,
-      "volume": null,
-      "heat_score": 57.9
+      "heat_score": 60.3
     }
   ],
   "summary": {
     "hot": [
-      "昨日连板_含一字",
-      "煤化工",
-      "动物保健Ⅲ",
-      "动物保健Ⅱ",
-      "昨日连板",
-      "国际工程",
-      "昨日打二板以上表现",
-      "其他化学原料",
       "体育Ⅲ",
-      "体育Ⅱ"
+      "体育Ⅱ",
+      "氮肥",
+      "有机硅",
+      "煤化工",
+      "稀土",
+      "其他化学原料",
+      "昨日连板_含一字",
+      "昨日打二板以上表现",
+      "昨日连板"
     ],
     "cold": [
-      "白色家电",
-      "国有大型银行Ⅲ",
+      "租赁",
       "冰洗",
+      "光伏加工设备",
       "保险Ⅲ",
       "保险Ⅱ",
-      "航空运输",
+      "国有大型银行Ⅲ",
       "摩托车",
-      "医美服务",
       "风电整机",
+      "医美服务",
       "综合电力设备商"
     ]
   }
