@@ -1,41 +1,6 @@
 {
-  "updated_at": "2026-04-10 07:09:17",
+  "updated_at": "2026-04-10 09:49:11",
   "items": [
-    {
-      "name": "蓄电池及其他电池",
-      "type": "industry",
-      "change_pct": 5.68,
-      "volume": null,
-      "heat_score": 69.9
-    },
-    {
-      "name": "玻纤制造",
-      "type": "industry",
-      "change_pct": 4.69,
-      "volume": null,
-      "heat_score": 66.4
-    },
-    {
-      "name": "金融信息服务",
-      "type": "industry",
-      "change_pct": 4.65,
-      "volume": null,
-      "heat_score": 66.3
-    },
-    {
-      "name": "期货",
-      "type": "industry",
-      "change_pct": 4.23,
-      "volume": null,
-      "heat_score": 64.8
-    },
-    {
-      "name": "锂电池",
-      "type": "industry",
-      "change_pct": 4.12,
-      "volume": null,
-      "heat_score": 64.4
-    },
     {
       "name": "昨日连板",
       "type": "concept",
@@ -135,6 +100,20 @@
       "heat_score": 60.9
     },
     {
+      "name": "金融信息服务",
+      "type": "industry",
+      "change_pct": 4.65,
+      "volume": null,
+      "heat_score": 60.7
+    },
+    {
+      "name": "蓄电池及其他电池",
+      "type": "industry",
+      "change_pct": 5.68,
+      "volume": null,
+      "heat_score": 60.6
+    },
+    {
       "name": "锂",
       "type": "industry",
       "change_pct": 3.03,
@@ -168,6 +147,13 @@
       "change_pct": 2.81,
       "volume": null,
       "heat_score": 59.8
+    },
+    {
+      "name": "玻纤制造",
+      "type": "industry",
+      "change_pct": 4.69,
+      "volume": null,
+      "heat_score": 59.5
     },
     {
       "name": "其他纺织",
@@ -240,6 +226,13 @@
       "heat_score": 58.8
     },
     {
+      "name": "期货",
+      "type": "industry",
+      "change_pct": 4.23,
+      "volume": null,
+      "heat_score": 58.5
+    },
+    {
       "name": "托育服务",
       "type": "concept",
       "change_pct": 2.42,
@@ -287,6 +280,13 @@
       "change_pct": 2.26,
       "volume": null,
       "heat_score": 57.9
+    },
+    {
+      "name": "锂电池",
+      "type": "industry",
+      "change_pct": 4.12,
+      "volume": null,
+      "heat_score": 57.8
     },
     {
       "name": "半导体设备",
@@ -564,16 +564,16 @@
   ],
   "summary": {
     "hot": [
-      "蓄电池及其他电池",
-      "玻纤制造",
-      "金融信息服务",
-      "期货",
-      "锂电池",
       "昨日连板",
       "逆变器",
       "昨日连板_含一字",
       "电池",
-      "GDR"
+      "GDR",
+      "电池化学品",
+      "品牌消费电子",
+      "麒麟电池",
+      "纳米银",
+      "刀片电池"
     ],
     "cold": [
       "体育Ⅲ",
