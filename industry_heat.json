@@ -1,591 +1,591 @@
 {
-  "updated_at": "2026-04-14 04:30:49",
+  "updated_at": "2026-04-14 07:10:44",
   "items": [
     {
       "name": "钴",
       "type": "industry",
-      "change_pct": 14.04,
+      "change_pct": 13.38,
       "volume": null,
       "heat_score": 85.0
     },
     {
       "name": "昨日打二板以上表现",
       "type": "concept",
-      "change_pct": 5.79,
+      "change_pct": 6.58,
       "volume": null,
-      "heat_score": 70.3
-    },
-    {
-      "name": "半导体设备",
-      "type": "industry",
-      "change_pct": 5.38,
-      "volume": null,
-      "heat_score": 68.8
-    },
-    {
-      "name": "文字媒体",
-      "type": "industry",
-      "change_pct": 4.16,
-      "volume": null,
-      "heat_score": 64.6
+      "heat_score": 73.0
     },
     {
       "name": "国际工程",
       "type": "industry",
-      "change_pct": 4.03,
+      "change_pct": 5.67,
       "volume": null,
-      "heat_score": 64.1
-    },
-    {
-      "name": "生猪养殖",
-      "type": "industry",
-      "change_pct": 3.98,
-      "volume": null,
-      "heat_score": 63.9
+      "heat_score": 69.8
     },
     {
       "name": "能源金属",
       "type": "industry",
-      "change_pct": 3.86,
+      "change_pct": 5.42,
+      "volume": null,
+      "heat_score": 69.0
+    },
+    {
+      "name": "航天装备Ⅲ",
+      "type": "industry",
+      "change_pct": 5.22,
+      "volume": null,
+      "heat_score": 68.3
+    },
+    {
+      "name": "航天装备Ⅱ",
+      "type": "industry",
+      "change_pct": 5.22,
+      "volume": null,
+      "heat_score": 68.3
+    },
+    {
+      "name": "生猪养殖",
+      "type": "industry",
+      "change_pct": 4.6,
+      "volume": null,
+      "heat_score": 66.1
+    },
+    {
+      "name": "半导体设备",
+      "type": "industry",
+      "change_pct": 4.47,
+      "volume": null,
+      "heat_score": 65.6
+    },
+    {
+      "name": "其他数字媒体",
+      "type": "industry",
+      "change_pct": 4.14,
+      "volume": null,
+      "heat_score": 64.5
+    },
+    {
+      "name": "文字媒体",
+      "type": "industry",
+      "change_pct": 3.94,
+      "volume": null,
+      "heat_score": 63.8
+    },
+    {
+      "name": "电池化学品",
+      "type": "industry",
+      "change_pct": 3.85,
       "volume": null,
       "heat_score": 63.5
     },
     {
-      "name": "分立器件",
+      "name": "锂",
       "type": "industry",
-      "change_pct": 3.55,
+      "change_pct": 3.73,
       "volume": null,
-      "heat_score": 62.4
-    },
-    {
-      "name": "昨日连板",
-      "type": "concept",
-      "change_pct": 3.53,
-      "volume": null,
-      "heat_score": 62.4
-    },
-    {
-      "name": "昨日连板_含一字",
-      "type": "concept",
-      "change_pct": 3.53,
-      "volume": null,
-      "heat_score": 62.4
+      "heat_score": 63.1
     },
     {
       "name": "印制电路板",
       "type": "industry",
-      "change_pct": 3.36,
+      "change_pct": 3.67,
       "volume": null,
-      "heat_score": 61.8
+      "heat_score": 62.8
     },
     {
-      "name": "高带宽内存",
+      "name": "昨日连板",
       "type": "concept",
-      "change_pct": 3.22,
+      "change_pct": 3.64,
       "volume": null,
-      "heat_score": 61.3
+      "heat_score": 62.7
     },
     {
-      "name": "半导体材料",
+      "name": "其他电源设备Ⅲ",
       "type": "industry",
-      "change_pct": 3.17,
+      "change_pct": 3.51,
       "volume": null,
-      "heat_score": 61.1
+      "heat_score": 62.3
+    },
+    {
+      "name": "元件",
+      "type": "industry",
+      "change_pct": 3.32,
+      "volume": null,
+      "heat_score": 61.6
+    },
+    {
+      "name": "同步磁阻电机",
+      "type": "concept",
+      "change_pct": 3.29,
+      "volume": null,
+      "heat_score": 61.5
+    },
+    {
+      "name": "昨日连板_含一字",
+      "type": "concept",
+      "change_pct": 3.26,
+      "volume": null,
+      "heat_score": 61.4
+    },
+    {
+      "name": "金融信息服务",
+      "type": "industry",
+      "change_pct": 3.13,
+      "volume": null,
+      "heat_score": 61.0
     },
     {
       "name": "存储芯片",
       "type": "concept",
+      "change_pct": 3.1,
+      "volume": null,
+      "heat_score": 60.9
+    },
+    {
+      "name": "镍",
+      "type": "industry",
       "change_pct": 3.03,
       "volume": null,
       "heat_score": 60.6
     },
     {
-      "name": "元件",
+      "name": "其他电源设备Ⅱ",
+      "type": "industry",
+      "change_pct": 3.02,
+      "volume": null,
+      "heat_score": 60.6
+    },
+    {
+      "name": "畜禽饲料",
+      "type": "industry",
+      "change_pct": 3.01,
+      "volume": null,
+      "heat_score": 60.5
+    },
+    {
+      "name": "养殖业",
       "type": "industry",
       "change_pct": 2.98,
       "volume": null,
       "heat_score": 60.4
     },
     {
-      "name": "半导体",
+      "name": "租售同权",
+      "type": "concept",
+      "change_pct": 2.92,
+      "volume": null,
+      "heat_score": 60.2
+    },
+    {
+      "name": "航天航空",
+      "type": "concept",
+      "change_pct": 2.91,
+      "volume": null,
+      "heat_score": 60.2
+    },
+    {
+      "name": "军工电子Ⅲ",
       "type": "industry",
       "change_pct": 2.9,
       "volume": null,
       "heat_score": 60.1
     },
     {
-      "name": "镍",
+      "name": "军工电子Ⅱ",
       "type": "industry",
       "change_pct": 2.9,
       "volume": null,
       "heat_score": 60.1
+    },
+    {
+      "name": "卫星互联网",
+      "type": "concept",
+      "change_pct": 2.9,
+      "volume": null,
+      "heat_score": 60.1
+    },
+    {
+      "name": "品牌消费电子",
+      "type": "industry",
+      "change_pct": 2.8,
+      "volume": null,
+      "heat_score": 59.8
     },
     {
       "name": "橡胶助剂",
       "type": "industry",
-      "change_pct": 2.83,
+      "change_pct": 2.78,
       "volume": null,
-      "heat_score": 59.9
+      "heat_score": 59.7
     },
     {
-      "name": "金融信息服务",
+      "name": "氟化工",
       "type": "industry",
-      "change_pct": 2.81,
-      "volume": null,
-      "heat_score": 59.8
-    },
-    {
-      "name": "集成电路制造",
-      "type": "industry",
-      "change_pct": 2.79,
-      "volume": null,
-      "heat_score": 59.8
-    },
-    {
-      "name": "航天装备Ⅲ",
-      "type": "industry",
-      "change_pct": 2.74,
+      "change_pct": 2.75,
       "volume": null,
       "heat_score": 59.6
     },
     {
-      "name": "航天装备Ⅱ",
-      "type": "industry",
-      "change_pct": 2.74,
+      "name": "锂矿概念",
+      "type": "concept",
+      "change_pct": 2.75,
       "volume": null,
       "heat_score": 59.6
     },
     {
-      "name": "集成电路封测",
+      "name": "医疗研发外包",
       "type": "industry",
-      "change_pct": 2.59,
+      "change_pct": 2.72,
+      "volume": null,
+      "heat_score": 59.5
+    },
+    {
+      "name": "猪肉概念",
+      "type": "concept",
+      "change_pct": 2.64,
+      "volume": null,
+      "heat_score": 59.2
+    },
+    {
+      "name": "锂电池",
+      "type": "industry",
+      "change_pct": 2.6,
       "volume": null,
       "heat_score": 59.1
     },
     {
-      "name": "铜",
+      "name": "国防军工",
       "type": "industry",
-      "change_pct": 2.54,
+      "change_pct": 2.57,
+      "volume": null,
+      "heat_score": 59.0
+    },
+    {
+      "name": "钠离子电池",
+      "type": "concept",
+      "change_pct": 2.58,
+      "volume": null,
+      "heat_score": 59.0
+    },
+    {
+      "name": "刀片电池",
+      "type": "concept",
+      "change_pct": 2.58,
+      "volume": null,
+      "heat_score": 59.0
+    },
+    {
+      "name": "先进封装",
+      "type": "concept",
+      "change_pct": 2.56,
+      "volume": null,
+      "heat_score": 59.0
+    },
+    {
+      "name": "集成电路封测",
+      "type": "industry",
+      "change_pct": 2.55,
       "volume": null,
       "heat_score": 58.9
     },
     {
-      "name": "数字芯片设计",
+      "name": "高带宽内存",
+      "type": "concept",
+      "change_pct": 2.53,
+      "volume": null,
+      "heat_score": 58.9
+    },
+    {
+      "name": "被动元件",
+      "type": "industry",
+      "change_pct": 2.51,
+      "volume": null,
+      "heat_score": 58.8
+    },
+    {
+      "name": "昨日涨停_含一字",
+      "type": "concept",
+      "change_pct": 2.51,
+      "volume": null,
+      "heat_score": 58.8
+    },
+    {
+      "name": "房产租赁经纪",
       "type": "industry",
       "change_pct": 2.49,
       "volume": null,
       "heat_score": 58.7
     },
     {
-      "name": "养殖业",
+      "name": "半导体",
       "type": "industry",
-      "change_pct": 2.47,
+      "change_pct": 2.48,
+      "volume": null,
+      "heat_score": 58.7
+    },
+    {
+      "name": "铜",
+      "type": "industry",
+      "change_pct": 2.46,
       "volume": null,
       "heat_score": 58.6
     },
     {
-      "name": "其他小金属",
+      "name": "麒麟电池",
+      "type": "concept",
+      "change_pct": 2.46,
+      "volume": null,
+      "heat_score": 58.6
+    },
+    {
+      "name": "PCB",
+      "type": "concept",
+      "change_pct": 2.46,
+      "volume": null,
+      "heat_score": 58.6
+    },
+    {
+      "name": "印刷",
+      "type": "industry",
+      "change_pct": 2.42,
+      "volume": null,
+      "heat_score": 58.5
+    },
+    {
+      "name": "昨日涨停",
+      "type": "concept",
+      "change_pct": 2.42,
+      "volume": null,
+      "heat_score": 58.5
+    },
+    {
+      "name": "AIPC",
+      "type": "concept",
+      "change_pct": 2.42,
+      "volume": null,
+      "heat_score": 58.5
+    },
+    {
+      "name": "动力电池回收",
+      "type": "concept",
+      "change_pct": 2.42,
+      "volume": null,
+      "heat_score": 58.5
+    },
+    {
+      "name": "分立器件",
+      "type": "industry",
+      "change_pct": 2.41,
+      "volume": null,
+      "heat_score": 58.4
+    },
+    {
+      "name": "住宅开发",
+      "type": "industry",
+      "change_pct": 2.41,
+      "volume": null,
+      "heat_score": 58.4
+    },
+    {
+      "name": "航空装备Ⅲ",
       "type": "industry",
       "change_pct": 2.4,
       "volume": null,
       "heat_score": 58.4
     },
     {
-      "name": "先进封装",
-      "type": "concept",
-      "change_pct": 2.41,
+      "name": "航空装备Ⅱ",
+      "type": "industry",
+      "change_pct": 2.4,
       "volume": null,
       "heat_score": 58.4
     },
     {
-      "name": "电子化学品Ⅲ",
+      "name": "半导体材料",
+      "type": "industry",
+      "change_pct": 2.4,
+      "volume": null,
+      "heat_score": 58.4
+    },
+    {
+      "name": "数字芯片设计",
       "type": "industry",
       "change_pct": 2.38,
       "volume": null,
       "heat_score": 58.3
     },
     {
-      "name": "电子化学品Ⅱ",
+      "name": "其他小金属",
       "type": "industry",
       "change_pct": 2.38,
       "volume": null,
       "heat_score": 58.3
     },
     {
-      "name": "品牌消费电子",
-      "type": "industry",
-      "change_pct": 2.38,
-      "volume": null,
-      "heat_score": 58.3
-    },
-    {
-      "name": "中芯概念",
+      "name": "氟化工概念",
       "type": "concept",
-      "change_pct": 2.36,
-      "volume": null,
-      "heat_score": 58.3
-    },
-    {
-      "name": "昨日涨停_含一字",
-      "type": "concept",
-      "change_pct": 2.36,
+      "change_pct": 2.38,
       "volume": null,
       "heat_score": 58.3
     },
     {
       "name": "百元股",
       "type": "concept",
-      "change_pct": 2.36,
+      "change_pct": 2.37,
       "volume": null,
       "heat_score": 58.3
     },
     {
-      "name": "PCB",
+      "name": "商业航天",
       "type": "concept",
+      "change_pct": 2.34,
+      "volume": null,
+      "heat_score": 58.2
+    },
+    {
+      "name": "通信工程及服务",
+      "type": "industry",
+      "change_pct": 2.31,
+      "volume": null,
+      "heat_score": 58.1
+    },
+    {
+      "name": "CRO",
+      "type": "concept",
+      "change_pct": 2.32,
+      "volume": null,
+      "heat_score": 58.1
+    },
+    {
+      "name": "体育Ⅲ",
+      "type": "industry",
       "change_pct": 2.28,
       "volume": null,
       "heat_score": 58.0
     },
     {
-      "name": "激光设备",
+      "name": "体育Ⅱ",
       "type": "industry",
-      "change_pct": 2.25,
+      "change_pct": 2.28,
+      "volume": null,
+      "heat_score": 58.0
+    },
+    {
+      "name": "锂电专用设备",
+      "type": "industry",
+      "change_pct": 2.28,
+      "volume": null,
+      "heat_score": 58.0
+    },
+    {
+      "name": "商业地产",
+      "type": "industry",
+      "change_pct": 2.27,
       "volume": null,
       "heat_score": 57.9
     },
     {
-      "name": "其他数字媒体",
+      "name": "厨房电器",
       "type": "industry",
-      "change_pct": 2.23,
+      "change_pct": 2.24,
       "volume": null,
       "heat_score": 57.8
     },
     {
-      "name": "航天航空",
+      "name": "昨日首板",
       "type": "concept",
-      "change_pct": 2.23,
+      "change_pct": 2.24,
       "volume": null,
       "heat_score": 57.8
     },
     {
-      "name": "昨日涨停",
-      "type": "concept",
+      "name": "数字媒体",
+      "type": "industry",
       "change_pct": 2.21,
       "volume": null,
       "heat_score": 57.7
     },
     {
-      "name": "被动元件",
-      "type": "industry",
-      "change_pct": 2.11,
-      "volume": null,
-      "heat_score": 57.4
-    },
-    {
-      "name": "CPO概念",
+      "name": "空间站概念",
       "type": "concept",
-      "change_pct": 2.11,
+      "change_pct": 2.19,
       "volume": null,
-      "heat_score": 57.4
+      "heat_score": 57.7
     },
     {
-      "name": "卫星互联网",
-      "type": "concept",
-      "change_pct": 2.1,
-      "volume": null,
-      "heat_score": 57.4
-    },
-    {
-      "name": "畜禽饲料",
+      "name": "电子化学品Ⅲ",
       "type": "industry",
-      "change_pct": 2.08,
+      "change_pct": 2.18,
       "volume": null,
-      "heat_score": 57.3
+      "heat_score": 57.6
+    },
+    {
+      "name": "电子化学品Ⅱ",
+      "type": "industry",
+      "change_pct": 2.18,
+      "volume": null,
+      "heat_score": 57.6
+    },
+    {
+      "name": "蓄电池及其他电池",
+      "type": "industry",
+      "change_pct": 2.17,
+      "volume": null,
+      "heat_score": 57.6
     },
     {
       "name": "腾讯云",
       "type": "concept",
-      "change_pct": 2.09,
+      "change_pct": 2.16,
       "volume": null,
-      "heat_score": 57.3
+      "heat_score": 57.6
     },
     {
-      "name": "氟化工",
+      "name": "房地产开发",
       "type": "industry",
-      "change_pct": 2.05,
+      "change_pct": 2.15,
       "volume": null,
-      "heat_score": 57.2
+      "heat_score": 57.5
     },
     {
-      "name": "光通信模块",
-      "type": "concept",
-      "change_pct": 2.07,
-      "volume": null,
-      "heat_score": 57.2
-    },
-    {
-      "name": "AIPC",
-      "type": "concept",
-      "change_pct": 2.05,
-      "volume": null,
-      "heat_score": 57.2
-    },
-    {
-      "name": "电子",
+      "name": "房地产",
       "type": "industry",
-      "change_pct": 2.03,
+      "change_pct": 2.14,
       "volume": null,
-      "heat_score": 57.1
-    },
-    {
-      "name": "其他电源设备Ⅲ",
-      "type": "industry",
-      "change_pct": 2.02,
-      "volume": null,
-      "heat_score": 57.1
-    },
-    {
-      "name": "光伏加工设备",
-      "type": "industry",
-      "change_pct": 2.0,
-      "volume": null,
-      "heat_score": 57.0
+      "heat_score": 57.5
     },
     {
       "name": "第四代半导体",
       "type": "concept",
-      "change_pct": 2.0,
+      "change_pct": 2.15,
       "volume": null,
-      "heat_score": 57.0
-    },
-    {
-      "name": "东数西算",
-      "type": "concept",
-      "change_pct": 1.99,
-      "volume": null,
-      "heat_score": 57.0
-    },
-    {
-      "name": "印刷",
-      "type": "industry",
-      "change_pct": 1.98,
-      "volume": null,
-      "heat_score": 56.9
-    },
-    {
-      "name": "其他养殖",
-      "type": "industry",
-      "change_pct": 1.96,
-      "volume": null,
-      "heat_score": 56.9
-    },
-    {
-      "name": "第三代半导体",
-      "type": "concept",
-      "change_pct": 1.97,
-      "volume": null,
-      "heat_score": 56.9
-    },
-    {
-      "name": "昨日首板",
-      "type": "concept",
-      "change_pct": 1.96,
-      "volume": null,
-      "heat_score": 56.9
-    },
-    {
-      "name": "通信工程及服务",
-      "type": "industry",
-      "change_pct": 1.93,
-      "volume": null,
-      "heat_score": 56.8
-    },
-    {
-      "name": "军工电子Ⅲ",
-      "type": "industry",
-      "change_pct": 1.93,
-      "volume": null,
-      "heat_score": 56.8
-    },
-    {
-      "name": "军工电子Ⅱ",
-      "type": "industry",
-      "change_pct": 1.93,
-      "volume": null,
-      "heat_score": 56.8
-    },
-    {
-      "name": "半导体概念",
-      "type": "concept",
-      "change_pct": 1.91,
-      "volume": null,
-      "heat_score": 56.7
-    },
-    {
-      "name": "氮化镓",
-      "type": "concept",
-      "change_pct": 1.91,
-      "volume": null,
-      "heat_score": 56.7
-    },
-    {
-      "name": "航空装备Ⅲ",
-      "type": "industry",
-      "change_pct": 1.88,
-      "volume": null,
-      "heat_score": 56.6
-    },
-    {
-      "name": "航空装备Ⅱ",
-      "type": "industry",
-      "change_pct": 1.88,
-      "volume": null,
-      "heat_score": 56.6
-    },
-    {
-      "name": "同步磁阻电机",
-      "type": "concept",
-      "change_pct": 1.89,
-      "volume": null,
-      "heat_score": 56.6
-    },
-    {
-      "name": "英伟达概念",
-      "type": "concept",
-      "change_pct": 1.89,
-      "volume": null,
-      "heat_score": 56.6
-    },
-    {
-      "name": "被动元件概念",
-      "type": "concept",
-      "change_pct": 1.88,
-      "volume": null,
-      "heat_score": 56.6
-    },
-    {
-      "name": "钨",
-      "type": "industry",
-      "change_pct": 1.85,
-      "volume": null,
-      "heat_score": 56.5
-    },
-    {
-      "name": "地热能",
-      "type": "concept",
-      "change_pct": 1.85,
-      "volume": null,
-      "heat_score": 56.5
-    },
-    {
-      "name": "猪肉概念",
-      "type": "concept",
-      "change_pct": 1.83,
-      "volume": null,
-      "heat_score": 56.4
-    },
-    {
-      "name": "PLC概念",
-      "type": "concept",
-      "change_pct": 1.82,
-      "volume": null,
-      "heat_score": 56.4
-    },
-    {
-      "name": "其他电源设备Ⅱ",
-      "type": "industry",
-      "change_pct": 1.8,
-      "volume": null,
-      "heat_score": 56.3
-    },
-    {
-      "name": "电池化学品",
-      "type": "industry",
-      "change_pct": 1.79,
-      "volume": null,
-      "heat_score": 56.3
-    },
-    {
-      "name": "算力概念",
-      "type": "concept",
-      "change_pct": 1.8,
-      "volume": null,
-      "heat_score": 56.3
-    },
-    {
-      "name": "历史新高",
-      "type": "concept",
-      "change_pct": 1.8,
-      "volume": null,
-      "heat_score": 56.3
-    },
-    {
-      "name": "电视广播Ⅲ",
-      "type": "industry",
-      "change_pct": 1.78,
-      "volume": null,
-      "heat_score": 56.2
-    },
-    {
-      "name": "电视广播Ⅱ",
-      "type": "industry",
-      "change_pct": 1.78,
-      "volume": null,
-      "heat_score": 56.2
-    },
-    {
-      "name": "液冷概念",
-      "type": "concept",
-      "change_pct": 1.77,
-      "volume": null,
-      "heat_score": 56.2
-    },
-    {
-      "name": "其他通信设备",
-      "type": "industry",
-      "change_pct": 1.75,
-      "volume": null,
-      "heat_score": 56.1
-    },
-    {
-      "name": "数字媒体",
-      "type": "industry",
-      "change_pct": 1.74,
-      "volume": null,
-      "heat_score": 56.1
-    },
-    {
-      "name": "超跌股",
-      "type": "concept",
-      "change_pct": 1.73,
-      "volume": null,
-      "heat_score": 56.1
+      "heat_score": 57.5
     }
   ],
   "summary": {
     "hot": [
       "钴",
       "昨日打二板以上表现",
-      "半导体设备",
-      "文字媒体",
       "国际工程",
-      "生猪养殖",
       "能源金属",
-      "分立器件",
-      "昨日连板",
-      "昨日连板_含一字"
+      "航天装备Ⅲ",
+      "航天装备Ⅱ",
+      "生猪养殖",
+      "半导体设备",
+      "其他数字媒体",
+      "文字媒体"
     ],
     "cold": [
-      "油服工程",
       "林业Ⅲ",
       "林业Ⅱ",
-      "钾肥",
-      "教育运营及其他",
-      "氨纶",
-      "油田服务",
       "粘胶",
-      "印染",
-      "稀土"
+      "纯碱",
+      "油品石化贸易",
+      "稀土",
+      "油服工程",
+      "钾肥",
+      "油田服务",
+      "氨纶"
     ]
   }
 }
