@@ -1,34 +1,6 @@
 {
-  "updated_at": "2026-04-15 10:00:19",
+  "updated_at": "2026-04-15 15:51:02",
   "items": [
-    {
-      "name": "快递",
-      "type": "industry",
-      "change_pct": 6.01,
-      "volume": null,
-      "heat_score": 71.0
-    },
-    {
-      "name": "线下药店",
-      "type": "industry",
-      "change_pct": 6.01,
-      "volume": null,
-      "heat_score": 71.0
-    },
-    {
-      "name": "宠物食品",
-      "type": "industry",
-      "change_pct": 5.72,
-      "volume": null,
-      "heat_score": 70.0
-    },
-    {
-      "name": "医药商业",
-      "type": "industry",
-      "change_pct": 4.35,
-      "volume": null,
-      "heat_score": 65.2
-    },
     {
       "name": "SPD概念",
       "type": "concept",
@@ -56,6 +28,27 @@
       "change_pct": 3.74,
       "volume": null,
       "heat_score": 63.1
+    },
+    {
+      "name": "快递",
+      "type": "industry",
+      "change_pct": 6.01,
+      "volume": null,
+      "heat_score": 62.0
+    },
+    {
+      "name": "宠物食品",
+      "type": "industry",
+      "change_pct": 5.72,
+      "volume": null,
+      "heat_score": 61.2
+    },
+    {
+      "name": "线下药店",
+      "type": "industry",
+      "change_pct": 6.01,
+      "volume": null,
+      "heat_score": 61.0
     },
     {
       "name": "肝素概念",
@@ -105,6 +98,13 @@
       "change_pct": 2.43,
       "volume": null,
       "heat_score": 58.5
+    },
+    {
+      "name": "医药商业",
+      "type": "industry",
+      "change_pct": 4.35,
+      "volume": null,
+      "heat_score": 58.0
     },
     {
       "name": "化学制药",
@@ -564,16 +564,16 @@
   ],
   "summary": {
     "hot": [
-      "快递",
-      "线下药店",
-      "宠物食品",
-      "医药商业",
       "SPD概念",
       "国际工程",
       "医药流通",
       "超级真菌",
+      "快递",
+      "宠物食品",
+      "线下药店",
       "肝素概念",
-      "减肥药"
+      "减肥药",
+      "重组蛋白"
     ],
     "cold": [
       "钴",
