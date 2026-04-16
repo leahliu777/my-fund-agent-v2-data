@@ -1,54 +1,19 @@
 {
-  "updated_at": "2026-04-16 07:13:14",
+  "updated_at": "2026-04-16 09:59:35",
   "items": [
-    {
-      "name": "钨",
-      "type": "industry",
-      "change_pct": 8.58,
-      "volume": null,
-      "heat_score": 80.0
-    },
-    {
-      "name": "锂",
-      "type": "industry",
-      "change_pct": 6.47,
-      "volume": null,
-      "heat_score": 72.6
-    },
-    {
-      "name": "综合电力设备商",
-      "type": "industry",
-      "change_pct": 5.56,
-      "volume": null,
-      "heat_score": 69.5
-    },
-    {
-      "name": "能源金属",
-      "type": "industry",
-      "change_pct": 5.22,
-      "volume": null,
-      "heat_score": 68.3
-    },
-    {
-      "name": "铁矿石",
-      "type": "industry",
-      "change_pct": 5.07,
-      "volume": null,
-      "heat_score": 67.7
-    },
-    {
-      "name": "镍",
-      "type": "industry",
-      "change_pct": 5.02,
-      "volume": null,
-      "heat_score": 67.6
-    },
     {
       "name": "锦纶",
       "type": "industry",
       "change_pct": 5.02,
       "volume": null,
       "heat_score": 67.6
+    },
+    {
+      "name": "钨",
+      "type": "industry",
+      "change_pct": 8.58,
+      "volume": null,
+      "heat_score": 66.5
     },
     {
       "name": "其他数字媒体",
@@ -233,6 +198,13 @@
       "heat_score": 61.6
     },
     {
+      "name": "锂",
+      "type": "industry",
+      "change_pct": 6.47,
+      "volume": null,
+      "heat_score": 61.5
+    },
+    {
       "name": "其他化学纤维",
       "type": "industry",
       "change_pct": 3.3,
@@ -275,6 +247,13 @@
       "heat_score": 61.1
     },
     {
+      "name": "铁矿石",
+      "type": "industry",
+      "change_pct": 5.07,
+      "volume": null,
+      "heat_score": 61.0
+    },
+    {
       "name": "厨卫电器",
       "type": "industry",
       "change_pct": 3.15,
@@ -308,6 +287,13 @@
       "change_pct": 3.07,
       "volume": null,
       "heat_score": 60.7
+    },
+    {
+      "name": "综合电力设备商",
+      "type": "industry",
+      "change_pct": 5.56,
+      "volume": null,
+      "heat_score": 60.6
     },
     {
       "name": "其他电子Ⅲ",
@@ -408,6 +394,13 @@
       "heat_score": 60.0
     },
     {
+      "name": "镍",
+      "type": "industry",
+      "change_pct": 5.02,
+      "volume": null,
+      "heat_score": 59.9
+    },
+    {
       "name": "通信设备",
       "type": "industry",
       "change_pct": 2.82,
@@ -499,6 +492,13 @@
       "heat_score": 59.5
     },
     {
+      "name": "能源金属",
+      "type": "industry",
+      "change_pct": 5.22,
+      "volume": null,
+      "heat_score": 59.4
+    },
+    {
       "name": "智谱AI概念",
       "type": "concept",
       "change_pct": 2.69,
@@ -564,16 +564,16 @@
   ],
   "summary": {
     "hot": [
-      "钨",
-      "锂",
-      "综合电力设备商",
-      "能源金属",
-      "铁矿石",
-      "镍",
       "锦纶",
+      "钨",
       "其他数字媒体",
       "通信应用增值服务",
-      "蓄电池及其他电池"
+      "蓄电池及其他电池",
+      "锂矿概念",
+      "厨房电器",
+      "铅锌",
+      "刀片电池",
+      "通信服务"
     ],
     "cold": [
       "线下药店",
