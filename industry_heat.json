@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-17 07:13:01",
+  "updated_at": "2026-04-17 09:58:07",
   "items": [
     {
       "name": "昨日连板",
@@ -44,41 +44,6 @@
       "heat_score": 65.5
     },
     {
-      "name": "光伏加工设备",
-      "type": "industry",
-      "change_pct": 3.73,
-      "volume": null,
-      "heat_score": 63.1
-    },
-    {
-      "name": "通信网络设备及器件",
-      "type": "industry",
-      "change_pct": 3.68,
-      "volume": null,
-      "heat_score": 62.9
-    },
-    {
-      "name": "电子化学品Ⅲ",
-      "type": "industry",
-      "change_pct": 3.64,
-      "volume": null,
-      "heat_score": 62.7
-    },
-    {
-      "name": "电子化学品Ⅱ",
-      "type": "industry",
-      "change_pct": 3.64,
-      "volume": null,
-      "heat_score": 62.7
-    },
-    {
-      "name": "其他化学纤维",
-      "type": "industry",
-      "change_pct": 3.61,
-      "volume": null,
-      "heat_score": 62.6
-    },
-    {
       "name": "复合集流体",
       "type": "concept",
       "change_pct": 3.51,
@@ -91,20 +56,6 @@
       "change_pct": 3.51,
       "volume": null,
       "heat_score": 62.3
-    },
-    {
-      "name": "膜材料",
-      "type": "industry",
-      "change_pct": 3.39,
-      "volume": null,
-      "heat_score": 61.9
-    },
-    {
-      "name": "光学元件",
-      "type": "industry",
-      "change_pct": 3.22,
-      "volume": null,
-      "heat_score": 61.3
     },
     {
       "name": "第四代半导体",
@@ -121,60 +72,11 @@
       "heat_score": 60.6
     },
     {
-      "name": "钴",
-      "type": "industry",
-      "change_pct": 2.92,
-      "volume": null,
-      "heat_score": 60.2
-    },
-    {
-      "name": "印制电路板",
-      "type": "industry",
-      "change_pct": 2.85,
-      "volume": null,
-      "heat_score": 60.0
-    },
-    {
-      "name": "食用菌",
-      "type": "industry",
-      "change_pct": 2.82,
-      "volume": null,
-      "heat_score": 59.9
-    },
-    {
       "name": "F5G概念",
       "type": "concept",
       "change_pct": 2.76,
       "volume": null,
       "heat_score": 59.7
-    },
-    {
-      "name": "大气治理",
-      "type": "industry",
-      "change_pct": 2.67,
-      "volume": null,
-      "heat_score": 59.3
-    },
-    {
-      "name": "蓄电池及其他电池",
-      "type": "industry",
-      "change_pct": 2.6,
-      "volume": null,
-      "heat_score": 59.1
-    },
-    {
-      "name": "元件",
-      "type": "industry",
-      "change_pct": 2.59,
-      "volume": null,
-      "heat_score": 59.1
-    },
-    {
-      "name": "金融信息服务",
-      "type": "industry",
-      "change_pct": 2.54,
-      "volume": null,
-      "heat_score": 58.9
     },
     {
       "name": "BC电池",
@@ -191,13 +93,6 @@
       "heat_score": 58.8
     },
     {
-      "name": "机床工具",
-      "type": "industry",
-      "change_pct": 2.46,
-      "volume": null,
-      "heat_score": 58.6
-    },
-    {
       "name": "PCB",
       "type": "concept",
       "change_pct": 2.47,
@@ -205,32 +100,11 @@
       "heat_score": 58.6
     },
     {
-      "name": "其他金属新材料",
+      "name": "其他化学纤维",
       "type": "industry",
-      "change_pct": 2.42,
+      "change_pct": 3.61,
       "volume": null,
       "heat_score": 58.5
-    },
-    {
-      "name": "其他橡胶制品",
-      "type": "industry",
-      "change_pct": 2.41,
-      "volume": null,
-      "heat_score": 58.4
-    },
-    {
-      "name": "橡胶助剂",
-      "type": "industry",
-      "change_pct": 2.4,
-      "volume": null,
-      "heat_score": 58.4
-    },
-    {
-      "name": "钨",
-      "type": "industry",
-      "change_pct": 2.39,
-      "volume": null,
-      "heat_score": 58.4
     },
     {
       "name": "蓝宝石",
@@ -268,46 +142,11 @@
       "heat_score": 58.0
     },
     {
-      "name": "通信设备",
-      "type": "industry",
-      "change_pct": 2.29,
-      "volume": null,
-      "heat_score": 58.0
-    },
-    {
-      "name": "风电整机",
-      "type": "industry",
-      "change_pct": 2.28,
-      "volume": null,
-      "heat_score": 58.0
-    },
-    {
       "name": "昨日涨停_含一字",
       "type": "concept",
       "change_pct": 2.29,
       "volume": null,
       "heat_score": 58.0
-    },
-    {
-      "name": "工控设备",
-      "type": "industry",
-      "change_pct": 2.27,
-      "volume": null,
-      "heat_score": 57.9
-    },
-    {
-      "name": "塑料包装",
-      "type": "industry",
-      "change_pct": 2.26,
-      "volume": null,
-      "heat_score": 57.9
-    },
-    {
-      "name": "果蔬加工",
-      "type": "industry",
-      "change_pct": 2.25,
-      "volume": null,
-      "heat_score": 57.9
     },
     {
       "name": "昨日涨停",
@@ -408,6 +247,13 @@
       "heat_score": 57.5
     },
     {
+      "name": "光伏加工设备",
+      "type": "industry",
+      "change_pct": 3.73,
+      "volume": null,
+      "heat_score": 57.4
+    },
+    {
       "name": "磨具磨料",
       "type": "industry",
       "change_pct": 2.12,
@@ -469,6 +315,20 @@
       "change_pct": 2.07,
       "volume": null,
       "heat_score": 57.2
+    },
+    {
+      "name": "电子化学品Ⅲ",
+      "type": "industry",
+      "change_pct": 3.64,
+      "volume": null,
+      "heat_score": 57.1
+    },
+    {
+      "name": "电子化学品Ⅱ",
+      "type": "industry",
+      "change_pct": 3.64,
+      "volume": null,
+      "heat_score": 57.1
     },
     {
       "name": "电池",
@@ -560,6 +420,146 @@
       "change_pct": 1.95,
       "volume": null,
       "heat_score": 56.8
+    },
+    {
+      "name": "MicroLED",
+      "type": "concept",
+      "change_pct": 1.94,
+      "volume": null,
+      "heat_score": 56.8
+    },
+    {
+      "name": "碳纤维",
+      "type": "concept",
+      "change_pct": 1.93,
+      "volume": null,
+      "heat_score": 56.8
+    },
+    {
+      "name": "通信网络设备及器件",
+      "type": "industry",
+      "change_pct": 3.68,
+      "volume": null,
+      "heat_score": 56.6
+    },
+    {
+      "name": "大气治理",
+      "type": "industry",
+      "change_pct": 2.67,
+      "volume": null,
+      "heat_score": 56.6
+    },
+    {
+      "name": "风电设备",
+      "type": "industry",
+      "change_pct": 1.9,
+      "volume": null,
+      "heat_score": 56.6
+    },
+    {
+      "name": "LED",
+      "type": "industry",
+      "change_pct": 1.89,
+      "volume": null,
+      "heat_score": 56.6
+    },
+    {
+      "name": "培育钻石",
+      "type": "concept",
+      "change_pct": 1.88,
+      "volume": null,
+      "heat_score": 56.6
+    },
+    {
+      "name": "OLED",
+      "type": "concept",
+      "change_pct": 1.88,
+      "volume": null,
+      "heat_score": 56.6
+    },
+    {
+      "name": "金融信息服务",
+      "type": "industry",
+      "change_pct": 2.54,
+      "volume": null,
+      "heat_score": 56.5
+    },
+    {
+      "name": "电子",
+      "type": "industry",
+      "change_pct": 1.85,
+      "volume": null,
+      "heat_score": 56.5
+    },
+    {
+      "name": "风电零部件",
+      "type": "industry",
+      "change_pct": 1.83,
+      "volume": null,
+      "heat_score": 56.4
+    },
+    {
+      "name": "粘胶",
+      "type": "industry",
+      "change_pct": 1.83,
+      "volume": null,
+      "heat_score": 56.4
+    },
+    {
+      "name": "钛白粉",
+      "type": "industry",
+      "change_pct": 1.82,
+      "volume": null,
+      "heat_score": 56.4
+    },
+    {
+      "name": "毫米波概念",
+      "type": "concept",
+      "change_pct": 1.82,
+      "volume": null,
+      "heat_score": 56.4
+    },
+    {
+      "name": "金属新材料",
+      "type": "industry",
+      "change_pct": 1.81,
+      "volume": null,
+      "heat_score": 56.3
+    },
+    {
+      "name": "其他专用设备",
+      "type": "industry",
+      "change_pct": 1.75,
+      "volume": null,
+      "heat_score": 56.1
+    },
+    {
+      "name": "集成电路封测",
+      "type": "industry",
+      "change_pct": 1.73,
+      "volume": null,
+      "heat_score": 56.1
+    },
+    {
+      "name": "苹果概念",
+      "type": "concept",
+      "change_pct": 1.75,
+      "volume": null,
+      "heat_score": 56.1
+    },
+    {
+      "name": "5G概念",
+      "type": "concept",
+      "change_pct": 1.74,
+      "volume": null,
+      "heat_score": 56.1
+    },
+    {
+      "name": "超导概念",
+      "type": "concept",
+      "change_pct": 1.74,
+      "volume": null,
+      "heat_score": 56.1
     }
   ],
   "summary": {
@@ -570,10 +570,10 @@
       "昨日连板_含一字",
       "玻璃基板",
       "CPO概念",
-      "光伏加工设备",
-      "通信网络设备及器件",
-      "电子化学品Ⅲ",
-      "电子化学品Ⅱ"
+      "复合集流体",
+      "MLCC",
+      "第四代半导体",
+      "3D玻璃"
     ],
     "cold": [
       "厨卫电器",
