@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-17 15:40:30",
+  "updated_at": "2026-04-18 04:18:31",
   "items": [
     {
       "name": "昨日连板",
@@ -44,11 +44,46 @@
       "heat_score": 65.5
     },
     {
+      "name": "锂电专用设备",
+      "type": "industry",
+      "change_pct": 4.11,
+      "volume": null,
+      "heat_score": 64.4
+    },
+    {
+      "name": "铅锌",
+      "type": "industry",
+      "change_pct": 4.0,
+      "volume": null,
+      "heat_score": 64.0
+    },
+    {
+      "name": "非金属材料Ⅲ",
+      "type": "industry",
+      "change_pct": 3.92,
+      "volume": null,
+      "heat_score": 63.7
+    },
+    {
+      "name": "非金属材料Ⅱ",
+      "type": "industry",
+      "change_pct": 3.92,
+      "volume": null,
+      "heat_score": 63.7
+    },
+    {
       "name": "激光设备",
       "type": "industry",
       "change_pct": 3.9,
       "volume": null,
       "heat_score": 63.6
+    },
+    {
+      "name": "光伏加工设备",
+      "type": "industry",
+      "change_pct": 3.73,
+      "volume": null,
+      "heat_score": 63.1
     },
     {
       "name": "通信网络设备及器件",
@@ -317,20 +352,6 @@
       "heat_score": 57.9
     },
     {
-      "name": "非金属材料Ⅲ",
-      "type": "industry",
-      "change_pct": 3.92,
-      "volume": null,
-      "heat_score": 57.8
-    },
-    {
-      "name": "非金属材料Ⅱ",
-      "type": "industry",
-      "change_pct": 3.92,
-      "volume": null,
-      "heat_score": 57.8
-    },
-    {
       "name": "AI芯片",
       "type": "concept",
       "change_pct": 2.24,
@@ -387,13 +408,6 @@
       "heat_score": 57.6
     },
     {
-      "name": "铅锌",
-      "type": "industry",
-      "change_pct": 4.0,
-      "volume": null,
-      "heat_score": 57.5
-    },
-    {
       "name": "其他塑料制品",
       "type": "industry",
       "change_pct": 2.15,
@@ -406,13 +420,6 @@
       "change_pct": 2.15,
       "volume": null,
       "heat_score": 57.5
-    },
-    {
-      "name": "光伏加工设备",
-      "type": "industry",
-      "change_pct": 3.73,
-      "volume": null,
-      "heat_score": 57.4
     },
     {
       "name": "磨具磨料",
@@ -513,13 +520,6 @@
       "heat_score": 57.0
     },
     {
-      "name": "锂电专用设备",
-      "type": "industry",
-      "change_pct": 4.11,
-      "volume": null,
-      "heat_score": 56.9
-    },
-    {
       "name": "被动元件",
       "type": "industry",
       "change_pct": 1.98,
@@ -570,10 +570,10 @@
       "昨日连板_含一字",
       "玻璃基板",
       "CPO概念",
-      "激光设备",
-      "通信网络设备及器件",
-      "电子化学品Ⅲ",
-      "电子化学品Ⅱ"
+      "锂电专用设备",
+      "铅锌",
+      "非金属材料Ⅲ",
+      "非金属材料Ⅱ"
     ],
     "cold": [
       "厨卫电器",
