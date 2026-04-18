@@ -1,6 +1,6 @@
 {
-  "update_time": "2026-04-18 12:14:33",
-  "rate_a": 0.4,
+  "update_time": "2026-04-18 14:47:19",
+  "rate_a": 0.5,
   "rate_b": 0.49,
   "weather": "💨 持续顺风",
   "macro": {
@@ -10,5 +10,5 @@
   },
   "grid_count": 0,
   "total_pnl": 815.5,
-  "daily_pnl": 98.58
+  "daily_pnl": 117.24
 }

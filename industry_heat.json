@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-18 04:18:31",
+  "updated_at": "2026-04-18 06:49:56",
   "items": [
     {
       "name": "昨日连板",
@@ -42,6 +42,13 @@
       "change_pct": 4.44,
       "volume": null,
       "heat_score": 65.5
+    },
+    {
+      "name": "半导体材料",
+      "type": "industry",
+      "change_pct": 4.29,
+      "volume": null,
+      "heat_score": 65.0
     },
     {
       "name": "锂电专用设备",
@@ -294,13 +301,6 @@
       "change_pct": 2.35,
       "volume": null,
       "heat_score": 58.2
-    },
-    {
-      "name": "半导体材料",
-      "type": "industry",
-      "change_pct": 4.29,
-      "volume": null,
-      "heat_score": 58.0
     },
     {
       "name": "通信设备",
@@ -570,10 +570,10 @@
       "昨日连板_含一字",
       "玻璃基板",
       "CPO概念",
+      "半导体材料",
       "锂电专用设备",
       "铅锌",
-      "非金属材料Ⅲ",
-      "非金属材料Ⅱ"
+      "非金属材料Ⅲ"
     ],
     "cold": [
       "厨卫电器",
