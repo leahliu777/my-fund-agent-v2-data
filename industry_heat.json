@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-18 09:15:54",
+  "updated_at": "2026-04-18 15:09:55",
   "items": [
     {
       "name": "昨日连板",
@@ -42,6 +42,20 @@
       "change_pct": 4.44,
       "volume": null,
       "heat_score": 65.5
+    },
+    {
+      "name": "非金属材料Ⅲ",
+      "type": "industry",
+      "change_pct": 3.92,
+      "volume": null,
+      "heat_score": 63.7
+    },
+    {
+      "name": "非金属材料Ⅱ",
+      "type": "industry",
+      "change_pct": 3.92,
+      "volume": null,
+      "heat_score": 63.7
     },
     {
       "name": "电子化学品Ⅲ",
@@ -303,20 +317,6 @@
       "heat_score": 57.9
     },
     {
-      "name": "非金属材料Ⅲ",
-      "type": "industry",
-      "change_pct": 3.92,
-      "volume": null,
-      "heat_score": 57.8
-    },
-    {
-      "name": "非金属材料Ⅱ",
-      "type": "industry",
-      "change_pct": 3.92,
-      "volume": null,
-      "heat_score": 57.8
-    },
-    {
       "name": "AI芯片",
       "type": "concept",
       "change_pct": 2.24,
@@ -527,14 +527,7 @@
       "heat_score": 56.9
     },
     {
-      "name": "半导体概念",
-      "type": "concept",
-      "change_pct": 1.95,
-      "volume": null,
-      "heat_score": 56.8
-    },
-    {
-      "name": "先进封装",
+      "name": "IGBT概念",
       "type": "concept",
       "change_pct": 1.95,
       "volume": null,
@@ -548,7 +541,14 @@
       "heat_score": 56.8
     },
     {
-      "name": "IGBT概念",
+      "name": "先进封装",
+      "type": "concept",
+      "change_pct": 1.95,
+      "volume": null,
+      "heat_score": 56.8
+    },
+    {
+      "name": "半导体概念",
       "type": "concept",
       "change_pct": 1.95,
       "volume": null,
@@ -570,10 +570,10 @@
       "昨日连板_含一字",
       "玻璃基板",
       "CPO概念",
+      "非金属材料Ⅲ",
+      "非金属材料Ⅱ",
       "电子化学品Ⅲ",
-      "电子化学品Ⅱ",
-      "其他化学纤维",
-      "复合集流体"
+      "电子化学品Ⅱ"
     ],
     "cold": [
       "厨卫电器",
