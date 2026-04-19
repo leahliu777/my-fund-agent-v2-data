@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-19 09:28:29",
+  "updated_at": "2026-04-19 15:11:14",
   "items": [
     {
       "name": "昨日连板",
@@ -534,14 +534,7 @@
       "heat_score": 56.9
     },
     {
-      "name": "半导体概念",
-      "type": "concept",
-      "change_pct": 1.95,
-      "volume": null,
-      "heat_score": 56.8
-    },
-    {
-      "name": "先进封装",
+      "name": "IGBT概念",
       "type": "concept",
       "change_pct": 1.95,
       "volume": null,
@@ -555,7 +548,14 @@
       "heat_score": 56.8
     },
     {
-      "name": "IGBT概念",
+      "name": "先进封装",
+      "type": "concept",
+      "change_pct": 1.95,
+      "volume": null,
+      "heat_score": 56.8
+    },
+    {
+      "name": "半导体概念",
       "type": "concept",
       "change_pct": 1.95,
       "volume": null,

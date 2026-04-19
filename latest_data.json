@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-04-19 17:25:33",
+  "update_time": "2026-04-19 23:07:42",
   "rate_a": 0.5,
   "rate_b": 0.49,
   "weather": "💨 持续顺风",
@@ -9,6 +9,6 @@
     "dxy": "98.1"
   },
   "grid_count": 0,
-  "total_pnl": 815.5,
-  "daily_pnl": 117.24
+  "total_pnl": 795.19,
+  "daily_pnl": 116.94
 }
