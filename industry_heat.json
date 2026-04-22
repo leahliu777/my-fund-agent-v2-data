@@ -1,590 +1,590 @@
 {
-  "updated_at": "2026-04-22 04:31:25",
+  "updated_at": "2026-04-22 07:14:43",
   "items": [
     {
       "name": "昨日打二板以上表现",
       "type": "concept",
-      "change_pct": 7.59,
+      "change_pct": 6.57,
       "volume": null,
-      "heat_score": 76.6
+      "heat_score": 73.0
     },
     {
       "name": "通信线缆及配套",
       "type": "industry",
-      "change_pct": 5.63,
+      "change_pct": 5.78,
       "volume": null,
-      "heat_score": 69.7
-    },
-    {
-      "name": "铅锌",
-      "type": "industry",
-      "change_pct": 4.55,
-      "volume": null,
-      "heat_score": 65.9
-    },
-    {
-      "name": "昨日连板",
-      "type": "concept",
-      "change_pct": 4.43,
-      "volume": null,
-      "heat_score": 65.5
-    },
-    {
-      "name": "昨日连板_含一字",
-      "type": "concept",
-      "change_pct": 4.34,
-      "volume": null,
-      "heat_score": 65.2
+      "heat_score": 70.2
     },
     {
       "name": "光通信模块",
       "type": "concept",
-      "change_pct": 3.91,
+      "change_pct": 5.03,
       "volume": null,
-      "heat_score": 63.7
+      "heat_score": 67.6
     },
     {
       "name": "半导体材料",
       "type": "industry",
-      "change_pct": 3.77,
+      "change_pct": 4.91,
       "volume": null,
-      "heat_score": 63.2
-    },
-    {
-      "name": "钨",
-      "type": "industry",
-      "change_pct": 3.64,
-      "volume": null,
-      "heat_score": 62.7
-    },
-    {
-      "name": "光纤概念",
-      "type": "concept",
-      "change_pct": 3.55,
-      "volume": null,
-      "heat_score": 62.4
+      "heat_score": 67.2
     },
     {
       "name": "CPO概念",
       "type": "concept",
-      "change_pct": 3.33,
+      "change_pct": 4.76,
       "volume": null,
-      "heat_score": 61.7
+      "heat_score": 66.7
     },
     {
-      "name": "被动元件",
-      "type": "industry",
-      "change_pct": 3.14,
+      "name": "光纤概念",
+      "type": "concept",
+      "change_pct": 4.04,
       "volume": null,
-      "heat_score": 61.0
+      "heat_score": 64.1
+    },
+    {
+      "name": "通信网络设备及器件",
+      "type": "industry",
+      "change_pct": 3.95,
+      "volume": null,
+      "heat_score": 63.8
+    },
+    {
+      "name": "铅锌",
+      "type": "industry",
+      "change_pct": 3.81,
+      "volume": null,
+      "heat_score": 63.3
     },
     {
       "name": "EDR概念",
       "type": "concept",
+      "change_pct": 3.79,
+      "volume": null,
+      "heat_score": 63.3
+    },
+    {
+      "name": "被动元件",
+      "type": "industry",
+      "change_pct": 3.69,
+      "volume": null,
+      "heat_score": 62.9
+    },
+    {
+      "name": "昨日连板_含一字",
+      "type": "concept",
+      "change_pct": 3.65,
+      "volume": null,
+      "heat_score": 62.8
+    },
+    {
+      "name": "F5G概念",
+      "type": "concept",
+      "change_pct": 3.57,
+      "volume": null,
+      "heat_score": 62.5
+    },
+    {
+      "name": "元件",
+      "type": "industry",
+      "change_pct": 3.49,
+      "volume": null,
+      "heat_score": 62.2
+    },
+    {
+      "name": "昨日连板",
+      "type": "concept",
+      "change_pct": 3.45,
+      "volume": null,
+      "heat_score": 62.1
+    },
+    {
+      "name": "印制电路板",
+      "type": "industry",
+      "change_pct": 3.41,
+      "volume": null,
+      "heat_score": 61.9
+    },
+    {
+      "name": "信托",
+      "type": "industry",
+      "change_pct": 3.29,
+      "volume": null,
+      "heat_score": 61.5
+    },
+    {
+      "name": "华为海思",
+      "type": "concept",
+      "change_pct": 3.29,
+      "volume": null,
+      "heat_score": 61.5
+    },
+    {
+      "name": "集成电路封测",
+      "type": "industry",
+      "change_pct": 3.26,
+      "volume": null,
+      "heat_score": 61.4
+    },
+    {
+      "name": "高带宽内存",
+      "type": "concept",
+      "change_pct": 3.26,
+      "volume": null,
+      "heat_score": 61.4
+    },
+    {
+      "name": "英伟达概念",
+      "type": "concept",
+      "change_pct": 3.13,
+      "volume": null,
+      "heat_score": 61.0
+    },
+    {
+      "name": "通信设备",
+      "type": "industry",
       "change_pct": 3.12,
       "volume": null,
       "heat_score": 60.9
     },
     {
+      "name": "半导体设备",
+      "type": "industry",
+      "change_pct": 3.09,
+      "volume": null,
+      "heat_score": 60.8
+    },
+    {
+      "name": "半导体",
+      "type": "industry",
+      "change_pct": 2.93,
+      "volume": null,
+      "heat_score": 60.3
+    },
+    {
       "name": "复合肥",
       "type": "industry",
-      "change_pct": 2.99,
+      "change_pct": 2.93,
       "volume": null,
-      "heat_score": 60.5
+      "heat_score": 60.3
     },
     {
-      "name": "F5G概念",
-      "type": "concept",
-      "change_pct": 2.69,
-      "volume": null,
-      "heat_score": 59.4
-    },
-    {
-      "name": "通信网络设备及器件",
+      "name": "钨",
       "type": "industry",
-      "change_pct": 2.65,
+      "change_pct": 2.91,
       "volume": null,
-      "heat_score": 59.3
-    },
-    {
-      "name": "昨日涨停_含一字",
-      "type": "concept",
-      "change_pct": 2.58,
-      "volume": null,
-      "heat_score": 59.0
-    },
-    {
-      "name": "元件",
-      "type": "industry",
-      "change_pct": 2.54,
-      "volume": null,
-      "heat_score": 58.9
+      "heat_score": 60.2
     },
     {
       "name": "分立器件",
       "type": "industry",
-      "change_pct": 2.52,
+      "change_pct": 2.91,
       "volume": null,
-      "heat_score": 58.8
+      "heat_score": 60.2
+    },
+    {
+      "name": "玻璃基板",
+      "type": "concept",
+      "change_pct": 2.92,
+      "volume": null,
+      "heat_score": 60.2
+    },
+    {
+      "name": "先进封装",
+      "type": "concept",
+      "change_pct": 2.75,
+      "volume": null,
+      "heat_score": 59.6
+    },
+    {
+      "name": "MLCC",
+      "type": "concept",
+      "change_pct": 2.7,
+      "volume": null,
+      "heat_score": 59.5
+    },
+    {
+      "name": "彩电",
+      "type": "industry",
+      "change_pct": 2.66,
+      "volume": null,
+      "heat_score": 59.3
+    },
+    {
+      "name": "历史新高",
+      "type": "concept",
+      "change_pct": 2.66,
+      "volume": null,
+      "heat_score": 59.3
+    },
+    {
+      "name": "通信",
+      "type": "industry",
+      "change_pct": 2.62,
+      "volume": null,
+      "heat_score": 59.2
+    },
+    {
+      "name": "OLED",
+      "type": "concept",
+      "change_pct": 2.55,
+      "volume": null,
+      "heat_score": 58.9
+    },
+    {
+      "name": "AI手机",
+      "type": "concept",
+      "change_pct": 2.47,
+      "volume": null,
+      "heat_score": 58.6
     },
     {
       "name": "非金属材料Ⅲ",
       "type": "industry",
-      "change_pct": 2.33,
+      "change_pct": 2.44,
       "volume": null,
-      "heat_score": 58.2
+      "heat_score": 58.5
     },
     {
       "name": "非金属材料Ⅱ",
       "type": "industry",
-      "change_pct": 2.33,
+      "change_pct": 2.44,
+      "volume": null,
+      "heat_score": 58.5
+    },
+    {
+      "name": "中芯概念",
+      "type": "concept",
+      "change_pct": 2.44,
+      "volume": null,
+      "heat_score": 58.5
+    },
+    {
+      "name": "AIPC",
+      "type": "concept",
+      "change_pct": 2.42,
+      "volume": null,
+      "heat_score": 58.5
+    },
+    {
+      "name": "通信应用增值服务",
+      "type": "industry",
+      "change_pct": 2.39,
+      "volume": null,
+      "heat_score": 58.4
+    },
+    {
+      "name": "WiFi",
+      "type": "concept",
+      "change_pct": 2.4,
+      "volume": null,
+      "heat_score": 58.4
+    },
+    {
+      "name": "数字芯片设计",
+      "type": "industry",
+      "change_pct": 2.38,
+      "volume": null,
+      "heat_score": 58.3
+    },
+    {
+      "name": "百元股",
+      "type": "concept",
+      "change_pct": 2.38,
+      "volume": null,
+      "heat_score": 58.3
+    },
+    {
+      "name": "电子",
+      "type": "industry",
+      "change_pct": 2.35,
       "volume": null,
       "heat_score": 58.2
     },
     {
-      "name": "华为海思",
+      "name": "通信技术",
       "type": "concept",
       "change_pct": 2.35,
       "volume": null,
       "heat_score": 58.2
     },
     {
-      "name": "印制电路板",
+      "name": "运动服装",
       "type": "industry",
+      "change_pct": 2.32,
+      "volume": null,
+      "heat_score": 58.1
+    },
+    {
+      "name": "昨日涨停_含一字",
+      "type": "concept",
+      "change_pct": 2.31,
+      "volume": null,
+      "heat_score": 58.1
+    },
+    {
+      "name": "MiniLED",
+      "type": "concept",
+      "change_pct": 2.31,
+      "volume": null,
+      "heat_score": 58.1
+    },
+    {
+      "name": "光学元件",
+      "type": "industry",
+      "change_pct": 2.3,
+      "volume": null,
+      "heat_score": 58.0
+    },
+    {
+      "name": "铜缆高速连接",
+      "type": "concept",
       "change_pct": 2.29,
       "volume": null,
       "heat_score": 58.0
     },
     {
-      "name": "通信设备",
+      "name": "纳米银",
+      "type": "concept",
+      "change_pct": 2.23,
+      "volume": null,
+      "heat_score": 57.8
+    },
+    {
+      "name": "IPv6",
+      "type": "concept",
+      "change_pct": 2.23,
+      "volume": null,
+      "heat_score": 57.8
+    },
+    {
+      "name": "模拟芯片设计",
       "type": "industry",
-      "change_pct": 2.28,
-      "volume": null,
-      "heat_score": 58.0
-    },
-    {
-      "name": "昨日涨停",
-      "type": "concept",
-      "change_pct": 2.25,
-      "volume": null,
-      "heat_score": 57.9
-    },
-    {
-      "name": "昨日首板",
-      "type": "concept",
       "change_pct": 2.21,
       "volume": null,
       "heat_score": 57.7
     },
     {
-      "name": "其他小金属",
-      "type": "industry",
-      "change_pct": 2.1,
+      "name": "液冷概念",
+      "type": "concept",
+      "change_pct": 2.2,
       "volume": null,
-      "heat_score": 57.4
+      "heat_score": 57.7
     },
     {
-      "name": "高带宽内存",
+      "name": "通信终端及配件",
+      "type": "industry",
+      "change_pct": 2.18,
+      "volume": null,
+      "heat_score": 57.6
+    },
+    {
+      "name": "激光设备",
+      "type": "industry",
+      "change_pct": 2.18,
+      "volume": null,
+      "heat_score": 57.6
+    },
+    {
+      "name": "MicroLED",
+      "type": "concept",
+      "change_pct": 2.18,
+      "volume": null,
+      "heat_score": 57.6
+    },
+    {
+      "name": "空间计算",
+      "type": "concept",
+      "change_pct": 2.17,
+      "volume": null,
+      "heat_score": 57.6
+    },
+    {
+      "name": "东方财富热股",
+      "type": "concept",
+      "change_pct": 2.17,
+      "volume": null,
+      "heat_score": 57.6
+    },
+    {
+      "name": "算力概念",
+      "type": "concept",
+      "change_pct": 2.17,
+      "volume": null,
+      "heat_score": 57.6
+    },
+    {
+      "name": "2026—季报扭亏",
+      "type": "concept",
+      "change_pct": 2.15,
+      "volume": null,
+      "heat_score": 57.5
+    },
+    {
+      "name": "苹果概念",
+      "type": "concept",
+      "change_pct": 2.14,
+      "volume": null,
+      "heat_score": 57.5
+    },
+    {
+      "name": "植物照明",
+      "type": "concept",
+      "change_pct": 2.13,
+      "volume": null,
+      "heat_score": 57.5
+    },
+    {
+      "name": "存储芯片",
+      "type": "concept",
+      "change_pct": 2.13,
+      "volume": null,
+      "heat_score": 57.5
+    },
+    {
+      "name": "复合集流体",
+      "type": "concept",
+      "change_pct": 2.13,
+      "volume": null,
+      "heat_score": 57.5
+    },
+    {
+      "name": "华为欧拉",
       "type": "concept",
       "change_pct": 2.12,
       "volume": null,
       "heat_score": 57.4
     },
     {
-      "name": "玻璃基板",
+      "name": "华为昇腾",
       "type": "concept",
-      "change_pct": 2.11,
+      "change_pct": 2.12,
       "volume": null,
       "heat_score": 57.4
     },
     {
-      "name": "东方财富热股",
+      "name": "PCB",
       "type": "concept",
       "change_pct": 2.11,
       "volume": null,
       "heat_score": 57.4
-    },
-    {
-      "name": "英伟达概念",
-      "type": "concept",
-      "change_pct": 2.02,
-      "volume": null,
-      "heat_score": 57.1
-    },
-    {
-      "name": "半导体",
-      "type": "industry",
-      "change_pct": 1.96,
-      "volume": null,
-      "heat_score": 56.9
-    },
-    {
-      "name": "OLED",
-      "type": "concept",
-      "change_pct": 1.98,
-      "volume": null,
-      "heat_score": 56.9
-    },
-    {
-      "name": "MLCC",
-      "type": "concept",
-      "change_pct": 1.95,
-      "volume": null,
-      "heat_score": 56.8
-    },
-    {
-      "name": "AI手机",
-      "type": "concept",
-      "change_pct": 1.92,
-      "volume": null,
-      "heat_score": 56.7
-    },
-    {
-      "name": "蓝宝石",
-      "type": "concept",
-      "change_pct": 1.89,
-      "volume": null,
-      "heat_score": 56.6
-    },
-    {
-      "name": "AIPC",
-      "type": "concept",
-      "change_pct": 1.89,
-      "volume": null,
-      "heat_score": 56.6
-    },
-    {
-      "name": "超导概念",
-      "type": "concept",
-      "change_pct": 1.89,
-      "volume": null,
-      "heat_score": 56.6
-    },
-    {
-      "name": "历史新高",
-      "type": "concept",
-      "change_pct": 1.87,
-      "volume": null,
-      "heat_score": 56.5
-    },
-    {
-      "name": "小金属",
-      "type": "industry",
-      "change_pct": 1.82,
-      "volume": null,
-      "heat_score": 56.4
-    },
-    {
-      "name": "植物照明",
-      "type": "concept",
-      "change_pct": 1.84,
-      "volume": null,
-      "heat_score": 56.4
-    },
-    {
-      "name": "碳基材料",
-      "type": "concept",
-      "change_pct": 1.8,
-      "volume": null,
-      "heat_score": 56.3
-    },
-    {
-      "name": "稀缺资源",
-      "type": "concept",
-      "change_pct": 1.79,
-      "volume": null,
-      "heat_score": 56.3
-    },
-    {
-      "name": "氨纶",
-      "type": "industry",
-      "change_pct": 1.77,
-      "volume": null,
-      "heat_score": 56.2
-    },
-    {
-      "name": "家纺",
-      "type": "industry",
-      "change_pct": 1.76,
-      "volume": null,
-      "heat_score": 56.2
-    },
-    {
-      "name": "华为欧拉",
-      "type": "concept",
-      "change_pct": 1.77,
-      "volume": null,
-      "heat_score": 56.2
-    },
-    {
-      "name": "第四代半导体",
-      "type": "concept",
-      "change_pct": 1.76,
-      "volume": null,
-      "heat_score": 56.2
-    },
-    {
-      "name": "通信",
-      "type": "industry",
-      "change_pct": 1.75,
-      "volume": null,
-      "heat_score": 56.1
-    },
-    {
-      "name": "彩电",
-      "type": "industry",
-      "change_pct": 1.74,
-      "volume": null,
-      "heat_score": 56.1
-    },
-    {
-      "name": "柔性屏(折叠屏)",
-      "type": "concept",
-      "change_pct": 1.74,
-      "volume": null,
-      "heat_score": 56.1
-    },
-    {
-      "name": "MicroLED",
-      "type": "concept",
-      "change_pct": 1.73,
-      "volume": null,
-      "heat_score": 56.1
-    },
-    {
-      "name": "激光设备",
-      "type": "industry",
-      "change_pct": 1.69,
-      "volume": null,
-      "heat_score": 55.9
-    },
-    {
-      "name": "纳米银",
-      "type": "concept",
-      "change_pct": 1.69,
-      "volume": null,
-      "heat_score": 55.9
-    },
-    {
-      "name": "苹果概念",
-      "type": "concept",
-      "change_pct": 1.67,
-      "volume": null,
-      "heat_score": 55.8
-    },
-    {
-      "name": "IPv6",
-      "type": "concept",
-      "change_pct": 1.67,
-      "volume": null,
-      "heat_score": 55.8
-    },
-    {
-      "name": "数字芯片设计",
-      "type": "industry",
-      "change_pct": 1.64,
-      "volume": null,
-      "heat_score": 55.7
-    },
-    {
-      "name": "模拟芯片设计",
-      "type": "industry",
-      "change_pct": 1.62,
-      "volume": null,
-      "heat_score": 55.7
-    },
-    {
-      "name": "塑料包装",
-      "type": "industry",
-      "change_pct": 1.62,
-      "volume": null,
-      "heat_score": 55.7
-    },
-    {
-      "name": "通信技术",
-      "type": "concept",
-      "change_pct": 1.64,
-      "volume": null,
-      "heat_score": 55.7
-    },
-    {
-      "name": "氦气概念",
-      "type": "concept",
-      "change_pct": 1.64,
-      "volume": null,
-      "heat_score": 55.7
-    },
-    {
-      "name": "MiniLED",
-      "type": "concept",
-      "change_pct": 1.6,
-      "volume": null,
-      "heat_score": 55.6
-    },
-    {
-      "name": "复合集流体",
-      "type": "concept",
-      "change_pct": 1.6,
-      "volume": null,
-      "heat_score": 55.6
-    },
-    {
-      "name": "WiFi",
-      "type": "concept",
-      "change_pct": 1.6,
-      "volume": null,
-      "heat_score": 55.6
-    },
-    {
-      "name": "荣耀概念",
-      "type": "concept",
-      "change_pct": 1.59,
-      "volume": null,
-      "heat_score": 55.6
-    },
-    {
-      "name": "面板",
-      "type": "industry",
-      "change_pct": 1.56,
-      "volume": null,
-      "heat_score": 55.5
-    },
-    {
-      "name": "快递",
-      "type": "industry",
-      "change_pct": 1.56,
-      "volume": null,
-      "heat_score": 55.5
-    },
-    {
-      "name": "电子",
-      "type": "industry",
-      "change_pct": 1.56,
-      "volume": null,
-      "heat_score": 55.5
-    },
-    {
-      "name": "纯碱",
-      "type": "industry",
-      "change_pct": 1.55,
-      "volume": null,
-      "heat_score": 55.4
-    },
-    {
-      "name": "纺织化学制品",
-      "type": "industry",
-      "change_pct": 1.54,
-      "volume": null,
-      "heat_score": 55.4
-    },
-    {
-      "name": "2025三季报预减",
-      "type": "concept",
-      "change_pct": 1.54,
-      "volume": null,
-      "heat_score": 55.4
-    },
-    {
-      "name": "改性塑料",
-      "type": "industry",
-      "change_pct": 1.51,
-      "volume": null,
-      "heat_score": 55.3
-    },
-    {
-      "name": "最近多板",
-      "type": "concept",
-      "change_pct": 1.49,
-      "volume": null,
-      "heat_score": 55.2
-    },
-    {
-      "name": "特种纸",
-      "type": "industry",
-      "change_pct": 1.46,
-      "volume": null,
-      "heat_score": 55.1
-    },
-    {
-      "name": "铜缆高速连接",
-      "type": "concept",
-      "change_pct": 1.46,
-      "volume": null,
-      "heat_score": 55.1
-    },
-    {
-      "name": "屏下摄像",
-      "type": "concept",
-      "change_pct": 1.45,
-      "volume": null,
-      "heat_score": 55.1
-    },
-    {
-      "name": "照明设备Ⅲ",
-      "type": "industry",
-      "change_pct": 1.43,
-      "volume": null,
-      "heat_score": 55.0
-    },
-    {
-      "name": "照明设备Ⅱ",
-      "type": "industry",
-      "change_pct": 1.43,
-      "volume": null,
-      "heat_score": 55.0
-    },
-    {
-      "name": "通信终端及配件",
-      "type": "industry",
-      "change_pct": 1.43,
-      "volume": null,
-      "heat_score": 55.0
     },
     {
       "name": "星闪概念",
       "type": "concept",
-      "change_pct": 1.44,
+      "change_pct": 2.08,
       "volume": null,
-      "heat_score": 55.0
+      "heat_score": 57.3
     },
     {
-      "name": "中芯概念",
+      "name": "毫米波概念",
       "type": "concept",
-      "change_pct": 1.44,
+      "change_pct": 2.07,
       "volume": null,
-      "heat_score": 55.0
+      "heat_score": 57.2
     },
     {
-      "name": "半导体设备",
-      "type": "industry",
-      "change_pct": 1.39,
+      "name": "超导概念",
+      "type": "concept",
+      "change_pct": 2.07,
       "volume": null,
-      "heat_score": 54.9
+      "heat_score": 57.2
+    },
+    {
+      "name": "MLOps概念",
+      "type": "concept",
+      "change_pct": 2.06,
+      "volume": null,
+      "heat_score": 57.2
+    },
+    {
+      "name": "蓝宝石",
+      "type": "concept",
+      "change_pct": 2.05,
+      "volume": null,
+      "heat_score": 57.2
+    },
+    {
+      "name": "昨日首板",
+      "type": "concept",
+      "change_pct": 2.05,
+      "volume": null,
+      "heat_score": 57.2
+    },
+    {
+      "name": "玻纤制造",
+      "type": "industry",
+      "change_pct": 2.04,
+      "volume": null,
+      "heat_score": 57.1
+    },
+    {
+      "name": "激光雷达",
+      "type": "concept",
+      "change_pct": 2.04,
+      "volume": null,
+      "heat_score": 57.1
+    },
+    {
+      "name": "柔性屏(折叠屏)",
+      "type": "concept",
+      "change_pct": 2.04,
+      "volume": null,
+      "heat_score": 57.1
+    },
+    {
+      "name": "其他小金属",
+      "type": "industry",
+      "change_pct": 2.01,
+      "volume": null,
+      "heat_score": 57.0
+    },
+    {
+      "name": "腾讯云",
+      "type": "concept",
+      "change_pct": 2.0,
+      "volume": null,
+      "heat_score": 57.0
+    },
+    {
+      "name": "UWB概念",
+      "type": "concept",
+      "change_pct": 1.99,
+      "volume": null,
+      "heat_score": 57.0
+    },
+    {
+      "name": "光刻机(胶)",
+      "type": "concept",
+      "change_pct": 1.99,
+      "volume": null,
+      "heat_score": 57.0
     }
   ],
   "summary": {
     "hot": [
       "昨日打二板以上表现",
       "通信线缆及配套",
-      "铅锌",
-      "昨日连板",
-      "昨日连板_含一字",
       "光通信模块",
       "半导体材料",
-      "钨",
+      "CPO概念",
       "光纤概念",
-      "CPO概念"
+      "通信网络设备及器件",
+      "铅锌",
+      "EDR概念",
+      "被动元件"
     ],
     "cold": [
       "昨日触板",
-      "昨日炸板",
+      "航天装备Ⅲ",
+      "航天装备Ⅱ",
+      "国际工程",
       "超市",
       "影视动漫制作",
       "影视院线",
-      "船舶制造",
-      "航天装备Ⅲ",
-      "航天装备Ⅱ",
       "院线",
+      "船舶制造",
       "教育运营及其他"
     ]
   }
