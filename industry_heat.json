@@ -1,588 +1,588 @@
 {
-  "updated_at": "2026-04-24 04:42:46",
+  "updated_at": "2026-04-24 15:27:08",
   "items": [
     {
       "name": "锂",
       "type": "industry",
-      "change_pct": 5.08,
+      "change_pct": 8.12,
       "volume": null,
-      "heat_score": 67.8
-    },
-    {
-      "name": "运动服装",
-      "type": "industry",
-      "change_pct": 4.91,
-      "volume": null,
-      "heat_score": 67.2
+      "heat_score": 78.4
     },
     {
       "name": "能源金属",
       "type": "industry",
-      "change_pct": 4.36,
+      "change_pct": 7.07,
       "volume": null,
-      "heat_score": 65.3
+      "heat_score": 74.7
     },
     {
-      "name": "集成电路制造",
+      "name": "运动服装",
       "type": "industry",
-      "change_pct": 3.5,
+      "change_pct": 5.18,
       "volume": null,
-      "heat_score": 62.2
-    },
-    {
-      "name": "氮肥",
-      "type": "industry",
-      "change_pct": 3.16,
-      "volume": null,
-      "heat_score": 61.1
+      "heat_score": 68.1
     },
     {
       "name": "钴",
       "type": "industry",
-      "change_pct": 2.6,
+      "change_pct": 4.35,
       "volume": null,
-      "heat_score": 59.1
-    },
-    {
-      "name": "品牌化妆品",
-      "type": "industry",
-      "change_pct": 2.4,
-      "volume": null,
-      "heat_score": 58.4
-    },
-    {
-      "name": "家纺",
-      "type": "industry",
-      "change_pct": 2.17,
-      "volume": null,
-      "heat_score": 57.6
+      "heat_score": 65.2
     },
     {
       "name": "镍",
       "type": "industry",
-      "change_pct": 2.07,
+      "change_pct": 4.11,
       "volume": null,
-      "heat_score": 57.2
+      "heat_score": 64.4
     },
     {
-      "name": "电池化学品",
+      "name": "氮肥",
       "type": "industry",
-      "change_pct": 1.96,
+      "change_pct": 4.07,
       "volume": null,
-      "heat_score": 56.9
+      "heat_score": 64.2
     },
     {
       "name": "锂矿概念",
       "type": "concept",
-      "change_pct": 1.93,
+      "change_pct": 3.74,
       "volume": null,
-      "heat_score": 56.8
+      "heat_score": 63.1
+    },
+    {
+      "name": "钾肥",
+      "type": "industry",
+      "change_pct": 3.63,
+      "volume": null,
+      "heat_score": 62.7
+    },
+    {
+      "name": "磷肥及磷化工",
+      "type": "industry",
+      "change_pct": 3.3,
+      "volume": null,
+      "heat_score": 61.5
+    },
+    {
+      "name": "医美服务",
+      "type": "industry",
+      "change_pct": 3.29,
+      "volume": null,
+      "heat_score": 61.5
+    },
+    {
+      "name": "集成电路制造",
+      "type": "industry",
+      "change_pct": 3.21,
+      "volume": null,
+      "heat_score": 61.2
+    },
+    {
+      "name": "氟化工",
+      "type": "industry",
+      "change_pct": 3.07,
+      "volume": null,
+      "heat_score": 60.7
+    },
+    {
+      "name": "电池化学品",
+      "type": "industry",
+      "change_pct": 2.81,
+      "volume": null,
+      "heat_score": 59.8
     },
     {
       "name": "氦气概念",
       "type": "concept",
-      "change_pct": 1.78,
+      "change_pct": 2.54,
       "volume": null,
-      "heat_score": 56.2
+      "heat_score": 58.9
     },
     {
-      "name": "第四代半导体",
+      "name": "PVDF概念",
       "type": "concept",
-      "change_pct": 1.71,
+      "change_pct": 2.46,
+      "volume": null,
+      "heat_score": 58.6
+    },
+    {
+      "name": "农业综合Ⅱ",
+      "type": "industry",
+      "change_pct": 2.22,
+      "volume": null,
+      "heat_score": 57.8
+    },
+    {
+      "name": "农业综合Ⅲ",
+      "type": "industry",
+      "change_pct": 2.22,
+      "volume": null,
+      "heat_score": 57.8
+    },
+    {
+      "name": "磷化工",
+      "type": "concept",
+      "change_pct": 2.21,
+      "volume": null,
+      "heat_score": 57.7
+    },
+    {
+      "name": "品牌化妆品",
+      "type": "industry",
+      "change_pct": 2.18,
+      "volume": null,
+      "heat_score": 57.6
+    },
+    {
+      "name": "2026—季报扭亏",
+      "type": "concept",
+      "change_pct": 2.14,
+      "volume": null,
+      "heat_score": 57.5
+    },
+    {
+      "name": "家纺",
+      "type": "industry",
+      "change_pct": 2.08,
+      "volume": null,
+      "heat_score": 57.3
+    },
+    {
+      "name": "农化制品",
+      "type": "industry",
+      "change_pct": 2.06,
+      "volume": null,
+      "heat_score": 57.2
+    },
+    {
+      "name": "氟化工概念",
+      "type": "concept",
+      "change_pct": 2.06,
+      "volume": null,
+      "heat_score": 57.2
+    },
+    {
+      "name": "其他饰品",
+      "type": "industry",
+      "change_pct": 2.04,
+      "volume": null,
+      "heat_score": 57.1
+    },
+    {
+      "name": "复合肥",
+      "type": "industry",
+      "change_pct": 1.81,
+      "volume": null,
+      "heat_score": 56.3
+    },
+    {
+      "name": "综合包装",
+      "type": "industry",
+      "change_pct": 1.79,
+      "volume": null,
+      "heat_score": 56.3
+    },
+    {
+      "name": "氯碱",
+      "type": "industry",
+      "change_pct": 1.74,
+      "volume": null,
+      "heat_score": 56.1
+    },
+    {
+      "name": "纯碱",
+      "type": "industry",
+      "change_pct": 1.7,
       "volume": null,
       "heat_score": 56.0
     },
     {
-      "name": "数字芯片设计",
+      "name": "会展服务",
       "type": "industry",
-      "change_pct": 1.54,
+      "change_pct": 1.68,
       "volume": null,
-      "heat_score": 55.4
+      "heat_score": 55.9
     },
     {
-      "name": "昨日连板_含一字",
+      "name": "氨纶",
+      "type": "industry",
+      "change_pct": 1.67,
+      "volume": null,
+      "heat_score": 55.8
+    },
+    {
+      "name": "铝",
+      "type": "industry",
+      "change_pct": 1.67,
+      "volume": null,
+      "heat_score": 55.8
+    },
+    {
+      "name": "其他养殖",
+      "type": "industry",
+      "change_pct": 1.66,
+      "volume": null,
+      "heat_score": 55.8
+    },
+    {
+      "name": "第四代半导体",
       "type": "concept",
+      "change_pct": 1.65,
+      "volume": null,
+      "heat_score": 55.8
+    },
+    {
+      "name": "数字芯片设计",
+      "type": "industry",
+      "change_pct": 1.61,
+      "volume": null,
+      "heat_score": 55.6
+    },
+    {
+      "name": "铅锌",
+      "type": "industry",
+      "change_pct": 1.59,
+      "volume": null,
+      "heat_score": 55.6
+    },
+    {
+      "name": "分立器件",
+      "type": "industry",
+      "change_pct": 1.58,
+      "volume": null,
+      "heat_score": 55.5
+    },
+    {
+      "name": "草甘膦",
+      "type": "concept",
+      "change_pct": 1.51,
+      "volume": null,
+      "heat_score": 55.3
+    },
+    {
+      "name": "端到端供应链服务",
+      "type": "industry",
+      "change_pct": 1.49,
+      "volume": null,
+      "heat_score": 55.2
+    },
+    {
+      "name": "金属包装",
+      "type": "industry",
       "change_pct": 1.48,
       "volume": null,
       "heat_score": 55.2
     },
     {
-      "name": "2026—季报扭亏",
+      "name": "化工原料",
       "type": "concept",
-      "change_pct": 1.43,
+      "change_pct": 1.49,
+      "volume": null,
+      "heat_score": 55.2
+    },
+    {
+      "name": "瓷砖地板",
+      "type": "industry",
+      "change_pct": 1.47,
+      "volume": null,
+      "heat_score": 55.1
+    },
+    {
+      "name": "化妆品",
+      "type": "industry",
+      "change_pct": 1.44,
       "volume": null,
       "heat_score": 55.0
     },
     {
-      "name": "分立器件",
+      "name": "模拟芯片设计",
       "type": "industry",
       "change_pct": 1.4,
       "volume": null,
       "heat_score": 54.9
     },
     {
-      "name": "模拟芯片设计",
-      "type": "industry",
-      "change_pct": 1.39,
+      "name": "举牌",
+      "type": "concept",
+      "change_pct": 1.4,
       "volume": null,
       "heat_score": 54.9
     },
     {
-      "name": "复合肥",
+      "name": "电池",
       "type": "industry",
-      "change_pct": 1.37,
+      "change_pct": 1.38,
       "volume": null,
       "heat_score": 54.8
     },
     {
-      "name": "氨纶",
+      "name": "医院",
+      "type": "industry",
+      "change_pct": 1.36,
+      "volume": null,
+      "heat_score": 54.8
+    },
+    {
+      "name": "动力电池回收",
+      "type": "concept",
+      "change_pct": 1.33,
+      "volume": null,
+      "heat_score": 54.7
+    },
+    {
+      "name": "仓储物流",
       "type": "industry",
       "change_pct": 1.32,
       "volume": null,
       "heat_score": 54.6
     },
     {
-      "name": "昨日连板",
+      "name": "农药",
+      "type": "industry",
+      "change_pct": 1.28,
+      "volume": null,
+      "heat_score": 54.5
+    },
+    {
+      "name": "昨日首板",
       "type": "concept",
       "change_pct": 1.3,
       "volume": null,
       "heat_score": 54.5
     },
     {
-      "name": "氟化工",
-      "type": "industry",
-      "change_pct": 1.27,
+      "name": "工业气体",
+      "type": "concept",
+      "change_pct": 1.28,
       "volume": null,
-      "heat_score": 54.4
+      "heat_score": 54.5
     },
     {
-      "name": "会展服务",
-      "type": "industry",
-      "change_pct": 1.27,
-      "volume": null,
-      "heat_score": 54.4
-    },
-    {
-      "name": "钾肥",
-      "type": "industry",
-      "change_pct": 1.26,
-      "volume": null,
-      "heat_score": 54.4
-    },
-    {
-      "name": "其他饰品",
-      "type": "industry",
+      "name": "人造肉",
+      "type": "concept",
       "change_pct": 1.22,
       "volume": null,
       "heat_score": 54.3
     },
     {
-      "name": "医院",
+      "name": "工业金属",
       "type": "industry",
-      "change_pct": 1.2,
+      "change_pct": 1.19,
       "volume": null,
       "heat_score": 54.2
     },
     {
-      "name": "医美服务",
+      "name": "煤化工",
       "type": "industry",
-      "change_pct": 1.2,
+      "change_pct": 1.19,
       "volume": null,
       "heat_score": 54.2
     },
     {
-      "name": "集成电路封测",
-      "type": "industry",
-      "change_pct": 1.18,
+      "name": "MLCC",
+      "type": "concept",
+      "change_pct": 1.16,
       "volume": null,
       "heat_score": 54.1
     },
     {
-      "name": "昨日首板",
+      "name": "微盘股",
       "type": "concept",
-      "change_pct": 1.13,
+      "change_pct": 1.14,
       "volume": null,
       "heat_score": 54.0
     },
     {
-      "name": "其他养殖",
+      "name": "水产饲料",
       "type": "industry",
-      "change_pct": 1.09,
+      "change_pct": 1.12,
       "volume": null,
-      "heat_score": 53.8
+      "heat_score": 53.9
     },
     {
       "name": "半导体",
       "type": "industry",
-      "change_pct": 1.02,
+      "change_pct": 1.11,
+      "volume": null,
+      "heat_score": 53.9
+    },
+    {
+      "name": "钛白粉概念",
+      "type": "concept",
+      "change_pct": 1.11,
+      "volume": null,
+      "heat_score": 53.9
+    },
+    {
+      "name": "锂电池",
+      "type": "industry",
+      "change_pct": 1.06,
+      "volume": null,
+      "heat_score": 53.7
+    },
+    {
+      "name": "服装家纺",
+      "type": "industry",
+      "change_pct": 1.03,
       "volume": null,
       "heat_score": 53.6
     },
     {
-      "name": "金属包装",
-      "type": "industry",
-      "change_pct": 0.99,
+      "name": "抗菌面料",
+      "type": "concept",
+      "change_pct": 1.04,
+      "volume": null,
+      "heat_score": 53.6
+    },
+    {
+      "name": "青蒿素",
+      "type": "concept",
+      "change_pct": 1.03,
+      "volume": null,
+      "heat_score": 53.6
+    },
+    {
+      "name": "微盘精选",
+      "type": "concept",
+      "change_pct": 1.01,
       "volume": null,
       "heat_score": 53.5
     },
     {
-      "name": "举牌",
-      "type": "concept",
-      "change_pct": 0.96,
-      "volume": null,
-      "heat_score": 53.4
-    },
-    {
-      "name": "磷肥及磷化工",
+      "name": "综合环境治理",
       "type": "industry",
       "change_pct": 0.95,
       "volume": null,
       "heat_score": 53.3
     },
     {
-      "name": "化妆品",
+      "name": "铁矿石",
       "type": "industry",
       "change_pct": 0.92,
       "volume": null,
       "heat_score": 53.2
     },
     {
-      "name": "宁组合",
+      "name": "复合集流体",
+      "type": "concept",
+      "change_pct": 0.89,
+      "volume": null,
+      "heat_score": 53.1
+    },
+    {
+      "name": "刀片电池",
+      "type": "concept",
+      "change_pct": 0.89,
+      "volume": null,
+      "heat_score": 53.1
+    },
+    {
+      "name": "中芯概念",
+      "type": "concept",
+      "change_pct": 0.87,
+      "volume": null,
+      "heat_score": 53.0
+    },
+    {
+      "name": "农药兽药",
+      "type": "concept",
+      "change_pct": 0.85,
+      "volume": null,
+      "heat_score": 53.0
+    },
+    {
+      "name": "其他家居用品",
+      "type": "industry",
+      "change_pct": 0.84,
+      "volume": null,
+      "heat_score": 52.9
+    },
+    {
+      "name": "有机硅",
+      "type": "industry",
+      "change_pct": 0.84,
+      "volume": null,
+      "heat_score": 52.9
+    },
+    {
+      "name": "农用机械",
+      "type": "industry",
+      "change_pct": 0.84,
+      "volume": null,
+      "heat_score": 52.9
+    },
+    {
+      "name": "非运动服装",
+      "type": "industry",
+      "change_pct": 0.84,
+      "volume": null,
+      "heat_score": 52.9
+    },
+    {
+      "name": "其他化学制品",
+      "type": "industry",
+      "change_pct": 0.83,
+      "volume": null,
+      "heat_score": 52.9
+    },
+    {
+      "name": "炭黑",
+      "type": "industry",
+      "change_pct": 0.83,
+      "volume": null,
+      "heat_score": 52.9
+    },
+    {
+      "name": "医疗美容",
+      "type": "industry",
+      "change_pct": 0.82,
+      "volume": null,
+      "heat_score": 52.9
+    },
+    {
+      "name": "噪声防治",
       "type": "concept",
       "change_pct": 0.84,
       "volume": null,
       "heat_score": 52.9
     },
     {
-      "name": "仓储物流",
+      "name": "宁组合",
+      "type": "concept",
+      "change_pct": 0.82,
+      "volume": null,
+      "heat_score": 52.9
+    },
+    {
+      "name": "纺织服装设备",
       "type": "industry",
       "change_pct": 0.81,
       "volume": null,
       "heat_score": 52.8
-    },
-    {
-      "name": "农化制品",
-      "type": "industry",
-      "change_pct": 0.8,
-      "volume": null,
-      "heat_score": 52.8
-    },
-    {
-      "name": "昨日涨停_含一字",
-      "type": "concept",
-      "change_pct": 0.8,
-      "volume": null,
-      "heat_score": 52.8
-    },
-    {
-      "name": "电池",
-      "type": "industry",
-      "change_pct": 0.77,
-      "volume": null,
-      "heat_score": 52.7
-    },
-    {
-      "name": "厨房电器",
-      "type": "industry",
-      "change_pct": 0.76,
-      "volume": null,
-      "heat_score": 52.7
-    },
-    {
-      "name": "医疗美容",
-      "type": "industry",
-      "change_pct": 0.7,
-      "volume": null,
-      "heat_score": 52.5
-    },
-    {
-      "name": "超跌股",
-      "type": "concept",
-      "change_pct": 0.72,
-      "volume": null,
-      "heat_score": 52.5
-    },
-    {
-      "name": "工业气体",
-      "type": "concept",
-      "change_pct": 0.7,
-      "volume": null,
-      "heat_score": 52.5
-    },
-    {
-      "name": "PVDF概念",
-      "type": "concept",
-      "change_pct": 0.7,
-      "volume": null,
-      "heat_score": 52.5
-    },
-    {
-      "name": "瓷砖地板",
-      "type": "industry",
-      "change_pct": 0.68,
-      "volume": null,
-      "heat_score": 52.4
-    },
-    {
-      "name": "服装家纺",
-      "type": "industry",
-      "change_pct": 0.65,
-      "volume": null,
-      "heat_score": 52.3
-    },
-    {
-      "name": "磷化工",
-      "type": "concept",
-      "change_pct": 0.64,
-      "volume": null,
-      "heat_score": 52.2
-    },
-    {
-      "name": "噪声防治",
-      "type": "concept",
-      "change_pct": 0.58,
-      "volume": null,
-      "heat_score": 52.0
-    },
-    {
-      "name": "锂电池",
-      "type": "industry",
-      "change_pct": 0.53,
-      "volume": null,
-      "heat_score": 51.9
-    },
-    {
-      "name": "医美耗材",
-      "type": "industry",
-      "change_pct": 0.53,
-      "volume": null,
-      "heat_score": 51.9
-    },
-    {
-      "name": "氟化工概念",
-      "type": "concept",
-      "change_pct": 0.53,
-      "volume": null,
-      "heat_score": 51.9
-    },
-    {
-      "name": "综合电商",
-      "type": "industry",
-      "change_pct": 0.52,
-      "volume": null,
-      "heat_score": 51.8
-    },
-    {
-      "name": "中芯概念",
-      "type": "concept",
-      "change_pct": 0.51,
-      "volume": null,
-      "heat_score": 51.8
-    },
-    {
-      "name": "MLCC",
-      "type": "concept",
-      "change_pct": 0.51,
-      "volume": null,
-      "heat_score": 51.8
-    },
-    {
-      "name": "端到端供应链服务",
-      "type": "industry",
-      "change_pct": 0.47,
-      "volume": null,
-      "heat_score": 51.6
-    },
-    {
-      "name": "厨卫电器",
-      "type": "industry",
-      "change_pct": 0.43,
-      "volume": null,
-      "heat_score": 51.5
-    },
-    {
-      "name": "青蒿素",
-      "type": "concept",
-      "change_pct": 0.43,
-      "volume": null,
-      "heat_score": 51.5
-    },
-    {
-      "name": "AI芯片",
-      "type": "concept",
-      "change_pct": 0.43,
-      "volume": null,
-      "heat_score": 51.5
-    },
-    {
-      "name": "华为海思",
-      "type": "concept",
-      "change_pct": 0.4,
-      "volume": null,
-      "heat_score": 51.4
-    },
-    {
-      "name": "非运动服装",
-      "type": "industry",
-      "change_pct": 0.36,
-      "volume": null,
-      "heat_score": 51.3
-    },
-    {
-      "name": "动力电池回收",
-      "type": "concept",
-      "change_pct": 0.37,
-      "volume": null,
-      "heat_score": 51.3
-    },
-    {
-      "name": "户外露营",
-      "type": "concept",
-      "change_pct": 0.37,
-      "volume": null,
-      "heat_score": 51.3
-    },
-    {
-      "name": "综合环境治理",
-      "type": "industry",
-      "change_pct": 0.34,
-      "volume": null,
-      "heat_score": 51.2
-    },
-    {
-      "name": "其他家居用品",
-      "type": "industry",
-      "change_pct": 0.33,
-      "volume": null,
-      "heat_score": 51.2
-    },
-    {
-      "name": "厨房小家电",
-      "type": "industry",
-      "change_pct": 0.33,
-      "volume": null,
-      "heat_score": 51.2
-    },
-    {
-      "name": "氯碱",
-      "type": "industry",
-      "change_pct": 0.32,
-      "volume": null,
-      "heat_score": 51.1
-    },
-    {
-      "name": "铝",
-      "type": "industry",
-      "change_pct": 0.31,
-      "volume": null,
-      "heat_score": 51.1
-    },
-    {
-      "name": "抗菌面料",
-      "type": "concept",
-      "change_pct": 0.32,
-      "volume": null,
-      "heat_score": 51.1
-    },
-    {
-      "name": "2025三季报预减",
-      "type": "concept",
-      "change_pct": 0.3,
-      "volume": null,
-      "heat_score": 51.0
-    },
-    {
-      "name": "碳基材料",
-      "type": "concept",
-      "change_pct": 0.29,
-      "volume": null,
-      "heat_score": 51.0
-    },
-    {
-      "name": "电子后视镜",
-      "type": "concept",
-      "change_pct": 0.28,
-      "volume": null,
-      "heat_score": 51.0
-    },
-    {
-      "name": "纯碱",
-      "type": "industry",
-      "change_pct": 0.25,
-      "volume": null,
-      "heat_score": 50.9
-    },
-    {
-      "name": "汽车芯片",
-      "type": "concept",
-      "change_pct": 0.25,
-      "volume": null,
-      "heat_score": 50.9
-    },
-    {
-      "name": "华为欧拉",
-      "type": "concept",
-      "change_pct": 0.24,
-      "volume": null,
-      "heat_score": 50.8
-    },
-    {
-      "name": "食用菌",
-      "type": "industry",
-      "change_pct": 0.2,
-      "volume": null,
-      "heat_score": 50.7
-    },
-    {
-      "name": "娱乐用品",
-      "type": "industry",
-      "change_pct": 0.19,
-      "volume": null,
-      "heat_score": 50.7
-    },
-    {
-      "name": "其他酒类",
-      "type": "industry",
-      "change_pct": 0.19,
-      "volume": null,
-      "heat_score": 50.7
-    },
-    {
-      "name": "钠离子电池",
-      "type": "concept",
-      "change_pct": 0.2,
-      "volume": null,
-      "heat_score": 50.7
-    },
-    {
-      "name": "昨日涨停",
-      "type": "concept",
-      "change_pct": 0.19,
-      "volume": null,
-      "heat_score": 50.7
     }
   ],
   "summary": {
     "hot": [
       "锂",
-      "运动服装",
       "能源金属",
-      "集成电路制造",
-      "氮肥",
+      "运动服装",
       "钴",
-      "品牌化妆品",
-      "家纺",
       "镍",
-      "电池化学品"
+      "氮肥",
+      "锂矿概念",
+      "钾肥",
+      "磷肥及磷化工",
+      "医美服务"
     ],
     "cold": [
-      "钨",
-      "F5G概念",
-      "综合电力设备商",
       "通信线缆及配套",
-      "白银",
+      "电能综合服务",
       "油气及炼化工程",
-      "化学工程",
+      "金融信息服务",
+      "昨日打二板以上表现",
+      "水力发电",
+      "综合电力设备商",
       "宠物食品",
       "航天装备Ⅲ",
       "航天装备Ⅱ"
