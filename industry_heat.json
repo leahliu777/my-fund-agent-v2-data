@@ -1,12 +1,40 @@
 {
-  "updated_at": "2026-04-24 15:50:39",
+  "updated_at": "2026-04-25 04:21:33",
   "items": [
     {
       "name": "锂",
       "type": "industry",
       "change_pct": 8.12,
       "volume": null,
-      "heat_score": 64.8
+      "heat_score": 78.4
+    },
+    {
+      "name": "能源金属",
+      "type": "industry",
+      "change_pct": 7.07,
+      "volume": null,
+      "heat_score": 74.7
+    },
+    {
+      "name": "运动服装",
+      "type": "industry",
+      "change_pct": 5.18,
+      "volume": null,
+      "heat_score": 68.1
+    },
+    {
+      "name": "钴",
+      "type": "industry",
+      "change_pct": 4.35,
+      "volume": null,
+      "heat_score": 65.2
+    },
+    {
+      "name": "镍",
+      "type": "industry",
+      "change_pct": 4.11,
+      "volume": null,
+      "heat_score": 64.4
     },
     {
       "name": "氮肥",
@@ -14,13 +42,6 @@
       "change_pct": 4.07,
       "volume": null,
       "heat_score": 64.2
-    },
-    {
-      "name": "能源金属",
-      "type": "industry",
-      "change_pct": 7.07,
-      "volume": null,
-      "heat_score": 63.1
     },
     {
       "name": "锂矿概念",
@@ -72,13 +93,6 @@
       "heat_score": 59.8
     },
     {
-      "name": "运动服装",
-      "type": "industry",
-      "change_pct": 5.18,
-      "volume": null,
-      "heat_score": 59.6
-    },
-    {
       "name": "氦气概念",
       "type": "concept",
       "change_pct": 2.54,
@@ -91,13 +105,6 @@
       "change_pct": 2.46,
       "volume": null,
       "heat_score": 58.6
-    },
-    {
-      "name": "镍",
-      "type": "industry",
-      "change_pct": 4.11,
-      "volume": null,
-      "heat_score": 58.1
     },
     {
       "name": "农业综合Ⅲ",
@@ -133,13 +140,6 @@
       "change_pct": 2.14,
       "volume": null,
       "heat_score": 57.5
-    },
-    {
-      "name": "钴",
-      "type": "industry",
-      "change_pct": 4.35,
-      "volume": null,
-      "heat_score": 57.4
     },
     {
       "name": "家纺",
@@ -565,15 +565,15 @@
   "summary": {
     "hot": [
       "锂",
-      "氮肥",
       "能源金属",
+      "运动服装",
+      "钴",
+      "镍",
+      "氮肥",
       "锂矿概念",
       "钾肥",
       "磷肥及磷化工",
-      "医美服务",
-      "集成电路制造",
-      "氟化工",
-      "电池化学品"
+      "医美服务"
     ],
     "cold": [
       "通信线缆及配套",
