@@ -1,14 +1,14 @@
 {
-  "update_time": "2026-05-04 13:01:12",
-  "rate_a": -0.12,
+  "update_time": "2026-05-04 16:06:07",
+  "rate_a": -0.22,
   "rate_b": 0.12,
   "weather": "💨 持续顺风",
   "macro": {
     "us10y": "4.38%",
     "vix": "3277.1",
-    "dxy": "98.1"
+    "dxy": "98.3"
   },
   "grid_count": 0,
   "total_pnl": 850.67,
-  "daily_pnl": -13.2
+  "daily_pnl": -30.12
 }
