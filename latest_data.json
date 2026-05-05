@@ -1,6 +1,6 @@
 {
-  "update_time": "2026-05-05 12:43:48",
-  "rate_a": -0.1,
+  "update_time": "2026-05-05 15:32:04",
+  "rate_a": -0.02,
   "rate_b": 0.12,
   "weather": "💨 持续顺风",
   "macro": {
@@ -10,5 +10,5 @@
   },
   "grid_count": 0,
   "total_pnl": 834.33,
-  "daily_pnl": -9.29
+  "daily_pnl": 3.79
 }
