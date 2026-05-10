@@ -335,10 +335,27 @@
                     var updated = data.updated_at || '';
                     var hot = (data.summary && data.summary.hot) || [];
                     var cold = (data.summary && data.summary.cold) || [];
+                    // 计算数据新鲜度：超过6小时显示橙色警告，超过24小时显示红色
+                    var freshnessHtml = '';
+                    if (updated) {
+                        var updatedMs = new Date(updated.replace(' ', 'T')).getTime();
+                        var ageHours = (Date.now() - updatedMs) / 3600000;
+                        var freshnessColor, freshnessLabel;
+                        if (isNaN(ageHours)) {
+                            freshnessColor = 'var(--text-muted)'; freshnessLabel = updated;
+                        } else if (ageHours < 6) {
+                            freshnessColor = '#22a06b'; freshnessLabel = '数据新鲜 · ' + updated;
+                        } else if (ageHours < 24) {
+                            freshnessColor = '#d97706'; freshnessLabel = '⚠️ 数据已有 ' + Math.floor(ageHours) + ' 小时 · ' + updated;
+                        } else {
+                            freshnessColor = '#dc2626'; freshnessLabel = '⚠️ 数据已超过 ' + Math.floor(ageHours / 24) + ' 天未更新 · ' + updated;
+                        }
+                        freshnessHtml = '<span style="color:' + freshnessColor + ';font-size:11px;margin-left:8px;">' + freshnessLabel + '</span>';
+                    }
                     summaryEl.innerHTML = '<span class="hot-tag">🔥 热度: ' + hot.slice(0, 5).join('、') + '</span>' +
                         '<span class="cold-tag">❄️ 退潮: ' + cold.slice(0, 5).join('、') + '</span>' +
                         '<span style="color:var(--text-muted);font-size:11px;margin-left:8px;">冷→热</span>' +
-                        (updated ? '<span style="color:var(--text-muted);font-size:11px;"> · ' + updated + '</span>' : '');
+                        freshnessHtml;
                     var items = data.items || [];
                     var displayItems = items.slice(0, 80);
                     var heatMin = displayItems.length ? Math.min.apply(null, displayItems.map(function (x) { return x.heat_score || 0; })) : 0;

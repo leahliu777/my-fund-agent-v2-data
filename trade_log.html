@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#121212">
+<title>交易记录 | Trade Log</title>
+<link rel="stylesheet" href="modern-financial-theme.css">
+<style>
+/* ─── 布局 ─── */
+.tl-grid { display: grid; grid-template-columns: 380px 1fr; gap: 20px; align-items: start; }
+@media (max-width: 900px) { .tl-grid { grid-template-columns: 1fr; } }
+
+/* ─── 表单面板 ─── */
+.form-panel { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; position: sticky; top: 16px; }
+.form-panel h2 { font-size: 14px; letter-spacing: 1px; color: var(--accent-primary); text-transform: uppercase; margin: 0 0 16px; }
+
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 11px; color: var(--text-tertiary); margin-bottom: 5px; letter-spacing: 0.5px; }
+.field input, .field select, .field textarea {
+  width: 100%; padding: 9px 12px; box-sizing: border-box;
+  background: var(--bg-tertiary); border: 1px solid var(--border-color);
+  border-radius: 6px; color: var(--text-primary); font-size: 14px;
+  transition: border-color 0.15s;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none; border-color: var(--accent-primary);
+}
+.field textarea { resize: vertical; min-height: 60px; }
+
+/* 交易类型切换 */
+.type-toggle { display: flex; gap: 0; margin-bottom: 14px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color); }
+.type-toggle button {
+  flex: 1; padding: 9px; border: none; cursor: pointer;
+  font-size: 13px; font-weight: 600; transition: all 0.15s;
+  background: var(--bg-tertiary); color: var(--text-secondary);
+}
+.type-toggle button.active-buy  { background: rgba(245,67,67,0.15); color: var(--color-up); }
+.type-toggle button.active-sell { background: rgba(0,200,83,0.15);  color: var(--color-down); }
+
+/* 持仓联动提示 */
+.holding-hint {
+  background: var(--bg-tertiary); border: 1px solid var(--border-color);
+  border-radius: 6px; padding: 10px 12px; margin-bottom: 14px;
+  font-size: 12px; color: var(--text-secondary);
+  display: none;
+}
+.holding-hint .hint-name { font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+.holding-hint .hint-row { display: flex; justify-content: space-between; }
+.holding-hint .hint-val { color: var(--accent-secondary); font-family: monospace; }
+
+/* 新持仓预览 */
+.preview-box {
+  background: rgba(74,144,226,0.06); border: 1px solid rgba(74,144,226,0.25);
+  border-radius: 6px; padding: 10px 12px; margin-bottom: 14px;
+  font-size: 12px; display: none;
+}
+.preview-box .preview-title { color: var(--accent-primary); font-weight: 600; margin-bottom: 6px; font-size: 11px; letter-spacing: 0.5px; }
+.preview-box .preview-row { display: flex; justify-content: space-between; margin: 3px 0; }
+.preview-box .preview-arrow { color: var(--text-tertiary); margin: 0 4px; }
+.preview-box .preview-new { color: var(--accent-secondary); font-family: monospace; font-weight: 600; }
+
+/* 操作按钮 */
+.btn-submit {
+  width: 100%; padding: 12px; border: none; border-radius: 6px;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: all 0.15s; letter-spacing: 0.5px;
+}
+.btn-submit.buy  { background: var(--color-up);   color: #fff; }
+.btn-submit.sell { background: var(--color-down); color: #fff; }
+.btn-submit:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.btn-submit:active { transform: translateY(0); }
+
+/* 新建基金切换 */
+.new-fund-toggle { font-size: 12px; color: var(--accent-primary); cursor: pointer; text-decoration: underline; margin-bottom: 14px; display: inline-block; }
+.new-fund-fields { display: none; border: 1px dashed var(--border-color); border-radius: 6px; padding: 12px; margin-bottom: 14px; }
+
+/* ─── 记录面板 ─── */
+.records-panel h2 { font-size: 14px; letter-spacing: 1px; color: var(--accent-primary); text-transform: uppercase; margin: 0 0 16px; }
+
+/* 持仓汇总表 */
+.holdings-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 20px; }
+.holdings-table th { background: var(--bg-tertiary); color: var(--text-tertiary); font-size: 11px; letter-spacing: 0.5px; padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border-color); }
+.holdings-table td { padding: 10px 10px; border-bottom: 1px solid var(--border-color-light); color: var(--text-primary); }
+.holdings-table tr:hover td { background: var(--bg-tertiary); }
+.holdings-table .mono { font-family: monospace; }
+.sector-tag { display: inline-block; font-size: 10px; padding: 2px 6px; border-radius: 3px; background: var(--bg-elevated); color: var(--text-secondary); }
+
+/* 流水记录 */
+.flows-list { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
+.flow-item { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-bottom: 1px solid var(--border-color-light); transition: background 0.1s; }
+.flow-item:last-child { border-bottom: none; }
+.flow-item:hover { background: var(--bg-tertiary); }
+.flow-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.flow-dot.deposit { background: var(--color-up); }
+.flow-dot.withdrawal { background: var(--color-down); }
+.flow-date { font-size: 12px; color: var(--text-tertiary); width: 80px; flex-shrink: 0; font-family: monospace; }
+.flow-note { flex: 1; font-size: 13px; color: var(--text-primary); }
+.flow-amount { font-size: 14px; font-weight: 600; font-family: monospace; flex-shrink: 0; }
+.flow-amount.deposit { color: var(--color-up); }
+.flow-amount.withdrawal { color: var(--color-down); }
+.flow-delete { width: 20px; height: 20px; border: none; background: none; cursor: pointer; color: var(--text-tertiary); font-size: 16px; padding: 0; flex-shrink: 0; line-height: 1; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: all 0.1s; }
+.flow-delete:hover { background: rgba(245,67,67,0.15); color: var(--color-up); }
+
+/* 统计栏 */
+.stats-bar { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+.stat-chip { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 6px; padding: 8px 14px; }
+.stat-chip .sc-label { font-size: 10px; color: var(--text-tertiary); letter-spacing: 0.5px; margin-bottom: 2px; }
+.stat-chip .sc-val { font-size: 16px; font-weight: 600; font-family: monospace; }
+
+/* toast 通知 */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+  background: var(--bg-elevated); border: 1px solid var(--border-color);
+  border-radius: 8px; padding: 12px 20px; font-size: 14px;
+  box-shadow: var(--shadow-lg); z-index: 9999; transition: transform 0.25s ease;
+  white-space: nowrap;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.success { border-color: var(--color-down); color: var(--color-down); }
+.toast.error   { border-color: var(--color-up);   color: var(--color-up); }
+
+/* 导出区 */
+.export-area {
+  background: var(--bg-secondary); border: 1px solid var(--border-color);
+  border-radius: 8px; padding: 16px; margin-top: 20px;
+}
+.export-area h3 { font-size: 12px; letter-spacing: 0.5px; color: var(--text-tertiary); margin: 0 0 12px; text-transform: uppercase; }
+.export-area textarea {
+  width: 100%; box-sizing: border-box; background: var(--bg-tertiary);
+  border: 1px solid var(--border-color); border-radius: 6px;
+  color: var(--text-primary); font-family: monospace; font-size: 11px;
+  padding: 10px; resize: vertical; min-height: 100px;
+}
+.export-btns { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.export-btns button {
+  padding: 7px 14px; border-radius: 6px; border: 1px solid var(--border-color);
+  background: var(--bg-tertiary); color: var(--text-primary); font-size: 12px;
+  cursor: pointer; transition: all 0.1s;
+}
+.export-btns button:hover { background: var(--bg-elevated); border-color: var(--accent-primary); color: var(--accent-primary); }
+
+/* 分隔标题 */
+.section-header { display: flex; align-items: center; justify-content: space-between; margin: 20px 0 12px; }
+.section-header h3 { font-size: 12px; letter-spacing: 1px; color: var(--text-tertiary); text-transform: uppercase; margin: 0; }
+.section-header .count { font-size: 12px; color: var(--text-tertiary); }
+
+/* 筛选条 */
+.filter-bar { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; }
+.filter-bar select, .filter-bar input {
+  padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-color);
+  background: var(--bg-tertiary); color: var(--text-primary); font-size: 12px;
+}
+</style>
+</head>
+<body>
+<div id="tooltip" class="tooltip"></div>
+
+<nav class="nav-tabs tab-nav">
+  <a href="index.html" class="nav-tab">每日对账</a>
+  <a href="analysis.html" class="nav-tab">深度归因</a>
+  <a href="history.html" class="nav-tab">历史回测</a>
+  <a href="knowledge.html" class="nav-tab">投资字典</a>
+  <a href="screener.html" class="nav-tab">基金筛选</a>
+  <a href="trade_log.html" class="nav-tab active">交易记录</a>
+</nav>
+
+<div class="container">
+  <h1 class="page-title">交易记录 (Trade Log)</h1>
+  <p style="color:var(--text-muted);font-size:13px;margin:0 0 20px;">申购/赎回后在此填写一次，持仓份额和资金流水同步更新，导出后替换仓库文件即可。</p>
+
+  <div class="tl-grid">
+
+    <!-- ══ 左：录入表单 ══ -->
+    <div class="form-panel">
+      <h2>📝 新增交易</h2>
+
+      <!-- 交易类型 -->
+      <div class="type-toggle">
+        <button id="btnBuy"  class="active-buy"  onclick="setType('buy')">买入 / 申购</button>
+        <button id="btnSell" onclick="setType('sell')">卖出 / 赎回</button>
+      </div>
+
+      <!-- 日期 -->
+      <div class="field">
+        <label>交易日期</label>
+        <input type="date" id="txDate">
+      </div>
+
+      <!-- 选择基金 / 新建 -->
+      <div class="field">
+        <label>基金</label>
+        <select id="fundSelect" onchange="onFundChange()">
+          <option value="">— 选择现有持仓 —</option>
+        </select>
+      </div>
+
+      <span class="new-fund-toggle" onclick="toggleNewFund()">＋ 添加新基金（首次买入时）</span>
+      <div class="new-fund-fields" id="newFundFields">
+        <div class="field"><label>基金代码（不含 jj 前缀）</label><input type="text" id="newCode" placeholder="如 016452"></div>
+        <div class="field"><label>基金名称</label><input type="text" id="newName" placeholder="如 南方纳斯达克100指数A"></div>
+        <div class="field">
+          <label>板块</label>
+          <select id="newSector">
+            <option value="Dividend">Dividend（红利/宽基）</option>
+            <option value="Tech">Tech（科技/AI）</option>
+            <option value="Resource">Resource（资源/黄金）</option>
+            <option value="Pension">Pension（养老 FOF）</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>类型</label>
+          <select id="newCategory"><option value="active">active</option><option value="pension">pension</option></select>
+        </div>
+        <div class="field"><label>对标基准</label><input type="text" id="newBenchmark" placeholder="000300 / QQQ / GC=F"></div>
+      </div>
+
+      <!-- 当前持仓提示 -->
+      <div class="holding-hint" id="holdingHint">
+        <div class="hint-name" id="hintName"></div>
+        <div class="hint-row"><span>当前份额</span><span class="hint-val" id="hintShares"></span></div>
+        <div class="hint-row"><span>成本净值</span><span class="hint-val" id="hintCost"></span></div>
+        <div class="hint-row"><span>成本市值</span><span class="hint-val" id="hintMV"></span></div>
+      </div>
+
+      <!-- 交易金额 -->
+      <div class="field">
+        <label>交易金额 (元)</label>
+        <input type="number" id="txAmount" min="0.01" step="0.01" placeholder="0.00" oninput="calcPreview()">
+      </div>
+
+      <!-- 成交净值 -->
+      <div class="field">
+        <label>成交净值（每份价格）</label>
+        <input type="number" id="txNav" min="0.0001" step="0.0001" placeholder="如 2.0352" oninput="calcPreview()">
+      </div>
+
+      <!-- 新持仓预览 -->
+      <div class="preview-box" id="previewBox">
+        <div class="preview-title">交易后持仓预览</div>
+        <div class="preview-row">
+          <span>份额</span>
+          <span><span id="pvSharesOld" class="mono"></span><span class="preview-arrow">→</span><span id="pvSharesNew" class="preview-new"></span></span>
+        </div>
+        <div class="preview-row">
+          <span>成本净值</span>
+          <span><span id="pvCostOld" class="mono"></span><span class="preview-arrow">→</span><span id="pvCostNew" class="preview-new"></span></span>
+        </div>
+        <div class="preview-row">
+          <span>成本市值</span>
+          <span><span id="pvMVOld" class="mono"></span><span class="preview-arrow">→</span><span id="pvMVNew" class="preview-new"></span></span>
+        </div>
+      </div>
+
+      <!-- 备注 -->
+      <div class="field">
+        <label>备注（自动填入资金流水）</label>
+        <textarea id="txNote" placeholder="如：定投 / 换仓操作说明"></textarea>
+      </div>
+
+      <button class="btn-submit buy" id="btnSubmit" onclick="submitTx()">确认买入</button>
+    </div>
+
+    <!-- ══ 右：持仓 + 流水 ══ -->
+    <div class="records-panel">
+
+      <!-- 统计栏 -->
+      <div class="stats-bar" id="statsBar"></div>
+
+      <!-- 持仓汇总 -->
+      <div class="section-header">
+        <h3>当前持仓</h3>
+        <span class="count" id="holdingsCount"></span>
+      </div>
+      <div style="overflow-x:auto;margin-bottom:20px;">
+        <table class="holdings-table" id="holdingsTable">
+          <thead>
+            <tr>
+              <th>基金名称</th>
+              <th>板块</th>
+              <th style="text-align:right">份额</th>
+              <th style="text-align:right">成本净值</th>
+              <th style="text-align:right">成本市值</th>
+              <th style="text-align:right">权重</th>
+            </tr>
+          </thead>
+          <tbody id="holdingsTbody"></tbody>
+        </table>
+      </div>
+
+      <!-- 资金流水 -->
+      <div class="section-header">
+        <h3>资金流水</h3>
+        <span class="count" id="flowsCount"></span>
+      </div>
+      <div class="filter-bar">
+        <select id="filterType" onchange="renderFlows()">
+          <option value="">全部</option>
+          <option value="deposit">买入</option>
+          <option value="withdrawal">卖出</option>
+        </select>
+        <input type="text" id="filterKeyword" placeholder="搜索备注..." oninput="renderFlows()" style="flex:1;min-width:120px;">
+      </div>
+      <div class="flows-list" id="flowsList"></div>
+
+      <!-- 导出区 -->
+      <div class="export-area">
+        <h3>导出文件内容</h3>
+        <p style="font-size:12px;color:var(--text-tertiary);margin:0 0 10px;">复制后替换仓库中对应文件，触发一次 workflow 即可生效。</p>
+        <div style="margin-bottom:8px;font-size:12px;color:var(--text-secondary);">holdings.csv</div>
+        <textarea id="exportHoldings" readonly></textarea>
+        <div style="margin:12px 0 8px;font-size:12px;color:var(--text-secondary);">capital_flows.json</div>
+        <textarea id="exportFlows" readonly></textarea>
+        <div class="export-btns">
+          <button onclick="copyText('exportHoldings')">复制 holdings.csv</button>
+          <button onclick="copyText('exportFlows')">复制 capital_flows.json</button>
+          <button onclick="downloadAll()">下载两个文件</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// 初始数据（从仓库读取后嵌入，下次 workflow 会更新此页面）
+// ═══════════════════════════════════════════════════════
+const INIT_HOLDINGS = [
+  {"code":"jj005562","name":"创金合信中证红利低波指数C","shares":1656.88,"cost":2.0352,"category":"active","sector":"Dividend","benchmark":"000300"},
+  {"code":"jj016452","name":"南方纳斯达克100指数(QDII)A","shares":699.09,"cost":2.0026,"category":"active","sector":"Tech","benchmark":"QQQ"},
+  {"code":"jj100038","name":"富国沪深300增强A","shares":1573.44,"cost":1.8142,"category":"active","sector":"Dividend","benchmark":"000300"},
+  {"code":"jj016582","name":"嘉实上海金ETF联接C","shares":1371.92,"cost":2.1723,"category":"active","sector":"Resource","benchmark":"GC=F"},
+  {"code":"jj017675","name":"东方红颐和积极养老五年(FOF)Y","shares":2383.96,"cost":1.2584,"category":"pension","sector":"Pension","benchmark":"000300"},
+  {"code":"jj017403","name":"广发养老2050五年持有期混合(FOF)Y","shares":2170.71,"cost":1.382,"category":"pension","sector":"Pension","benchmark":"000300"},
+  {"code":"jj016707","name":"华夏中证有色金属ETF联接A","shares":1692.08,"cost":1.9969,"category":"active","sector":"Resource","benchmark":"GC=F"},
+  {"code":"jj008586","name":"华夏人工智能ETC联接C","shares":1070.01,"cost":1.5028,"category":"active","sector":"Tech","benchmark":"QQQ"},
+  {"code":"jj003016","name":"中金中证3500指数增强A","shares":385.34,"cost":2.5951,"category":"active","sector":"Dividend","benchmark":"000300"}
+];
+
+const INIT_FLOWS = [
+  {"date":"2026-01-08","type":"withdrawal","amount":470.69,"note":"卖出创新药(转入沪深)"},
+  {"date":"2026-01-08","type":"withdrawal","amount":470.67,"note":"卖出创新药(转入沪深)"},
+  {"date":"2026-01-09","type":"withdrawal","amount":732.85,"note":"卖出中证白酒(给有色金属)"},
+  {"date":"2026-01-13","type":"deposit","amount":400,"note":"定投纳斯达克(13-23合计)"},
+  {"date":"2026-01-14","type":"withdrawal","amount":375.23,"note":"卖出华夏房地产(给沪深300)"},
+  {"date":"2026-01-14","type":"deposit","amount":500,"note":"买入人工智能"},
+  {"date":"2026-01-18","type":"withdrawal","amount":611.09,"note":"卖出有色金属(给人工智能)"},
+  {"date":"2026-01-21","type":"deposit","amount":500,"note":"买入人工智能"},
+  {"date":"2026-01-21","type":"withdrawal","amount":801.25,"note":"卖出上海金"},
+  {"date":"2026-01-30","type":"deposit","amount":2000,"note":"买入有色金属"},
+  {"date":"2026-01-30","type":"deposit","amount":1500,"note":"买入上海金"},
+  {"date":"2026-02-12","type":"deposit","amount":2000,"note":"增投红利低波"},
+  {"date":"2026-02-25","type":"withdrawal","amount":872.04,"note":"赎回华夏有色金属ETF联接A"},
+  {"date":"2026-03-01","type":"deposit","amount":1000,"note":"买入中金中证3500指数增强A"},
+  {"date":"2026-03-01","type":"deposit","amount":1000,"note":"买入富国沪深300增强A"}
+];
+
+// ═══════════════════════════════════════════════════════
+// 状态
+// ═══════════════════════════════════════════════════════
+let holdings = JSON.parse(JSON.stringify(INIT_HOLDINGS));
+let flows    = JSON.parse(JSON.stringify(INIT_FLOWS));
+let txType   = 'buy';
+let newFundOpen = false;
+
+const SECTOR_COLOR = {
+  Dividend: '#4a90e2', Tech: '#f5a623',
+  Resource: '#00c853', Pension: '#b0b0b0'
+};
+
+// ═══════════════════════════════════════════════════════
+// 初始化
+// ═══════════════════════════════════════════════════════
+function init() {
+  // 设今天为默认日期
+  document.getElementById('txDate').value = new Date().toISOString().slice(0, 10);
+  populateFundSelect();
+  renderAll();
+}
+
+function populateFundSelect() {
+  const sel = document.getElementById('fundSelect');
+  sel.innerHTML = '<option value="">— 选择现有持仓 —</option>';
+  holdings.forEach((h, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = h.name;
+    sel.appendChild(opt);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// UI 控制
+// ═══════════════════════════════════════════════════════
+function setType(t) {
+  txType = t;
+  document.getElementById('btnBuy').className  = t === 'buy'  ? 'active-buy'  : '';
+  document.getElementById('btnSell').className = t === 'sell' ? 'active-sell' : '';
+  document.getElementById('btnSubmit').className = `btn-submit ${t === 'buy' ? 'buy' : 'sell'}`;
+  document.getElementById('btnSubmit').textContent = t === 'buy' ? '确认买入' : '确认卖出';
+  calcPreview();
+}
+
+function toggleNewFund() {
+  newFundOpen = !newFundOpen;
+  document.getElementById('newFundFields').style.display = newFundOpen ? 'block' : 'none';
+  document.getElementById('fundSelect').disabled = newFundOpen;
+  if (newFundOpen) {
+    document.getElementById('holdingHint').style.display = 'none';
+    document.getElementById('previewBox').style.display = 'none';
+  }
+}
+
+function onFundChange() {
+  const idx = document.getElementById('fundSelect').value;
+  const hint = document.getElementById('holdingHint');
+  if (idx === '') { hint.style.display = 'none'; calcPreview(); return; }
+  const h = holdings[idx];
+  document.getElementById('hintName').textContent   = h.name;
+  document.getElementById('hintShares').textContent = h.shares.toFixed(2) + ' 份';
+  document.getElementById('hintCost').textContent   = h.cost.toFixed(4);
+  document.getElementById('hintMV').textContent     = '¥' + (h.shares * h.cost).toFixed(2);
+  hint.style.display = 'block';
+  calcPreview();
+}
+
+function calcPreview() {
+  const box    = document.getElementById('previewBox');
+  const idx    = document.getElementById('fundSelect').value;
+  const amount = parseFloat(document.getElementById('txAmount').value) || 0;
+  const nav    = parseFloat(document.getElementById('txNav').value)    || 0;
+
+  if (newFundOpen || idx === '' || amount <= 0 || nav <= 0) {
+    box.style.display = 'none'; return;
+  }
+
+  const h = holdings[idx];
+  const oldShares  = h.shares;
+  const oldCost    = h.cost;
+  const oldMV      = oldShares * oldCost;
+  const txShares   = amount / nav;
+
+  let newShares, newCost;
+  if (txType === 'buy') {
+    newShares = oldShares + txShares;
+    newCost   = (oldMV + amount) / newShares;   // 加权平均成本
+  } else {
+    newShares = Math.max(0, oldShares - txShares);
+    newCost   = oldCost;                        // 卖出不改成本净值
+  }
+  const newMV = newShares * newCost;
+
+  document.getElementById('pvSharesOld').textContent = oldShares.toFixed(2);
+  document.getElementById('pvSharesNew').textContent = newShares.toFixed(2);
+  document.getElementById('pvCostOld').textContent   = oldCost.toFixed(4);
+  document.getElementById('pvCostNew').textContent   = newCost.toFixed(4);
+  document.getElementById('pvMVOld').textContent     = '¥' + oldMV.toFixed(2);
+  document.getElementById('pvMVNew').textContent     = '¥' + newMV.toFixed(2);
+  box.style.display = 'block';
+}
+
+// ═══════════════════════════════════════════════════════
+// 提交交易
+// ═══════════════════════════════════════════════════════
+function submitTx() {
+  const date   = document.getElementById('txDate').value;
+  const amount = parseFloat(document.getElementById('txAmount').value);
+  const nav    = parseFloat(document.getElementById('txNav').value);
+  const note   = document.getElementById('txNote').value.trim();
+
+  if (!date)           { showToast('请选择交易日期', 'error'); return; }
+  if (!(amount > 0))   { showToast('请填写交易金额', 'error'); return; }
+  if (!(nav > 0))      { showToast('请填写成交净值', 'error'); return; }
+
+  const txShares = amount / nav;
+
+  // ── 新基金 or 现有持仓 ──
+  if (newFundOpen) {
+    // 新基金只支持买入
+    const code      = document.getElementById('newCode').value.trim();
+    const name      = document.getElementById('newName').value.trim();
+    const sector    = document.getElementById('newSector').value;
+    const category  = document.getElementById('newCategory').value;
+    const benchmark = document.getElementById('newBenchmark').value.trim() || '000300';
+    if (!code) { showToast('请填写基金代码', 'error'); return; }
+    if (!name) { showToast('请填写基金名称', 'error'); return; }
+
+    holdings.push({
+      code: 'jj' + code.replace(/^jj/, ''),
+      name, shares: txShares, cost: nav,
+      category, sector, benchmark
+    });
+    showToast(`✅ 已添加新持仓：${name}`, 'success');
+    // 重置新基金表单
+    ['newCode','newName','newBenchmark'].forEach(id => document.getElementById(id).value = '');
+    toggleNewFund();
+
+  } else {
+    const idx = document.getElementById('fundSelect').value;
+    if (idx === '') { showToast('请选择基金', 'error'); return; }
+    const h = holdings[idx];
+
+    if (txType === 'buy') {
+      const oldMV   = h.shares * h.cost;
+      const newShares = h.shares + txShares;
+      h.cost   = (oldMV + amount) / newShares;
+      h.shares = newShares;
+      showToast(`✅ 买入 ${h.name} ${txShares.toFixed(2)} 份`, 'success');
+    } else {
+      if (txShares > h.shares + 0.01) {
+        showToast(`⚠️ 卖出份额 ${txShares.toFixed(2)} 超过持有 ${h.shares.toFixed(2)}`, 'error'); return;
+      }
+      h.shares = Math.max(0, h.shares - txShares);
+      showToast(`✅ 卖出 ${h.name} ${txShares.toFixed(2)} 份`, 'success');
+    }
+    h.shares = parseFloat(h.shares.toFixed(2));
+    h.cost   = parseFloat(h.cost.toFixed(4));
+  }
+
+  // ── 写资金流水 ──
+  const autoNote = note || (txType === 'buy'
+    ? `买入 ${holdings[newFundOpen ? holdings.length - 1 : parseInt(document.getElementById('fundSelect').value)]?.name || ''}`
+    : `卖出 ${holdings[parseInt(document.getElementById('fundSelect').value)]?.name || ''}`);
+
+  flows.push({
+    date,
+    type:   txType === 'buy' ? 'deposit' : 'withdrawal',
+    amount: parseFloat(amount.toFixed(2)),
+    note:   autoNote
+  });
+  flows.sort((a, b) => a.date.localeCompare(b.date));
+
+  // 清空金额、净值、备注
+  ['txAmount', 'txNav', 'txNote'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('fundSelect').value = '';
+  document.getElementById('holdingHint').style.display = 'none';
+  document.getElementById('previewBox').style.display  = 'none';
+
+  renderAll();
+}
+
+// ═══════════════════════════════════════════════════════
+// 渲染
+// ═══════════════════════════════════════════════════════
+function renderAll() {
+  renderStats();
+  renderHoldings();
+  renderFlows();
+  renderExport();
+  populateFundSelect();
+}
+
+function renderStats() {
+  const totalMV  = holdings.reduce((s, h) => s + h.shares * h.cost, 0);
+  const netDeposit = flows.reduce((s, f) => f.type === 'deposit' ? s + f.amount : s - f.amount, 0);
+  const txCount  = flows.length;
+
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat-chip">
+      <div class="sc-label">成本总市值</div>
+      <div class="sc-val">¥${totalMV.toFixed(2)}</div>
+    </div>
+    <div class="stat-chip">
+      <div class="sc-label">净流入</div>
+      <div class="sc-val" style="color:${netDeposit >= 0 ? 'var(--color-up)' : 'var(--color-down)'}">${netDeposit >= 0 ? '+' : ''}¥${netDeposit.toFixed(2)}</div>
+    </div>
+    <div class="stat-chip">
+      <div class="sc-label">持仓数</div>
+      <div class="sc-val">${holdings.filter(h => h.shares > 0).length}</div>
+    </div>
+    <div class="stat-chip">
+      <div class="sc-label">流水条数</div>
+      <div class="sc-val">${txCount}</div>
+    </div>`;
+}
+
+function renderHoldings() {
+  const totalMV = holdings.reduce((s, h) => s + h.shares * h.cost, 0);
+  const sorted  = [...holdings].sort((a, b) => (b.shares * b.cost) - (a.shares * a.cost));
+  document.getElementById('holdingsCount').textContent = holdings.filter(h => h.shares > 0).length + ' 只';
+  document.getElementById('holdingsTbody').innerHTML = sorted.map(h => {
+    const mv     = h.shares * h.cost;
+    const weight = totalMV > 0 ? (mv / totalMV * 100).toFixed(1) : '0.0';
+    const color  = SECTOR_COLOR[h.sector] || '#808080';
+    return `<tr>
+      <td><div style="font-weight:500">${h.name}</div><div style="font-size:11px;color:var(--text-tertiary);margin-top:2px">${h.code}</div></td>
+      <td><span class="sector-tag" style="background:${color}22;color:${color}">${h.sector}</span></td>
+      <td class="mono" style="text-align:right">${h.shares.toFixed(2)}</td>
+      <td class="mono" style="text-align:right">${h.cost.toFixed(4)}</td>
+      <td class="mono" style="text-align:right">¥${mv.toFixed(2)}</td>
+      <td style="text-align:right">
+        <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px">
+          <div style="width:40px;height:4px;background:var(--bg-elevated);border-radius:2px;overflow:hidden">
+            <div style="width:${weight}%;height:100%;background:${color};border-radius:2px"></div>
+          </div>
+          <span style="font-size:12px;color:var(--text-secondary)">${weight}%</span>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function renderFlows() {
+  const typeFilter = document.getElementById('filterType').value;
+  const kw = document.getElementById('filterKeyword').value.toLowerCase();
+  const filtered = [...flows]
+    .filter(f => (!typeFilter || f.type === typeFilter) && (!kw || f.note.toLowerCase().includes(kw)))
+    .reverse();
+
+  document.getElementById('flowsCount').textContent = filtered.length + ' 条';
+  document.getElementById('flowsList').innerHTML = filtered.length === 0
+    ? '<div style="padding:20px;text-align:center;color:var(--text-tertiary);font-size:13px">暂无记录</div>'
+    : filtered.map((f, i) => {
+        const realIdx = flows.indexOf(f);
+        const sign = f.type === 'deposit' ? '+' : '-';
+        return `<div class="flow-item">
+          <div class="flow-dot ${f.type}"></div>
+          <div class="flow-date">${f.date}</div>
+          <div class="flow-note">${f.note || '—'}</div>
+          <div class="flow-amount ${f.type}">${sign}¥${f.amount.toFixed(2)}</div>
+          <button class="flow-delete" onclick="deleteFlow(${realIdx})" title="删除此条">×</button>
+        </div>`;
+      }).join('');
+}
+
+function deleteFlow(idx) {
+  if (!confirm(`确认删除：${flows[idx].date} ${flows[idx].note}？`)) return;
+  flows.splice(idx, 1);
+  renderAll();
+  showToast('已删除流水记录', 'success');
+}
+
+// ═══════════════════════════════════════════════════════
+// 导出
+// ═══════════════════════════════════════════════════════
+function renderExport() {
+  // holdings.csv
+  const csvLines = ['code,name,shares,cost,category,sector,benchmark'];
+  holdings.forEach(h => {
+    csvLines.push([h.code, h.name, h.shares, h.cost, h.category, h.sector, h.benchmark].join(','));
+  });
+  document.getElementById('exportHoldings').value = csvLines.join('\n');
+
+  // capital_flows.json
+  document.getElementById('exportFlows').value = JSON.stringify({ flows }, null, 2);
+}
+
+function copyText(id) {
+  const el = document.getElementById(id);
+  el.select();
+  document.execCommand('copy');
+  showToast('已复制到剪贴板 ✓', 'success');
+}
+
+function downloadAll() {
+  // holdings.csv
+  const csvContent = document.getElementById('exportHoldings').value;
+  downloadFile('holdings.csv', csvContent, 'text/csv');
+
+  // capital_flows.json
+  setTimeout(() => {
+    const jsonContent = document.getElementById('exportFlows').value;
+    downloadFile('capital_flows.json', jsonContent, 'application/json');
+  }, 300);
+}
+
+function downloadFile(filename, content, mime) {
+  const blob = new Blob([content], { type: mime });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ═══════════════════════════════════════════════════════
+// Toast
+// ═══════════════════════════════════════════════════════
+let toastTimer;
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.className = 'toast'; }, 2800);
+}
+
+init();
+</script>
+</body>
+</html>
