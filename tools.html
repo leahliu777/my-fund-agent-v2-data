@@ -216,19 +216,40 @@
       </div>
     </div>
 
-    <!-- 导出 -->
+    <!-- 同步到 GitHub -->
     <div class="export-block">
-      <h4>导出文件</h4>
-      <p style="font-size:var(--t-xs);color:var(--tx-3);margin-bottom:var(--s3)">复制后替换仓库文件，触发 workflow 生效。</p>
-      <div style="font-size:var(--t-xs);color:var(--tx-2);margin-bottom:4px">holdings.csv</div>
-      <textarea id="exportHoldings" readonly></textarea>
-      <div style="font-size:var(--t-xs);color:var(--tx-2);margin:var(--s3) 0 4px">capital_flows.json</div>
-      <textarea id="exportFlows" readonly></textarea>
-      <div class="export-btns">
-        <button class="btn btn-secondary btn-sm" onclick="copyText('exportHoldings')">复制 holdings</button>
-        <button class="btn btn-secondary btn-sm" onclick="copyText('exportFlows')">复制 flows</button>
-        <button class="btn btn-primary btn-sm" onclick="downloadAll()">下载两个文件</button>
+      <h4>同步到仓库</h4>
+
+      <div id="tokenSection">
+        <p style="font-size:var(--t-xs);color:var(--tx-3);margin-bottom:var(--s3)">
+          粘贴你的 GitHub Token（需要 <code>contents:write</code> 权限），只存在本地浏览器，不会上传。
+        </p>
+        <div style="display:flex;gap:var(--s2);margin-bottom:var(--s3)">
+          <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx" style="flex:1;font-family:var(--f-mono);font-size:var(--t-xs)">
+          <button class="btn btn-secondary btn-sm" onclick="saveToken()">记住</button>
+        </div>
+        <div id="tokenStatus" style="font-size:var(--t-xs);color:var(--tx-3);margin-bottom:var(--s3)"></div>
       </div>
+
+      <button class="btn btn-primary" id="btnSync" onclick="syncToGitHub()" style="width:100%;margin-bottom:var(--s3)">
+        同步到 GitHub
+      </button>
+      <div id="syncStatus" style="font-size:var(--t-xs);text-align:center;min-height:18px"></div>
+
+      <details style="margin-top:var(--s4)">
+        <summary style="font-size:var(--t-xs);color:var(--tx-3);cursor:pointer;list-style:none">手动导出 ›</summary>
+        <div style="margin-top:var(--s3)">
+          <div style="font-size:var(--t-xs);color:var(--tx-2);margin-bottom:4px">holdings.csv</div>
+          <textarea id="exportHoldings" readonly></textarea>
+          <div style="font-size:var(--t-xs);color:var(--tx-2);margin:var(--s3) 0 4px">capital_flows.json</div>
+          <textarea id="exportFlows" readonly></textarea>
+          <div class="export-btns" style="margin-top:var(--s3)">
+            <button class="btn btn-secondary btn-sm" onclick="copyText('exportHoldings')">复制 holdings</button>
+            <button class="btn btn-secondary btn-sm" onclick="copyText('exportFlows')">复制 flows</button>
+            <button class="btn btn-secondary btn-sm" onclick="downloadAll()">下载两个文件</button>
+          </div>
+        </div>
+      </details>
     </div>
   </div>
 
@@ -602,7 +623,121 @@ function toast(msg){
   clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove('show');},2500);
 }
 
+
+// ══════════════════════════════════════
+// GitHub 同步
+// ══════════════════════════════════════
+var REPO = 'leahliu777/my-fund-agent-v2';
+var BRANCH = 'main';
+
+function saveToken() {
+  var t = document.getElementById('ghToken').value.trim();
+  if (!t) { toast('请先输入 Token'); return; }
+  localStorage.setItem('gh_token', t);
+  document.getElementById('ghToken').value = '';
+  showTokenStatus();
+  toast('Token 已保存 ✓');
+}
+
+function showTokenStatus() {
+  var t = localStorage.getItem('gh_token');
+  var el = document.getElementById('tokenStatus');
+  if (!el) return;
+  if (t) {
+    el.textContent = '已保存 Token：' + t.slice(0,8) + '…';
+    el.style.color = 'var(--green)';
+    document.getElementById('ghToken').placeholder = '已保存，如需更换请重新粘贴';
+  } else {
+    el.textContent = '尚未保存 Token';
+    el.style.color = 'var(--tx-3)';
+  }
+}
+
+async function getFileSha(token, path) {
+  var r = await fetch(
+    'https://api.github.com/repos/' + REPO + '/contents/' + path + '?ref=' + BRANCH,
+    { headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' } }
+  );
+  if (r.status === 404) return null;
+  if (!r.ok) throw new Error('获取文件 SHA 失败: ' + r.status);
+  var data = await r.json();
+  return data.sha;
+}
+
+async function putFile(token, path, content, sha, message) {
+  var body = {
+    message: message,
+    content: btoa(unescape(encodeURIComponent(content))),
+    branch: BRANCH
+  };
+  if (sha) body.sha = sha;
+  var r = await fetch(
+    'https://api.github.com/repos/' + REPO + '/contents/' + path,
+    {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'token ' + token,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    }
+  );
+  if (!r.ok) {
+    var err = await r.json();
+    throw new Error((err.message || r.status) + '');
+  }
+  return r.json();
+}
+
+async function syncToGitHub() {
+  var token = localStorage.getItem('gh_token');
+  if (!token) {
+    var inline = document.getElementById('ghToken').value.trim();
+    if (!inline) { toast('请先保存 GitHub Token'); return; }
+    token = inline;
+  }
+
+  var btn = document.getElementById('btnSync');
+  var statusEl = document.getElementById('syncStatus');
+  btn.disabled = true;
+  btn.textContent = '同步中…';
+  statusEl.style.color = 'var(--tx-3)';
+  statusEl.textContent = '连接 GitHub…';
+
+  try {
+    var csvContent  = document.getElementById('exportHoldings').value;
+    var jsonContent = document.getElementById('exportFlows').value;
+    var now = new Date().toLocaleString('zh-CN', {timeZone:'Asia/Shanghai'}).replace(/\//g,'-');
+    var commitMsg = '交易记录更新: ' + now;
+
+    statusEl.textContent = '读取文件版本…';
+    var [holdingsSha, flowsSha] = await Promise.all([
+      getFileSha(token, 'holdings.csv'),
+      getFileSha(token, 'capital_flows.json')
+    ]);
+
+    statusEl.textContent = '写入 holdings.csv…';
+    await putFile(token, 'holdings.csv', csvContent, holdingsSha, commitMsg);
+
+    statusEl.textContent = '写入 capital_flows.json…';
+    await putFile(token, 'capital_flows.json', jsonContent, flowsSha, commitMsg);
+
+    statusEl.style.color = 'var(--green)';
+    statusEl.textContent = '✓ 已同步，workflow 将在下次定时触发时更新报告';
+    toast('同步成功 ✓');
+  } catch (e) {
+    statusEl.style.color = 'var(--up)';
+    statusEl.textContent = '同步失败：' + e.message;
+    toast('同步失败：' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '同步到 GitHub';
+  }
+}
+
 initTrade();
+showTokenStatus();
 </script>
 </body>
 </html>
