@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f5f5f0">
+<title>工具箱 | Fund Agent</title>
+<link rel="stylesheet" href="modern-financial-theme.css">
+<style>
+/* ── 页内 Tab ── */
+.inner-tabs { display:flex; gap:0; border-bottom:1px solid var(--line); margin-bottom:var(--s5); }
+.inner-tab {
+  flex:1; padding:var(--s3) var(--s2); text-align:center;
+  font-size:var(--t-sm); font-weight:var(--w-normal); color:var(--tx-3);
+  background:none; border:none; border-bottom:2px solid transparent;
+  cursor:pointer; transition:all .15s; -webkit-tap-highlight-color:transparent;
+}
+.inner-tab.active { color:var(--accent); border-bottom-color:var(--accent); }
+.inner-pane { display:none; }
+.inner-pane.active { display:block; }
+
+/* ── 行业热度 ── */
+.heat-summary { display:flex; flex-wrap:wrap; gap:var(--s2); margin-bottom:var(--s3); font-size:var(--t-xs); }
+.hot-tag  { background:var(--up-bg);   color:var(--up);   padding:3px 10px; border-radius:var(--r-full); }
+.cold-tag { background:var(--down-bg); color:var(--down); padding:3px 10px; border-radius:var(--r-full); }
+.industry-heat-treemap { width:100%; height:320px; }
+
+/* ── 术语词典 ── */
+.dict-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:var(--s3); margin-bottom:var(--s5); }
+.term-card { background:var(--bg-card); border:0.5px solid var(--line); border-radius:var(--r-md); padding:var(--s4); }
+.term-badge { font-size:var(--t-xs); font-weight:var(--w-normal); color:var(--accent); margin-bottom:var(--s2); }
+.term-desc  { font-size:var(--t-xs); color:var(--tx-2); line-height:1.6; margin:0; }
+.dict-section-title { font-size:var(--t-xs); font-weight:var(--w-normal); letter-spacing:0.8px; text-transform:uppercase; color:var(--tx-3); margin:var(--s6) 0 var(--s3); }
+
+/* ── 基金筛选 ── */
+.screener-filters { display:flex; flex-wrap:wrap; gap:var(--s3); margin-bottom:var(--s4); }
+.screener-filters select,.screener-filters input { flex:1; min-width:120px; }
+.screener-result { font-size:var(--t-xs); color:var(--tx-3); margin-bottom:var(--s3); }
+.screener-pagination { display:flex; align-items:center; gap:var(--s3); margin:var(--s3) 0; flex-wrap:wrap; }
+.screener-pagination button { padding:6px 14px; border-radius:var(--r-sm); background:var(--bg-raised); border:0.5px solid var(--line-md); cursor:pointer; font-size:var(--t-xs); color:var(--tx-1); }
+.screener-pagination button:disabled { opacity:.4; cursor:not-allowed; }
+
+/* ── 交易记录 ── */
+.tx-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; border-radius:var(--r-sm); overflow:hidden; border:0.5px solid var(--line-md); margin-bottom:var(--s5); }
+.tx-type-btn { padding:var(--s3); text-align:center; font-size:var(--t-sm); font-weight:var(--w-normal); cursor:pointer; background:var(--bg-raised); color:var(--tx-3); border:none; transition:all .15s; }
+.tx-type-btn.active-buy  { background:var(--up-bg);   color:var(--up); }
+.tx-type-btn.active-sell { background:var(--down-bg); color:var(--down); }
+.field { margin-bottom:var(--s4); }
+.field label { display:block; font-size:var(--t-xs); font-weight:var(--w-normal); color:var(--tx-3); letter-spacing:0.5px; margin-bottom:var(--s2); }
+.preview-box { background:var(--accent-lt); border:1px solid rgba(79,70,229,0.2); border-radius:var(--r-sm); padding:var(--s3) var(--s4); margin-bottom:var(--s4); display:none; }
+.preview-box .pt { font-size:var(--t-xs); font-weight:var(--w-normal); color:var(--accent); letter-spacing:0.5px; margin-bottom:var(--s2); }
+.preview-row { display:flex; justify-content:space-between; font-size:var(--t-xs); margin:2px 0; }
+.preview-new { color:var(--accent); font-family:var(--f-mono); font-weight:var(--w-normal); }
+.btn-submit { width:100%; padding:var(--s4); border:none; border-radius:var(--r-sm); font-size:var(--t-base); font-weight:var(--w-normal); cursor:pointer; transition:all .15s; }
+.btn-submit.buy  { background:var(--up);   color:#fff; }
+.btn-submit.sell { background:var(--down); color:#fff; }
+.flow-list { background:var(--bg-card); border:0.5px solid var(--line); border-radius:var(--r-md); overflow:hidden; }
+.flow-item { display:flex; align-items:center; gap:var(--s3); padding:var(--s3) var(--s4); border-bottom:1px solid var(--line); }
+.flow-item:last-child { border-bottom:none; }
+.flow-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.flow-dot.deposit { background:var(--up); }
+.flow-dot.withdrawal { background:var(--down); }
+.flow-date { font-size:var(--t-xs); color:var(--tx-3); width:72px; flex-shrink:0; font-family:var(--f-mono); }
+.flow-note { flex:1; font-size:var(--t-xs); color:var(--tx-1); }
+.flow-amt  { font-size:var(--t-sm); font-weight:var(--w-normal); font-family:var(--f-mono); flex-shrink:0; }
+.flow-amt.deposit { color:var(--up); }
+.flow-amt.withdrawal { color:var(--down); }
+.flow-del { width:22px; height:22px; border:none; background:none; cursor:pointer; color:var(--tx-3); font-size:16px; border-radius:var(--r-xs); }
+.flow-del:hover { background:var(--up-bg); color:var(--up); }
+.export-block { background:var(--bg-raised); border-radius:var(--r-md); padding:var(--s4); margin-top:var(--s5); }
+.export-block h4 { font-size:var(--t-xs); font-weight:var(--w-normal); letter-spacing:0.5px; color:var(--tx-3); text-transform:uppercase; margin-bottom:var(--s3); }
+.export-block textarea { font-size:var(--t-xs); min-height:80px; background:var(--bg-card); color:var(--tx-1); }
+.export-btns { display:flex; gap:var(--s2); margin-top:var(--s3); flex-wrap:wrap; }
+.stats-row { display:flex; gap:var(--s3); flex-wrap:wrap; margin-bottom:var(--s4); }
+.stat-chip { background:var(--bg-card); border:0.5px solid var(--line); border-radius:var(--r-sm); padding:var(--s3) var(--s4); }
+.stat-chip .sl { font-size:var(--t-xs); color:var(--tx-3); margin-bottom:2px; }
+.stat-chip .sv { font-size:16px; font-weight:var(--w-normal); font-family:var(--f-mono); }
+.holding-hint { background:var(--bg-raised); border:0.5px solid var(--line); border-radius:var(--r-sm); padding:var(--s3) var(--s4); margin-bottom:var(--s4); font-size:var(--t-xs); color:var(--tx-2); display:none; }
+.hint-row { display:flex; justify-content:space-between; }
+.hint-val { color:var(--accent); font-family:var(--f-mono); }
+.new-fund-toggle { font-size:var(--t-xs); color:var(--accent); cursor:pointer; text-decoration:underline; margin-bottom:var(--s4); display:inline-block; }
+.new-fund-fields { display:none; border:1px dashed var(--line-md); border-radius:var(--r-sm); padding:var(--s4); margin-bottom:var(--s4); }
+.section-hdr { display:flex; align-items:center; justify-content:space-between; margin-bottom:var(--s3); }
+.section-hdr span { font-size:var(--t-xs); font-weight:var(--w-normal); letter-spacing:0.8px; color:var(--tx-3); text-transform:uppercase; }
+.toast {
+  position:fixed; bottom:calc(var(--tab-h) + var(--safe-b) + 12px); left:50%;
+  transform:translateX(-50%) translateY(40px); opacity:0;
+  background:var(--tx-1); color:var(--bg-card);
+  padding:10px 18px; border-radius:var(--r-full); font-size:var(--t-sm);
+  transition:all .22s; z-index:9999; white-space:nowrap; pointer-events:none;
+}
+.toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+</style>
+</head>
+<body>
+<div id="tooltip" class="tooltip"></div>
+<nav class="nav-tabs tab-nav"><a href="index.html" class="nav-tab">今日</a><a href="analysis.html" class="nav-tab">分析</a><a href="tools.html" class="nav-tab active">工具</a></nav>
+
+<div class="container" style="padding-top:var(--s4)">
+  <div class="inner-tabs">
+    <button class="inner-tab active" onclick="switchTab('heat')">行业热度</button>
+    <button class="inner-tab" onclick="switchTab('screener')">基金筛选</button>
+    <button class="inner-tab" onclick="switchTab('trade')">交易记录</button>
+    <button class="inner-tab" onclick="switchTab('dict')">术语词典</button>
+  </div>
+
+  <!-- ══ 行业热度 ══ -->
+  <div id="pane-heat" class="inner-pane active">
+    <div id="heatLoading" style="padding:20px;text-align:center;color:var(--tx-3)">加载中…</div>
+    <div id="heatContent" style="display:none">
+      <div class="heat-summary" id="heatSummary"></div>
+      <div id="industry-heat-treemap" class="industry-heat-treemap"></div>
+    </div>
+    <div id="heatError" style="display:none;color:var(--up);font-size:var(--t-sm);padding:var(--s4)"></div>
+  </div>
+
+  <!-- ══ 基金筛选 ══ -->
+  <div id="pane-screener" class="inner-pane">
+    <div class="screener-filters">
+      <select id="filterType"><option value="">全部类型</option></select>
+      <input type="text" id="filterKeyword" placeholder="名称关键词…">
+      <button class="btn btn-primary" onclick="runFilter()">筛选</button>
+    </div>
+    <div id="screenerResult" class="screener-result"></div>
+    <div id="screenerPagination" class="screener-pagination" style="display:none"></div>
+    <div id="screenerLoading" style="display:none;color:var(--tx-3);padding:var(--s4)">加载中…</div>
+    <div id="screenerError" style="display:none;color:var(--up);font-size:var(--t-sm);padding:var(--s4)"></div>
+    <div style="overflow-x:auto">
+      <table class="screener-table" id="screenerTable" style="display:none;width:100%;border-collapse:collapse;font-size:var(--t-sm)">
+        <thead><tr>
+          <th style="padding:var(--s3) var(--s4);text-align:left;background:var(--bg-raised);font-size:var(--t-xs);color:var(--tx-3);border-bottom:1px solid var(--line)">综合分</th>
+          <th style="padding:var(--s3) var(--s4);text-align:left;background:var(--bg-raised);font-size:var(--t-xs);color:var(--tx-3);border-bottom:1px solid var(--line)">代码</th>
+          <th style="padding:var(--s3) var(--s4);text-align:left;background:var(--bg-raised);font-size:var(--t-xs);color:var(--tx-3);border-bottom:1px solid var(--line)">名称</th>
+          <th style="padding:var(--s3) var(--s4);text-align:left;background:var(--bg-raised);font-size:var(--t-xs);color:var(--tx-3);border-bottom:1px solid var(--line)">类型</th>
+        </tr></thead>
+        <tbody id="screenerBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ 交易记录 ══ -->
+  <div id="pane-trade" class="inner-pane">
+    <div class="stats-row" id="txStats"></div>
+
+    <div class="tx-grid">
+      <button class="tx-type-btn active-buy" id="btnBuy" onclick="setTxType('buy')">买入 / 申购</button>
+      <button class="tx-type-btn" id="btnSell" onclick="setTxType('sell')">卖出 / 赎回</button>
+    </div>
+
+    <div class="field"><label>交易日期</label><input type="date" id="txDate"></div>
+    <div class="field">
+      <label>基金</label>
+      <select id="fundSelect" onchange="onFundChange()">
+        <option value="">— 选择现有持仓 —</option>
+      </select>
+    </div>
+    <span class="new-fund-toggle" onclick="toggleNewFund()">＋ 添加新基金</span>
+    <div class="new-fund-fields" id="newFundFields">
+      <div class="field"><label>基金代码（无需 jj 前缀）</label><input type="text" id="newCode" placeholder="016452"></div>
+      <div class="field"><label>基金名称</label><input type="text" id="newName" placeholder="南方纳斯达克100指数A"></div>
+      <div class="field"><label>板块</label>
+        <select id="newSector">
+          <option value="Dividend">Dividend（红利/宽基）</option>
+          <option value="Tech">Tech（科技/AI）</option>
+          <option value="Resource">Resource（资源/黄金）</option>
+          <option value="Pension">Pension（养老 FOF）</option>
+        </select>
+      </div>
+      <div class="field"><label>类型</label>
+        <select id="newCategory"><option value="active">active</option><option value="pension">pension</option></select>
+      </div>
+      <div class="field"><label>对标基准</label><input type="text" id="newBenchmark" placeholder="000300 / QQQ / GC=F"></div>
+    </div>
+
+    <div class="holding-hint" id="holdingHint">
+      <div style="font-weight:var(--w-normal);color:var(--tx-1);margin-bottom:4px" id="hintName"></div>
+      <div class="hint-row"><span>当前份额</span><span class="hint-val" id="hintShares"></span></div>
+      <div class="hint-row"><span>成本净值</span><span class="hint-val" id="hintCost"></span></div>
+    </div>
+
+    <div class="field"><label>交易金额（元）</label><input type="number" id="txAmount" min="0.01" step="0.01" placeholder="0.00" oninput="calcPreview()"></div>
+    <div class="field"><label>成交净值</label><input type="number" id="txNav" min="0.0001" step="0.0001" placeholder="如 2.0352" oninput="calcPreview()"></div>
+
+    <div class="preview-box" id="previewBox">
+      <div class="pt">交易后预览</div>
+      <div class="preview-row"><span>份额</span><span><span id="pvSharesOld"></span> → <span id="pvSharesNew" class="preview-new"></span></span></div>
+      <div class="preview-row"><span>成本净值</span><span><span id="pvCostOld"></span> → <span id="pvCostNew" class="preview-new"></span></span></div>
+    </div>
+
+    <div class="field"><label>备注（自动写入资金流水）</label><textarea id="txNote" rows="2" placeholder="定投 / 换仓说明…"></textarea></div>
+    <button class="btn-submit buy" id="btnSubmit" onclick="submitTx()">确认买入</button>
+
+    <!-- 流水记录 -->
+    <div style="margin-top:var(--s6)">
+      <div class="section-hdr">
+        <span>资金流水</span>
+        <span id="flowCount" style="font-size:var(--t-xs);color:var(--tx-3)"></span>
+      </div>
+      <div class="flow-list" id="flowList"></div>
+    </div>
+
+    <!-- 持仓汇总 -->
+    <div style="margin-top:var(--s6)">
+      <div class="section-hdr"><span>当前持仓</span></div>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:var(--t-xs)" id="holdingsTable">
+          <thead><tr style="background:var(--bg-raised)">
+            <th style="padding:8px;text-align:left;font-size:var(--t-xs);color:var(--tx-3);border-bottom:1px solid var(--line)">基金名称</th>
+            <th style="padding:8px;text-align:right;font-size:var(--t-xs);color:var(--tx-3);border-bottom:1px solid var(--line)">份额</th>
+            <th style="padding:8px;text-align:right;font-size:var(--t-xs);color:var(--tx-3);border-bottom:1px solid var(--line)">成本净值</th>
+            <th style="padding:8px;text-align:right;font-size:var(--t-xs);color:var(--tx-3);border-bottom:1px solid var(--line)">成本市值</th>
+          </tr></thead>
+          <tbody id="holdingsTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 导出 -->
+    <div class="export-block">
+      <h4>导出文件</h4>
+      <p style="font-size:var(--t-xs);color:var(--tx-3);margin-bottom:var(--s3)">复制后替换仓库文件，触发 workflow 生效。</p>
+      <div style="font-size:var(--t-xs);color:var(--tx-2);margin-bottom:4px">holdings.csv</div>
+      <textarea id="exportHoldings" readonly></textarea>
+      <div style="font-size:var(--t-xs);color:var(--tx-2);margin:var(--s3) 0 4px">capital_flows.json</div>
+      <textarea id="exportFlows" readonly></textarea>
+      <div class="export-btns">
+        <button class="btn btn-secondary btn-sm" onclick="copyText('exportHoldings')">复制 holdings</button>
+        <button class="btn btn-secondary btn-sm" onclick="copyText('exportFlows')">复制 flows</button>
+        <button class="btn btn-primary btn-sm" onclick="downloadAll()">下载两个文件</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 术语词典 ══ -->
+  <div id="pane-dict" class="inner-pane">
+    <div id="glossaryLoading" style="padding:20px;text-align:center;color:var(--tx-3)">加载中…</div>
+    <div id="glossaryContent" style="display:none">
+      <div class="dict-section-title">AI 生成词条（本周报告提取）</div>
+      <div id="glossaryCore" class="dict-grid"></div>
+      <div class="dict-section-title">待审核词条</div>
+      <div id="glossaryPending" class="dict-grid"></div>
+      <p id="glossaryUpdated" style="font-size:var(--t-xs);color:var(--tx-3);margin-top:var(--s4)"></p>
+    </div>
+    <div id="glossaryError" style="display:none;color:var(--up);font-size:var(--t-sm);padding:var(--s4)"></div>
+
+    <!-- 静态内容词条 -->
+    <div class="dict-section-title" style="margin-top:var(--s6)">核心基础概念</div>
+    <div class="dict-grid">
+      <div class="term-card"><div class="term-badge">TWR 时间加权收益率</div><p class="term-desc">排除申购/赎回资金流动影响，真实反映你的选基和择时能力。与 MWR（金额加权）不同，TWR 不受大额进出的干扰，是评价投资能力的标准指标。</p></div>
+      <div class="term-card"><div class="term-badge">最大回撤 | Max Drawdown</div><p class="term-desc">特定时间内从历史最高点回落至最低点的幅度。衡量你"扛得住多大的账面亏损"，是风控最重要的底线指标。</p></div>
+      <div class="term-card"><div class="term-badge">夏普比率 | Sharpe Ratio</div><p class="term-desc">每承担一单位风险获得的超额回报。夏普 > 1 表示风险报酬合理，< 0 表示不如持有现金。</p></div>
+      <div class="term-card"><div class="term-badge">再平衡 | Rebalancing</div><p class="term-desc">当各板块实际权重偏离目标权重时，减持超配、补仓低配，强制回归目标风险结构。本系统偏离 ≥5% 时自动提醒。</p></div>
+      <div class="term-card"><div class="term-badge">Alpha / Beta</div><p class="term-desc">Alpha 是超越基准的超额收益，体现主动选基能力；Beta 是跟随市场波动的系统性收益。好的投资组合追求高 Alpha、可控 Beta。</p></div>
+      <div class="term-card"><div class="term-badge">US10Y / VIX / DXY</div><p class="term-desc">三大宏观晴雨表：美债10年期利率（估值锚）、恐慌指数（市场情绪）、美元指数（新兴市场压力）。本系统用历史百分位归一化评分。</p></div>
+    </div>
+
+    <div class="dict-section-title">交易策略</div>
+    <div class="dict-grid">
+      <div class="term-card"><div class="term-badge">定投 | DCA</div><p class="term-desc">按固定周期买入固定金额，通过分散时间降低择时风险。本系统建议结合估值百分位动态调整定投金额。</p></div>
+      <div class="term-card"><div class="term-badge">网格交易 | Grid Trading</div><p class="term-desc">在震荡区间内预设多个价格档位，低买高卖自动套利。适合波动率高、无明确趋势的板块。</p></div>
+      <div class="term-card"><div class="term-badge">左侧/右侧交易</div><p class="term-desc">左侧：趋势未反转前提前入场（抄底），追求最大利润但需承受浮亏；右侧：等确认反转后再入场，牺牲初段利润换更高确定性。</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<script>
+// ══════════════════════════════════════
+// 页内 Tab 切换
+// ══════════════════════════════════════
+var tabs = ['heat','screener','trade','dict'];
+var heatLoaded = false, screenerLoaded = false, glossaryLoaded = false;
+
+function switchTab(id) {
+  document.querySelectorAll('.inner-tab').forEach(function(b,i){ b.classList.toggle('active', tabs[i]===id); });
+  document.querySelectorAll('.inner-pane').forEach(function(p,i){ p.classList.toggle('active', tabs[i]===id); });
+  if (id==='heat'    && !heatLoaded)     { loadHeat();     heatLoaded=true; }
+  if (id==='screener'&& !screenerLoaded) { loadFunds();    screenerLoaded=true; }
+  if (id==='dict'    && !glossaryLoaded) { loadGlossary(); glossaryLoaded=true; }
+}
+
+// ══════════════════════════════════════
+// 行业热度
+// ══════════════════════════════════════
+function loadHeat() {
+  fetch('industry_heat.json')
+    .then(function(r){ if(!r.ok) return Promise.reject('HTTP '+r.status); return r.text(); })
+    .then(function(t){ if(t.trim()[0]==='<') return Promise.reject('未配置'); return JSON.parse(t); })
+    .then(function(data){
+      document.getElementById('heatLoading').style.display='none';
+      document.getElementById('heatContent').style.display='block';
+      var updated=data.updated_at||'', hot=(data.summary&&data.summary.hot)||[], cold=(data.summary&&data.summary.cold)||[];
+      var freshHtml='';
+      if(updated){
+        var ms=new Date(updated.replace(' ','T')).getTime(), h=(Date.now()-ms)/3600000;
+        var col=isNaN(h)?'var(--tx-3)':h<6?'#16a34a':h<24?'#d97706':'var(--up)';
+        var lbl=isNaN(h)?updated:h<6?'数据新鲜 · '+updated:h<24?'⚠️ 已有'+Math.floor(h)+'小时 · '+updated:'⚠️ 超过'+Math.floor(h/24)+'天未更新 · '+updated;
+        freshHtml='<span style="color:'+col+';font-size:var(--t-xs)">'+lbl+'</span>';
+      }
+      document.getElementById('heatSummary').innerHTML=
+        '<span class="hot-tag">🔥 '+hot.slice(0,5).join('、')+'</span>'+
+        '<span class="cold-tag">❄️ '+cold.slice(0,5).join('、')+'</span>'+freshHtml;
+      var items=data.items||[], hmin=Math.min.apply(null,items.map(function(x){return x.heat_score||0;}));
+      var hmax=Math.max.apply(null,items.map(function(x){return x.heat_score||100;}));
+      if(hmax<=hmin) hmax=hmin+1;
+      var chart=echarts.init(document.getElementById('industry-heat-treemap'));
+      chart.setOption({
+        backgroundColor:'transparent',
+        tooltip:{formatter:function(info){
+          var item=items.find(function(x){return x.name===info.name;});
+          var pct=item&&item.change_pct!=null?(item.change_pct>=0?'+':'')+item.change_pct.toFixed(2)+'%':'';
+          return '<b>'+info.name+'</b><br>热度: '+info.value+(pct?'<br>涨跌: '+pct:'');
+        }},
+        series:[{
+          type:'treemap',data:[{name:'行业热度',children:items.slice(0,80).map(function(x){
+            return {name:x.name||'',value:Math.max(1,x.heat_score||50),heat_score:x.heat_score,change_pct:x.change_pct};
+          }]}],
+          leafDepth:1,roam:false,
+          label:{show:true,formatter:function(p){
+            var s=p.data.heat_score!=null?p.data.heat_score:p.value;
+            var pct=p.data.change_pct;
+            return p.name+(pct!=null?'\n'+(pct>=0?'+':'')+pct.toFixed(1)+'%':'');
+          },fontSize:11},
+          itemStyle:{borderRadius:4},
+          levels:[{},{colorMappingBy:'value',colorAlpha:[0.3,1],color:['var(--up)','#f59e0b','var(--down)']}]
+        }]
+      });
+      window.addEventListener('resize',function(){chart.resize();});
+    })
+    .catch(function(e){
+      document.getElementById('heatLoading').style.display='none';
+      var el=document.getElementById('heatError'); el.style.display='block';
+      el.textContent=(e+'').indexOf('未配置')>=0?'行业热度数据暂未配置，workflow 运行 python industry_heat.py 后自动生效。':'加载失败: '+e;
+    });
+}
+// 首屏自动加载热度
+loadHeat(); heatLoaded=true;
+
+// ══════════════════════════════════════
+// 基金筛选
+// ══════════════════════════════════════
+var PAGE_SIZE=50, fundsData=null, filteredList=[], currentPage=1;
+function norm(f){ return {code:f.code||f.c,name:f.name||f.n,type:f.type||f.t,score:f.s!=null?f.s:(f.score!=null?f.score:0)}; }
+function loadFunds(){
+  document.getElementById('screenerLoading').style.display='block';
+  fetch('funds_db.json')
+    .then(function(r){if(!r.ok)return Promise.reject('HTTP '+r.status);return r.text();})
+    .then(function(t){if(t.trim()[0]==='<')return Promise.reject('未配置');return JSON.parse(t);})
+    .then(function(data){
+      fundsData=data; document.getElementById('screenerLoading').style.display='none';
+      var types=[],seen={};
+      (data.funds||[]).forEach(function(f){var t=norm(f).type;if(t&&!seen[t]){seen[t]=true;types.push(t);}});
+      document.getElementById('filterType').innerHTML='<option value="">全部类型</option>'+types.sort().map(function(t){return'<option value="'+t+'">'+t+'</option>';}).join('');
+      runFilter();
+    })
+    .catch(function(e){
+      document.getElementById('screenerLoading').style.display='none';
+      var el=document.getElementById('screenerError');el.style.display='block';
+      el.innerHTML=(e+'').indexOf('未配置')>=0?'基金数据暂未配置，可在 workflow 中运行 <code>python data_importer.py</code> 后部署。':'加载失败: '+e;
+    });
+}
+function runFilter(){
+  if(!fundsData||!fundsData.funds)return;
+  var tv=(document.getElementById('filterType').value||'').trim();
+  var kw=(document.getElementById('filterKeyword').value||'').trim().toLowerCase();
+  filteredList=fundsData.funds.filter(function(f){var n=norm(f);return(!tv||n.type===tv)&&(!kw||(n.name||'').toLowerCase().includes(kw));});
+  filteredList.sort(function(a,b){return(b.s!=null?b.s:0)-(a.s!=null?a.s:0);});
+  currentPage=1;
+  document.getElementById('screenerResult').textContent='共 '+filteredList.length+' 只';
+  renderScPage();
+}
+function renderScPage(){
+  var total=Math.max(1,Math.ceil(filteredList.length/PAGE_SIZE));
+  var s=(currentPage-1)*PAGE_SIZE;
+  var pg=document.getElementById('screenerPagination');
+  pg.style.display='flex';
+  pg.innerHTML='<button onclick="scPage(-1)" '+(currentPage<=1?'disabled':'')+'>上一页</button>'+
+    '<span>'+currentPage+'/'+total+'</span>'+
+    '<button onclick="scPage(1)" '+(currentPage>=total?'disabled':'')+'>下一页</button>';
+  var tbl=document.getElementById('screenerTable');tbl.style.display='table';
+  var body=document.getElementById('screenerBody');
+  body.innerHTML=filteredList.slice(s,s+PAGE_SIZE).map(function(f){
+    var n=norm(f);
+    var code=n.code||'';
+    var link='https://fund.eastmoney.com/'+code.replace(/^jj/,'')+'.html';
+    return '<tr><td style="padding:8px;border-bottom:1px solid var(--line);font-family:var(--f-mono)">'+n.score.toFixed(1)+'</td>'+
+      '<td style="padding:8px;border-bottom:1px solid var(--line);color:var(--tx-3);font-family:var(--f-mono);font-size:var(--t-xs)">'+code+'</td>'+
+      '<td style="padding:8px;border-bottom:1px solid var(--line)"><a href="'+link+'" target="_blank" style="color:var(--accent)">'+n.name+'</a></td>'+
+      '<td style="padding:8px;border-bottom:1px solid var(--line);color:var(--tx-3);font-size:var(--t-xs)">'+n.type+'</td></tr>';
+  }).join('');
+}
+function scPage(d){currentPage+=d;renderScPage();}
+document.getElementById('filterKeyword').addEventListener('keydown',function(e){if(e.key==='Enter')runFilter();});
+
+// ══════════════════════════════════════
+// 术语词典（动态）
+// ══════════════════════════════════════
+function loadGlossary(){
+  fetch('glossary.json')
+    .then(function(r){if(!r.ok)return Promise.reject('HTTP '+r.status);return r.json();})
+    .then(function(data){
+      document.getElementById('glossaryLoading').style.display='none';
+      document.getElementById('glossaryContent').style.display='block';
+      function render(terms,el){
+        if(!el)return;
+        var keys=Object.keys(terms);
+        el.innerHTML=keys.length===0?'<p style="color:var(--tx-3);font-size:var(--t-sm)">暂无</p>':
+          Object.entries(terms).map(function(e){return'<div class="term-card"><div class="term-badge">'+e[0]+'</div><p class="term-desc">'+e[1]+'</p></div>';}).join('');
+      }
+      render(data.core||{},document.getElementById('glossaryCore'));
+      render(data.pending||{},document.getElementById('glossaryPending'));
+      if(data.updated_at) document.getElementById('glossaryUpdated').textContent='更新时间: '+data.updated_at;
+    })
+    .catch(function(){
+      document.getElementById('glossaryLoading').style.display='none';
+      document.getElementById('glossaryError').style.display='block';
+      document.getElementById('glossaryError').textContent='词典数据暂未配置。';
+    });
+}
+
+// ══════════════════════════════════════
+// 交易记录
+// ══════════════════════════════════════
+var INIT_HOLDINGS=[
+  {code:'jj005562',name:'创金合信中证红利低波指数C',shares:1656.88,cost:2.0352,category:'active',sector:'Dividend',benchmark:'000300'},
+  {code:'jj016452',name:'南方纳斯达克100指数(QDII)A',shares:699.09,cost:2.0026,category:'active',sector:'Tech',benchmark:'QQQ'},
+  {code:'jj100038',name:'富国沪深300增强A',shares:1573.44,cost:1.8142,category:'active',sector:'Dividend',benchmark:'000300'},
+  {code:'jj016582',name:'嘉实上海金ETF联接C',shares:1371.92,cost:2.1723,category:'active',sector:'Resource',benchmark:'GC=F'},
+  {code:'jj017675',name:'东方红颐和积极养老五年(FOF)Y',shares:2383.96,cost:1.2584,category:'pension',sector:'Pension',benchmark:'000300'},
+  {code:'jj017403',name:'广发养老2050五年持有期混合(FOF)Y',shares:2170.71,cost:1.382,category:'pension',sector:'Pension',benchmark:'000300'},
+  {code:'jj016707',name:'华夏中证有色金属ETF联接A',shares:1692.08,cost:1.9969,category:'active',sector:'Resource',benchmark:'GC=F'},
+  {code:'jj008586',name:'华夏人工智能ETC联接C',shares:1070.01,cost:1.5028,category:'active',sector:'Tech',benchmark:'QQQ'},
+  {code:'jj003016',name:'中金中证3500指数增强A',shares:385.34,cost:2.5951,category:'active',sector:'Dividend',benchmark:'000300'}
+];
+var INIT_FLOWS=[
+  {date:'2026-01-08',type:'withdrawal',amount:470.69,note:'卖出创新药(转入沪深)'},
+  {date:'2026-01-08',type:'withdrawal',amount:470.67,note:'卖出创新药(转入沪深)'},
+  {date:'2026-01-09',type:'withdrawal',amount:732.85,note:'卖出中证白酒(给有色金属)'},
+  {date:'2026-01-13',type:'deposit',amount:400,note:'定投纳斯达克(13-23合计)'},
+  {date:'2026-01-14',type:'withdrawal',amount:375.23,note:'卖出华夏房地产(给沪深300)'},
+  {date:'2026-01-14',type:'deposit',amount:500,note:'买入人工智能'},
+  {date:'2026-01-18',type:'withdrawal',amount:611.09,note:'卖出有色金属(给人工智能)'},
+  {date:'2026-01-21',type:'deposit',amount:500,note:'买入人工智能'},
+  {date:'2026-01-21',type:'withdrawal',amount:801.25,note:'卖出上海金'},
+  {date:'2026-01-30',type:'deposit',amount:2000,note:'买入有色金属'},
+  {date:'2026-01-30',type:'deposit',amount:1500,note:'买入上海金'},
+  {date:'2026-02-12',type:'deposit',amount:2000,note:'增投红利低波'},
+  {date:'2026-02-25',type:'withdrawal',amount:872.04,note:'赎回华夏有色金属ETF联接A'},
+  {date:'2026-03-01',type:'deposit',amount:1000,note:'买入中金中证3500指数增强A'},
+  {date:'2026-03-01',type:'deposit',amount:1000,note:'买入富国沪深300增强A'}
+];
+
+var holdings=JSON.parse(JSON.stringify(INIT_HOLDINGS));
+var flows=JSON.parse(JSON.stringify(INIT_FLOWS));
+var txType='buy', newFundOpen=false;
+
+function initTrade(){
+  document.getElementById('txDate').value=new Date().toISOString().slice(0,10);
+  populateFundSelect(); renderAll();
+}
+function populateFundSelect(){
+  var sel=document.getElementById('fundSelect');
+  sel.innerHTML='<option value="">— 选择现有持仓 —</option>';
+  holdings.forEach(function(h,i){sel.innerHTML+='<option value="'+i+'">'+h.name+'</option>';});
+}
+function setTxType(t){
+  txType=t;
+  document.getElementById('btnBuy').className='tx-type-btn '+(t==='buy'?'active-buy':'');
+  document.getElementById('btnSell').className='tx-type-btn '+(t==='sell'?'active-sell':'');
+  document.getElementById('btnSubmit').className='btn-submit '+(t==='buy'?'buy':'sell');
+  document.getElementById('btnSubmit').textContent=t==='buy'?'确认买入':'确认卖出';
+  calcPreview();
+}
+function toggleNewFund(){
+  newFundOpen=!newFundOpen;
+  document.getElementById('newFundFields').style.display=newFundOpen?'block':'none';
+  document.getElementById('fundSelect').disabled=newFundOpen;
+  if(newFundOpen){document.getElementById('holdingHint').style.display='none';document.getElementById('previewBox').style.display='none';}
+}
+function onFundChange(){
+  var idx=document.getElementById('fundSelect').value;
+  var hint=document.getElementById('holdingHint');
+  if(!idx){hint.style.display='none';calcPreview();return;}
+  var h=holdings[idx];
+  document.getElementById('hintName').textContent=h.name;
+  document.getElementById('hintShares').textContent=h.shares.toFixed(2)+' 份';
+  document.getElementById('hintCost').textContent=h.cost.toFixed(4);
+  hint.style.display='block'; calcPreview();
+}
+function calcPreview(){
+  var box=document.getElementById('previewBox');
+  var idx=document.getElementById('fundSelect').value;
+  var amt=parseFloat(document.getElementById('txAmount').value)||0;
+  var nav=parseFloat(document.getElementById('txNav').value)||0;
+  if(newFundOpen||!idx||amt<=0||nav<=0){box.style.display='none';return;}
+  var h=holdings[idx];
+  var txShares=amt/nav, newShares, newCost;
+  if(txType==='buy'){newShares=h.shares+txShares;newCost=(h.shares*h.cost+amt)/newShares;}
+  else{newShares=Math.max(0,h.shares-txShares);newCost=h.cost;}
+  document.getElementById('pvSharesOld').textContent=h.shares.toFixed(2);
+  document.getElementById('pvSharesNew').textContent=newShares.toFixed(2);
+  document.getElementById('pvCostOld').textContent=h.cost.toFixed(4);
+  document.getElementById('pvCostNew').textContent=newCost.toFixed(4);
+  box.style.display='block';
+}
+function submitTx(){
+  var date=document.getElementById('txDate').value;
+  var amt=parseFloat(document.getElementById('txAmount').value);
+  var nav=parseFloat(document.getElementById('txNav').value);
+  var note=document.getElementById('txNote').value.trim();
+  if(!date){toast('请选择日期');return;}
+  if(!(amt>0)){toast('请填写金额');return;}
+  if(!(nav>0)){toast('请填写净值');return;}
+  var txShares=amt/nav;
+  if(newFundOpen){
+    var code=document.getElementById('newCode').value.trim();
+    var name=document.getElementById('newName').value.trim();
+    if(!code||!name){toast('请填写代码和名称');return;}
+    holdings.push({code:'jj'+code.replace(/^jj/,''),name,shares:txShares,cost:nav,
+      category:document.getElementById('newCategory').value,
+      sector:document.getElementById('newSector').value,
+      benchmark:document.getElementById('newBenchmark').value.trim()||'000300'});
+    toast('✓ 已添加 '+name);
+    toggleNewFund();
+  } else {
+    var idx=document.getElementById('fundSelect').value;
+    if(!idx){toast('请选择基金');return;}
+    var h=holdings[idx];
+    if(txType==='buy'){var ns=h.shares+txShares;h.cost=(h.shares*h.cost+amt)/ns;h.shares=ns;}
+    else{if(txShares>h.shares+0.01){toast('卖出份额超过持有量');return;}h.shares=Math.max(0,h.shares-txShares);}
+    h.shares=parseFloat(h.shares.toFixed(2));h.cost=parseFloat(h.cost.toFixed(4));
+    toast('✓ '+(txType==='buy'?'买入':'卖出')+' '+h.name);
+  }
+  var fundIdx=newFundOpen?holdings.length-1:parseInt(document.getElementById('fundSelect').value);
+  var autoNote=note||(txType==='buy'?'买入 ':'卖出 ')+(holdings[fundIdx]||{}).name||'';
+  flows.push({date,type:txType==='buy'?'deposit':'withdrawal',amount:parseFloat(amt.toFixed(2)),note:autoNote});
+  flows.sort(function(a,b){return a.date.localeCompare(b.date);});
+  ['txAmount','txNav','txNote'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('fundSelect').value='';
+  document.getElementById('holdingHint').style.display='none';
+  document.getElementById('previewBox').style.display='none';
+  renderAll();
+}
+function deleteFlow(i){
+  if(!confirm('删除：'+flows[i].date+' '+flows[i].note+'?'))return;
+  flows.splice(i,1);renderAll();toast('已删除');
+}
+function renderAll(){
+  renderStats();renderHoldings();renderFlows();renderExport();populateFundSelect();
+}
+function renderStats(){
+  var mv=holdings.reduce(function(s,h){return s+h.shares*h.cost;},0);
+  var net=flows.reduce(function(s,f){return f.type==='deposit'?s+f.amount:s-f.amount;},0);
+  document.getElementById('txStats').innerHTML=
+    '<div class="stat-chip"><div class="sl">成本总市值</div><div class="sv">¥'+mv.toFixed(0)+'</div></div>'+
+    '<div class="stat-chip"><div class="sl">净流入</div><div class="sv" style="color:'+(net>=0?'var(--up)':'var(--down)')+'">¥'+net.toFixed(0)+'</div></div>'+
+    '<div class="stat-chip"><div class="sl">流水条数</div><div class="sv">'+flows.length+'</div></div>';
+}
+function renderHoldings(){
+  var mv=holdings.reduce(function(s,h){return s+h.shares*h.cost;},0);
+  document.getElementById('holdingsTbody').innerHTML=[...holdings].sort(function(a,b){return b.shares*b.cost-a.shares*a.cost;}).map(function(h){
+    var v=h.shares*h.cost;
+    return '<tr><td style="padding:8px;border-bottom:1px solid var(--line);font-size:var(--t-xs)">'+h.name+'</td>'+
+      '<td style="padding:8px;border-bottom:1px solid var(--line);text-align:right;font-family:var(--f-mono);font-size:var(--t-xs)">'+h.shares.toFixed(2)+'</td>'+
+      '<td style="padding:8px;border-bottom:1px solid var(--line);text-align:right;font-family:var(--f-mono);font-size:var(--t-xs)">'+h.cost.toFixed(4)+'</td>'+
+      '<td style="padding:8px;border-bottom:1px solid var(--line);text-align:right;font-family:var(--f-mono);font-size:var(--t-xs)">¥'+v.toFixed(0)+'</td></tr>';
+  }).join('');
+}
+function renderFlows(){
+  var rev=[...flows].reverse();
+  document.getElementById('flowCount').textContent=rev.length+' 条';
+  document.getElementById('flowList').innerHTML=rev.length?rev.map(function(f,ri){
+    var i=flows.indexOf(f);
+    return '<div class="flow-item">'+
+      '<div class="flow-dot '+f.type+'"></div>'+
+      '<div class="flow-date">'+f.date+'</div>'+
+      '<div class="flow-note">'+f.note+'</div>'+
+      '<div class="flow-amt '+f.type+'">'+(f.type==='deposit'?'+':'-')+'¥'+f.amount.toFixed(0)+'</div>'+
+      '<button class="flow-del" onclick="deleteFlow('+i+')">×</button></div>';
+  }).join(''):'<div style="padding:var(--s5);text-align:center;color:var(--tx-3);font-size:var(--t-sm)">暂无记录</div>';
+}
+function renderExport(){
+  var csv='code,name,shares,cost,category,sector,benchmark\n'+holdings.map(function(h){return[h.code,h.name,h.shares,h.cost,h.category,h.sector,h.benchmark].join(',');}).join('\n');
+  document.getElementById('exportHoldings').value=csv;
+  document.getElementById('exportFlows').value=JSON.stringify({flows},null,2);
+}
+function copyText(id){document.getElementById(id).select();document.execCommand('copy');toast('已复制 ✓');}
+function downloadAll(){
+  dl('holdings.csv',document.getElementById('exportHoldings').value,'text/csv');
+  setTimeout(function(){dl('capital_flows.json',document.getElementById('exportFlows').value,'application/json');},300);
+}
+function dl(name,content,mime){
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type:mime}));a.download=name;a.click();
+}
+// Toast
+var toastTimer;
+function toast(msg){
+  var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove('show');},2500);
+}
+
+initTrade();
+</script>
+</body>
+</html>
