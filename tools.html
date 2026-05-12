@@ -336,17 +336,17 @@ function loadHeat() {
           return '<b>'+info.name+'</b><br>热度: '+info.value+(pct?'<br>涨跌: '+pct:'');
         }},
         series:[{
-          type:'treemap',data:[{name:'行业热度',children:items.slice(0,80).map(function(x){
+          type:'treemap',
+          leafDepth:1, roam:false,
+          data:[{name:'行业热度',children:items.slice(0,80).map(function(x){
             return {name:x.name||'',value:Math.max(1,x.heat_score||50),heat_score:x.heat_score,change_pct:x.change_pct};
-          }]}],
-          leafDepth:1,roam:false,
+          })}],
           label:{show:true,formatter:function(p){
-            var s=p.data.heat_score!=null?p.data.heat_score:p.value;
             var pct=p.data.change_pct;
             return p.name+(pct!=null?'\n'+(pct>=0?'+':'')+pct.toFixed(1)+'%':'');
           },fontSize:11},
           itemStyle:{borderRadius:4},
-          levels:[{},{colorMappingBy:'value',colorAlpha:[0.3,1],color:['var(--up)','#f59e0b','var(--down)']}]
+          levels:[{},{colorMappingBy:'value',colorAlpha:[0.3,1],color:['#dc2626','#f59e0b','#059669']}]
         }]
       });
       window.addEventListener('resize',function(){chart.resize();});
