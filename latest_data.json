@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-05-24 17:54:07",
+  "update_time": "2026-05-24 23:04:24",
   "rate_a": 1.17,
   "rate_b": 1.08,
   "weather": "🌫️ 横盘震荡",
@@ -9,8 +9,8 @@
     "dxy": "99.3"
   },
   "grid_count": 1,
-  "total_pnl": 981.42,
+  "total_pnl": 980.49,
   "twr_return": 3.34,
   "twr_max_drawdown": -2.74,
-  "daily_pnl": 289.65
+  "daily_pnl": 289.66
 }
