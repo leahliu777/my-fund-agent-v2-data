@@ -1,16 +1,16 @@
 {
-  "update_time": "2026-05-26 00:22:57",
-  "rate_a": 1.08,
-  "rate_b": 0.76,
+  "update_time": "2026-05-26 14:47:03",
+  "rate_a": 0.58,
+  "rate_b": -0.56,
   "weather": "🌫️ 横盘震荡",
   "macro": {
     "us10y": "4.56%",
-    "vix": "4384.6",
-    "dxy": "99.0"
+    "vix": "4282.8",
+    "dxy": "99.1"
   },
   "grid_count": 1,
-  "total_pnl": 941.02,
-  "twr_return": 3.42,
+  "total_pnl": 734.8,
+  "twr_return": 2.53,
   "twr_max_drawdown": -2.74,
-  "daily_pnl": 247.28
+  "daily_pnl": 52.13
 }
