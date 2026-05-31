@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-05-31 18:15:59",
+  "update_time": "2026-05-31 23:17:55",
   "rate_a": -0.37,
   "rate_b": -1.13,
   "weather": "💨 持续顺风",
@@ -9,8 +9,8 @@
     "dxy": "98.9"
   },
   "grid_count": 2,
-  "total_pnl": 504.1,
-  "twr_return": 2.37,
+  "total_pnl": 559.76,
+  "twr_return": 2.59,
   "twr_max_drawdown": -2.74,
-  "daily_pnl": -153.49
+  "daily_pnl": -152.75
 }
