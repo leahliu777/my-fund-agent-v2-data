@@ -2,18 +2,18 @@
 <meta charset="UTF-8">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>CIO 周报 | 2026-06-06 18:15:36</title>
+<title>CIO 周报 | 2026-06-06 23:39:18</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#050505">
+<meta name="theme-color" content="#f7f5ef">
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <style>
     :root {
-        --bg: #1a1a1a; --card: #242424; --primary: #d4af37;
-        --text: #e0e0e0; --text-muted: #aaa; --text-dim: #666;
-        --up: #ff4d4d; --down: #2ecc71; --border: #333;
-        --accent: rgba(212,175,55,0.15);
+        --bg: #f7f5ef; --card: #fffdfa; --primary: #111111;
+        --text: #111111; --text-muted: #5f5b53; --text-dim: #9a958c;
+        --up: #ef4444; --down: #2563eb; --border: #ebe7df;
+        --accent: rgba(17,17,17,0.06);
     }
     html, body {
         margin: 0; padding: 0;
@@ -24,26 +24,27 @@
 
     /* ── 导航 ── */
     .tab-nav {
-        background: var(--card); border-bottom: 1px solid var(--border);
+        background: rgba(255,253,250,0.94); border-bottom: 1px solid var(--border);
+        backdrop-filter: blur(14px);
         display: flex; justify-content: center;
         position: sticky; top: 0; z-index: 1000; width: 100%;
         overflow-x: auto; -webkit-overflow-scrolling: touch;
     }
     .tab-nav a {
-        padding: 14px 18px; color: #888; text-decoration: none;
-        font-weight: bold; font-size: 13px; white-space: nowrap;
+        padding: 14px 18px; color: var(--text-dim); text-decoration: none;
+        font-weight: 500; font-size: 13px; white-space: nowrap;
     }
     .tab-nav a.active { color: var(--primary); border-bottom: 2px solid var(--primary); }
     .tab-nav a::before { margin-right: 4px; }
 
     /* ── 主容器 ── */
-    .container { max-width: 680px; margin: 0 auto; padding: 16px; box-sizing: border-box; }
+    .container { max-width: 680px; margin: 0 auto; padding: 16px; box-sizing: border-box; width: 100%; overflow-x: hidden; }
 
     /* ── 统计卡片网格：2列 ── */
     .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
     .card {
         background: var(--card); padding: 16px; border-radius: 10px;
-        border: 1px solid var(--border); border-left: 4px solid var(--primary);
+        border: 1px solid var(--border); border-left: 3px solid var(--primary);
         box-sizing: border-box;
     }
     .card-label { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
@@ -53,14 +54,14 @@
 
     /* ── 目标进度条 ── */
     .progress-bar {
-        height: 6px; background: #333; border-radius: 3px; margin-top: 8px; overflow: hidden;
+        height: 6px; background: #eee9df; border-radius: 3px; margin-top: 8px; overflow: hidden;
     }
     .progress-fill { height: 100%; background: var(--primary); border-radius: 3px; }
 
     /* ── 行业色块条 ── */
     .sector-bar {
         height: 14px; display: flex; border-radius: 7px;
-        overflow: hidden; margin: 10px 0; background: #111;
+        overflow: hidden; margin: 10px 0; background: #eee9df;
     }
 
     /* ── 圆环图容器 ── */
@@ -74,21 +75,22 @@
     }
     table { width: 100%; border-collapse: collapse; min-width: 500px; }
     th, td { padding: 10px 10px; text-align: left; border-bottom: 1px solid var(--border); font-size: 13px; white-space: nowrap; }
-    th { background: #2a2a2a; color: var(--primary); font-size: 10px; text-transform: uppercase; }
+    th { background: #f0ece3; color: var(--primary); font-size: 10px; text-transform: uppercase; }
     .text-right { text-align: right; }
 
     /* ── AI 报告 ── */
     .weekly-brief {
-        background: linear-gradient(180deg, rgba(212,175,55,0.12), rgba(212,175,55,0.04));
-        border: 1px solid rgba(212,175,55,0.28);
+        background: var(--card);
+        border: 1px solid var(--border);
         border-left: 4px solid var(--primary);
         border-radius: 10px;
         padding: 14px 16px;
         margin-bottom: 14px;
+        min-width: 0;
     }
     .weekly-brief-label { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 7px; }
     .weekly-brief-title { font-size: 20px; line-height: 1.25; color: var(--text); font-weight: 700; margin-bottom: 10px; }
-    .weekly-brief ul { margin: 0; padding-left: 18px; color: #ddd; font-size: 13px; line-height: 1.7; }
+    .weekly-brief ul { margin: 0; padding-left: 18px; color: var(--text-muted); font-size: 13px; line-height: 1.7; }
     .weekly-brief li { margin-bottom: 5px; }
     .detail-block { margin-top: 14px; }
     .detail-block > summary {
@@ -98,7 +100,7 @@
     }
     .detail-block > summary::after { content: "展开"; color: var(--text-dim); font-size: 11px; }
     .detail-block[open] > summary::after { content: "收起"; }
-    .ai-report { padding-bottom: 18px; }
+    .ai-report { padding-bottom: 18px; overflow-wrap: anywhere; word-break: break-word; }
     .ai-report h2 {
         font-size: 15px; color: var(--primary); font-weight: bold;
         margin: 28px 0 12px; border-left: 4px solid var(--primary);
@@ -107,23 +109,24 @@
     }
     .ai-report ul { list-style: none; padding-left: 8px; margin: 0; }
     .ai-report li {
-        margin-bottom: 10px; color: #ccc; line-height: 1.75;
+        margin-bottom: 10px; color: var(--text-muted); line-height: 1.75;
         position: relative; padding-left: 18px; font-size: 14px;
     }
     .ai-report li::before { content: "•"; color: var(--primary); position: absolute; left: 0; font-weight: bold; }
     .ai-report strong { color: var(--primary); font-weight: 700; }
     .ai-report p { font-size: 14px; color: var(--text-muted); line-height: 1.75; margin: 8px 0; }
-    .ai-report table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 12px; }
-    .ai-report th { background: #2a2a2a; color: var(--primary); padding: 8px; text-align: left; }
-    .ai-report td { padding: 8px; border-bottom: 1px solid var(--border); color: #ccc; }
+    .ai-report table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 12px; min-width: 520px; }
+    .ai-report th { background: #f0ece3; color: var(--primary); padding: 8px; text-align: left; }
+    .ai-report td { padding: 8px; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+    .ai-report pre, .ai-report code { white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; }
 
     /* ── 词典高亮 ── */
     .glossary-term { border-bottom: 1px dashed var(--primary); cursor: help; color: var(--primary); font-weight: 600; }
     .tooltip {
-        position: fixed; background: rgba(20,20,20,0.97); color: #fff;
+        position: fixed; background: rgba(255,253,250,0.98); color: var(--text);
         padding: 12px 15px; border-radius: 8px; border: 1px solid var(--primary);
         display: none; z-index: 3000; font-size: 13px; max-width: 240px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.6); line-height: 1.5;
+        box-shadow: 0 8px 24px rgba(30,25,10,0.14); line-height: 1.5;
     }
 
     /* ── 周报问答框：内联，不遮挡底部导航 ── */
@@ -137,7 +140,7 @@
     }
     .chat-bar input {
         flex: 1; padding: 10px 14px; border-radius: 20px;
-        border: 1px solid var(--border); background: #2a2a2a;
+        border: 1px solid var(--border); background: #f7f5ef;
         color: var(--text); font-size: 14px; outline: none;
     }
     .chat-bar button {
@@ -158,7 +161,7 @@
     /* ── 登录弹层 ── */
     .modal {
         display: none; position: fixed; inset: 0; z-index: 9000;
-        background: rgba(0,0,0,0.75); justify-content: center; align-items: center;
+        background: rgba(20,18,14,0.28); justify-content: center; align-items: center;
     }
     .modal.show { display: flex; }
     .modal-content {
@@ -168,7 +171,7 @@
     .modal-content h2 { color: var(--primary); margin: 0 0 16px; font-size: 18px; }
     .modal-content input {
         width: 100%; padding: 10px 12px; border-radius: 8px;
-        border: 1px solid var(--border); background: #2a2a2a;
+        border: 1px solid var(--border); background: #f7f5ef;
         color: var(--text); font-size: 14px; box-sizing: border-box;
     }
     .modal-content button {
@@ -191,35 +194,32 @@
         grid-template-rows: auto auto;
         gap: 12px;
         margin-bottom: 16px;
+        min-width: 0;
     }
-    @media (max-width: 600px) {
-        .dashboard-grid { grid-template-columns: 1fr; }
-        .card-main-stats { grid-row: auto; }
-        .card-bench { grid-column: auto; grid-row: auto; }
-    }
-    .dashboard-grid .card { margin: 0; }
+    .dashboard-grid .card { margin: 0; min-width: 0; overflow: hidden; }
     .dashboard-grid .text-secondary { font-size: 11px; color: #666; margin-bottom: 4px; }
-    .dashboard-grid .value { font-weight: bold; font-size: 1.4rem; color: var(--text); }
+    .dashboard-grid .value { font-weight: bold; font-size: 1.4rem; color: var(--text); line-height: 1.25; overflow-wrap: anywhere; }
+    .dashboard-grid .value-lg { font-size: clamp(24px, 8vw, 34px); }
     .card-main-stats { grid-row: span 2; }
-    .goals-progress-bar { height: 6px; background: #333; border-radius: 3px; overflow: hidden; margin-top: 8px; }
+    .goals-progress-bar { height: 6px; background: #eee9df; border-radius: 3px; overflow: hidden; margin-top: 8px; }
     .goals-progress-fill { height: 100%; background: var(--primary); border-radius: 3px; }
     .card-drawdown { border-left: 4px solid var(--down); }
     .card-drawdown.alert { border-left-color: var(--up); box-shadow: 0 0 0 1px rgba(255,77,77,0.25); }
     .card-bench { grid-column: 2 / span 2; grid-row: 2; }
-    .bench-card { background: #2a2a2a; border-radius: 8px; padding: 12px; margin-top: 8px; border: 1px solid var(--border); }
-    .bench-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px dashed #333; font-size: 13px; }
+    .bench-card { background: #f1ede5; border-radius: 8px; padding: 12px; margin-top: 8px; border: 1px solid var(--border); min-width: 0; }
+    .bench-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px dashed #ddd6c9; font-size: 13px; }
     .bench-row:last-child { border-bottom: none; }
     .bench-row-header { border-bottom-color: transparent; padding-top: 0; }
     .bench-section { margin-bottom: 12px; }
     .bench-section:last-child { margin-bottom: 0; }
     .bench-title { font-weight: bold; color: var(--text); flex-shrink: 0; }
-    .bench-metrics { display: flex; gap: 8px; align-items: center; min-width: 0; flex: 1; }
+    .bench-metrics { display: grid; grid-template-columns: minmax(44px,1fr) 44px minmax(44px,1fr); gap: 8px; align-items: center; min-width: 0; flex: 1; }
     .bench-metrics-header { font-size: 11px; color: #666; }
     .metric-tag { padding: 2px 6px; border-radius: 4px; font-size: 0.9em; font-weight: 500; }
-    .tag-bench { background: #333; color: #aaa; }
-    .bench-bar-mine { flex: 1 1 0; min-width: 10px; max-width: 60px; height: 5px; background: var(--primary); border-radius: 3px; }
-    .bench-bar-bm { flex: 1 1 0; min-width: 10px; max-width: 60px; height: 5px; background: #444; border-radius: 3px; }
-    .bench-alpha { flex: 0 0 44px; text-align: center; font-weight: 600; font-size: 12px; }
+    .tag-bench { background: #e7e1d6; color: var(--text-muted); }
+    .bench-bar-mine { min-width: 10px; max-width: 100%; height: 5px; background: var(--primary); border-radius: 3px; }
+    .bench-bar-bm { min-width: 10px; max-width: 100%; height: 5px; background: #ddd6c9; border-radius: 3px; }
+    .bench-alpha { text-align: center; font-weight: 600; font-size: 12px; }
     .bench-alpha.positive { color: var(--down); }
     .bench-alpha.negative { color: var(--up); }
     .goals-diagnosis {
@@ -228,9 +228,21 @@
         border-left: 4px solid var(--up);
     }
     @media (max-width: 600px) {
+        .container { padding: 12px 12px calc(78px + env(safe-area-inset-bottom)); max-width: 100vw; }
+        .weekly-brief { padding: 12px 14px; border-radius: 8px; }
+        .weekly-brief-title { font-size: 18px; }
+        .weekly-brief li { font-size: 13px; line-height: 1.65; }
+        .dashboard-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+        .card-main-stats { grid-column: 1 / -1; grid-row: auto; }
+        .card-bench { grid-column: 1 / -1; grid-row: auto; }
+        .dashboard-grid .card { padding: 12px; border-radius: 8px; }
+        .dashboard-grid .value { font-size: 1.05rem; }
+        .dashboard-grid .value-lg { font-size: clamp(24px, 9vw, 32px); }
+        .bench-card { padding: 10px; }
         .bench-row { flex-direction: column; align-items: flex-start; gap: 6px; padding: 10px 0; font-size: 12px; }
-        .bench-metrics { width: 100%; justify-content: space-between; background: #2a2a2a; padding: 6px 8px; border-radius: 8px; }
+        .bench-metrics { width: 100%; background: #f1ede5; padding: 6px 0; border-radius: 8px; grid-template-columns: minmax(42px,1fr) 42px minmax(42px,1fr); }
         .bench-bar-mine, .bench-bar-bm { max-width: none; }
+        .table-scroll-wrapper { max-width: 100%; overflow-x: auto; }
     }
 
     /* ── 手机端微调 ── */
@@ -261,12 +273,12 @@
 </nav>
 
 <div class="container">
-    <p style="color:#555; font-size:11px; margin: 8px 0 14px;">WEEKLY AUDIT | 2026-06-06 18:15:36</p>
+    <p style="color:#555; font-size:11px; margin: 8px 0 14px;">WEEKLY AUDIT | 2026-06-06 23:39:18</p>
 
     <section class="weekly-brief">
         <div class="weekly-brief-label">下周计划</div>
         <div class="weekly-brief-title">先看结论，再看证据</div>
-        <ul><li>减仓黄金ETF联接基金，降低高位震荡风险；金额/比例：约¥1,200（当前持仓的50%）；触发：周一开盘执行</li><li>加仓纳斯达克100指数基金，捕捉美股科技趋势；金额/比例：约¥1,200；触发：周二前完成申购</li><li>持有红利基金和固收基金，维持防御底仓；金额/比例：当前持仓不变；触发：无触发条件</li></ul>
+        <ul><li>下周持有不动；金额/比例：0；触发：无强触发信号</li></ul>
     </section>
 
     <!-- 战略指挥室（由 _build_goals_dashboard_html 输出，含 dashboard-grid） -->
@@ -381,87 +393,46 @@
 
     <!-- AI 周报正文 -->
     <div class="ai-report" id="ai-report">
-        <script type="text/template" id="ai-source">## 1. 本周表现审计
-- 组合本周收益-2.10%，显著跑输激进基准纳斯达克100（+15.99%），Alpha为-10.74%，主因科技主题基金（如**AI算力、科技软件类基金**）未能跟上美股科技反弹节奏，且黄金、有色类基金本周贡献为0，拖累整体。
-- 表现最好的基金应为固收/高股息类基金（如**Pension、Dividend相关基金**），本周收益贡献为0，起到稳定器作用；表现最差的应为科技主题基金（如**AI算力、半导体类基金**），因A股科技板块本周调整，与美股走势背离。
-- 基金表现符合产品定位：红利/固收基金提供防御，科技基金暴露于A股风险，但未捕捉到美股行情，暴露了组合的A股集中风险。
+        <script type="text/template" id="ai-source">## 1. 本周收益真相
+- 组合本周收益-2.10%，主要拖累来自**科技类基金**（如**易方达人工智能ETF联接**、**华安纳斯达克100ETF联接**）和**资源类基金**（如**南方中证申万有色金属ETF联接**）。科技板块受海外利率预期扰动及国内AI主题获利回吐影响，净值下跌显著；有色金属因大宗商品价格回调而承压。
+- 最大贡献来自**红利类基金**（如**中证红利ETF联接**）和**固收类基金**（如**天弘永利债券**），在震荡市中提供了正收益，有效对冲了组合回撤。
+- 组合跑输激进基准（纳斯达克100）10.74%，主要因后者集中持有美股科技巨头，而组合内科技暴露分散且含A股科技，后者本周跌幅更深。跑赢稳健基准（沪深300）0.88%，显示组合在防御端配置有效。
 
-## 2. 基金持仓X光
-- 组合穿透行业暴露显示：固收（26.2%）、高股息（15.2%）、黄金（14.9%）合计超56%，风格偏向防御；科技类（AI算力10.9%+科技软件6.2%+半导体5.8%）合计约23%，暴露不足。
-- 风格漂移检查显示：黄金超配14pp，消费低配15pp，说明**黄金主题基金**（如**实物黄金相关ETF联接基金**）权重过高，偏离了均衡配置；**消费主题基金**（如**消费类指数基金**）缺失，未参与近期消费复苏行情。
-- 板块收益贡献点数均为0，说明本周各板块基金均未产生正收益，组合缺乏进攻性资产。
+## 2. 宏观传导链
+- **US10Y**：本周美债收益率上行，压制高估值科技股，传导至**易方达人工智能ETF联接**和**华安纳斯达克100ETF联接**净值下跌。
+- **DXY**：美元指数走强，对**黄金类基金**（如**华安黄金ETF联接**）形成短期压力，但黄金受避险需求支撑，跌幅有限。
+- **VIX**：波动率上升，市场风险偏好下降，资金从科技流向防御板块，利好**红利类基金**和**固收类基金**。
+- **行业热度**：AI算力、半导体板块热度降温，科技主题基金承压；高股息、黄金板块热度维持，红利基金和黄金基金表现相对稳健。
+- **下周环境判断**：震荡偏逆风。宏观不确定性（利率、汇率）仍存，科技板块需消化估值，但防御性资产（红利、黄金）有望提供缓冲。
 
-## 3. 宏观因子敏感度
-- 利率敏感度：高股息/固收占比41%，若下周美联储或国内央行释放鹰派信号，利率上行将压制**红利基金**和**债券基金**净值，需警惕。
-- 大宗商品敏感度：有色/黄金占比22%，若下周黄金、铜价回调，**黄金ETF联接基金**和**有色主题基金**将直接承压；本周黄金贡献为0，已反映高位震荡。
-- 本周宏观变量：美股科技大涨（纳斯达克+15.99%），但组合中**QDII科技基金**缺失，未能受益；A股科技调整，**AI算力基金**反而受损，暴露了跨境配置不足的短板。
+## 3. 四角色分歧
+- **宏观配置官**认为：当前利率上行和美元走强是短期扰动，科技板块长期逻辑未变，建议逢低补仓**易方达人工智能ETF联接**。
+- **组合风控官**反驳：组合当前最大回撤-9.47%，虽未触发警报，但单周亏损-2.10%已接近历史波动上限。若下周继续下跌，回撤可能突破-10%，届时需被动减仓。建议保持仓位，不追加风险暴露。
+- **基金产品分析师**修正：**易方达人工智能ETF联接**本周跌幅超预期，但跟踪指数未出现风格漂移，仍符合卫星配置角色。建议观察而非补仓，因当前波动率（23.05%）偏高，补仓可能放大短期回撤。
+- **交易执行官**最终采纳风控官意见：下周无强触发信号，默认持有不动，不进行任何买卖操作。
 
-## 4. 核心风险指标审计
-- 组合波动率23.05%，处于中高水平，主要波动贡献来自科技主题基金（如**AI算力、半导体基金**）；最大回撤-9.47%，接近10%警戒线，需关注。
-- 各基金波动贡献不均衡：固收/红利基金波动低，但科技基金波动高，且仓位集中（科技类约23%），导致组合整体波动率偏高。
-- 夏普比率未直接给出，但本周收益为负，且波动率高，夏普比率大概率恶化；建议降低科技基金仓位或增加低波动资产（如短债基金）以平滑波动。
+## 4. 基金角色复盘
+- **红利类基金**（如**中证红利ETF联接**）：角色为组合稳定器，本周表现符合预期，提供正收益。无风格漂移，继续持有。
+- **科技类基金**（如**易方达人工智能ETF联接**、**华安纳斯达克100ETF联接**）：角色为增长引擎，本周表现弱于预期，但属市场系统性回调，非基金本身问题。需观察下周是否企稳，若连续两周跑输基准，考虑降低权重。
+- **资源类基金**（如**南方中证申万有色金属ETF联接**）：角色为周期配置，本周受商品价格拖累。大宗商品敏感度分析显示其与商品价格正相关，短期承压，但中期供需逻辑未变，暂持。
+- **黄金类基金**（如**华安黄金ETF联接**）：角色为避险对冲，本周表现稳健，超配14%的黄金暴露有效对冲了科技回撤。继续持有。
+- **养老FOF基金**：角色为长期底仓，本周波动较小，符合低风险定位。底层资产质量未发现问题，维持持有。
 
-## 5. 行业/板块热力图
-- 当前市场最热板块：美股科技（纳斯达克100本周+15.99%）、A股消费（政策刺激预期）；最冷板块：A股科技（半导体、AI算力调整）、黄金（高位震荡）。
-- 组合持有的**AI算力基金**、**半导体基金**处于冷板块，本周拖累组合；**黄金ETF联接基金**虽未下跌，但已失去上涨动能。
-- 未持有热门板块基金：**消费主题基金**（如消费ETF联接）缺失，未参与消费行情；**QDII科技基金**（如纳斯达克100指数基金）缺失，错失美股反弹。
+## 5. 组合风险审计
+- **回撤**：最大回撤-9.47%，距警报线（假设-12%）尚有空间，但单周亏损-2.10%需警惕。若下周再跌-2.5%，回撤将扩大至-11.5%，接近风险线。
+- **基准差距**：跑输激进基准10.74%，但跑赢稳健基准0.88%，说明组合在防御端有效，但进攻端（科技）拖累明显。当前无需调整，因科技回调属市场行为。
+- **相关性**：红利与科技负相关，黄金与股债低相关，组合内部对冲有效。但科技与资源同向下跌，暴露了周期共振风险。
+- **板块权重**：科技+资源合计权重约35%，若两者同时下跌，组合波动将加大。当前权重未超限，但需监控。
+- **资金目标**：进度50%，市值¥24,471.63，距目标5万尚有差距。当前应优先控制回撤，而非追求收益，因此保持仓位，不扩张不收缩。
 
-## 6. 潜在机会提示
-- 可关注**QDII科技主题指数基金**（如纳斯达克100指数基金或标普500科技指数基金），以捕捉美股科技趋势，弥补组合跨境科技暴露不足。
-- 可关注**消费主题指数基金**（如中证消费ETF联接），受益于国内消费刺激政策，当前组合消费低配15pp，存在补涨空间。
+## 6. 下周行动计划
+- **持有不动**：所有基金均无强触发信号。红利、黄金、固收类基金表现稳健，科技和资源类基金回调属正常波动，无需恐慌性减仓。
+- **不操作理由**：组合波动率23.05%处于中等水平，最大回撤-9.47%未触发警报，且资金目标进度仅50%，当前应避免频繁交易增加成本。
+- **观察条件**：若**易方达人工智能ETF联接**或**华安纳斯达克100ETF联接**下周继续下跌超过-3%，且组合回撤扩大至-11%，则触发减仓信号，将科技类基金权重从当前约15%降至10%。
 
-## 7. 潜在风险预警
-- **黄金ETF联接基金**：黄金价格已高位震荡，若美元走强或风险偏好回升，黄金可能回调，该基金权重9.1%，风险集中。
-- **AI算力基金**：本周A股科技调整，若下周继续下跌，该基金可能进一步拖累组合；且其重仓股（如寒武纪）波动大，需警惕。
-- **FOF养老基金**：若其子基金中包含高集中度科技基金，可能放大回撤；建议检查子基金持仓是否与组合现有科技基金重叠。
-
-## 8. 调仓优化建议
-- **减仓**：**黄金ETF联接基金**（权重9.1%），理由：黄金高位震荡，贡献为0，可降低至5%以下，释放资金。
-- **加仓**：**纳斯达克100指数基金**（QDII），理由：弥补跨境科技暴露，捕捉美股趋势，建议配置5-10%。
-- **持有不动**：**红利基金**、**固收基金**，理由：提供防御，波动低，符合组合稳定器定位。
-
-## 9. 下周行动计划
-- 周一开盘：**减仓黄金ETF联接基金**，卖出约50%仓位（对应约¥1,200），降低黄金暴露。
-- 周二前：**申购纳斯达克100指数基金**（QDII），金额约¥1,200，利用减仓资金配置。
-- 全周观察：若A股科技板块反弹，**AI算力基金**可暂持有；若继续下跌，考虑减仓10%以控制风险。
-
-## 10. 分析师信心指数
-- **6/10**：组合防御性尚可，但进攻性不足且暴露于A股科技风险；下周若美股持续强势，加仓QDII科技可改善表现，但黄金和A股科技仍有下行风险。
-
-```PLAN_JSON
-{
-  "weekly_plan": [
-    {
-      "action": "sell",
-      "title": "减仓黄金ETF联接基金，降低高位震荡风险",
-      "fund": "黄金ETF联接基金",
-      "amount": "约¥1,200（当前持仓的50%）",
-      "trigger": "周一开盘执行",
-      "reason": "黄金高位震荡，本周贡献为0，释放资金用于配置美股科技",
-      "risk_line": "若黄金价格跌破前低5%，则暂停减仓，等待反弹"
-    },
-    {
-      "action": "buy",
-      "title": "加仓纳斯达克100指数基金，捕捉美股科技趋势",
-      "fund": "纳斯达克100指数基金（QDII）",
-      "amount": "约¥1,200",
-      "trigger": "周二前完成申购",
-      "reason": "弥补组合跨境科技暴露不足，本周纳斯达克100大涨15.99%，趋势延续性强",
-      "risk_line": "若纳斯达克100指数单周回调超5%，则暂停加仓，观察后再定"
-    },
-    {
-      "action": "hold",
-      "title": "持有红利基金和固收基金，维持防御底仓",
-      "fund": "红利基金、固收基金",
-      "amount": "当前持仓不变",
-      "trigger": "无触发条件",
-      "reason": "波动低，提供稳定收益，符合组合防御定位",
-      "risk_line": "若利率大幅上行超50bp，则考虑减仓固收基金"
-    }
-  ],
-  "confidence": 6
-}
-```
+## 7. 信心指数与风险线
+- **信心指数**：6/10。组合防御端有效，但进攻端承压，短期不确定性较高，中期逻辑未破。
+- **风险线**：下周若组合回撤扩大至-11%，或单周亏损超过-3%，则触发降风险动作：减仓**易方达人工智能ETF联接**和**华安纳斯达克100ETF联接**各5%仓位，转入**天弘永利债券**。
 
 ## 11. CIO 总结陈词
 
@@ -473,26 +444,15 @@
 
 ## 12. 投资策略评估与风险预警
 
-### 1. 策略表现：躺平 vs 模拟策略（完全一致）
-- **总收益**：-9.77%，**极端生存考验**下最大浮亏约 ¥2,694（回撤11.01%）。  
-- **赚钱的性价比（夏普比率）**：-8.04——每承担1%波动，亏8.04%收益，性价比极差。  
-- **年化波动率**：76.63%，相当于每天账户可能上下跳5%以上，心脏不好别碰。  
-- **结论**：躺平与模拟策略表现完全相同，说明当前持仓本身已无优化余地——要么全仓死扛，要么清仓认输。
+### 策略评估与风险预警
 
-### 2. 换仓理由（针对躺平更差的情况）
-- **躺平已无优势**：收益、回撤、波动率全部与模拟策略一致，且远跑输沪深300（+0.00%）。  
-- **建议**：立即清仓，转投货币基金或国债逆回购。理由：  
-  - 当前持仓波动率76.63%，但收益-9.77%，属于“高波动+负收益”的死亡组合。  
-  - 沪深300同期收益为0，说明市场整体未跌，你的亏损来自选股/择时错误，而非系统性风险。
+- **躺平 vs 模拟策略**：两者收益、回撤、夏普比率完全一致，均为-9.77%总收益、11.01%最大回撤、夏普-8.04。**躺平就是模拟策略，没有区别**。当前组合市值¥2.45万，极端生存考验下最大浮亏约¥2,694。年化波动率76.63%——这根本不是在投资，是在赌博，赚钱性价比为负。
 
-### 3. 压力测试警示（数据缺失，但必须假设）
-- **2008/2015/2022年**：回测无数据，但根据你当前持仓的极端波动率（76.63%），若遭遇2015年杠杆崩盘（通常回撤40%+），你的组合可能浮亏 **¥9,800以上**（按当前市值¥2.45万计算）。  
-- **警示**：如果你现在不减仓，遇到2015年那样的杠杆牛市崩盘，你将面临约 ¥9,800 的浮亏，这是否超出了你的心理防线？  
-  （注：实际金额需根据历史回撤幅度调整，但76.63%的波动率意味着任何极端行情都可能放大亏损。）
+- **业绩基准对比**：同期沪深300收益0.00%、波动0.00%。你的策略在5天内亏掉近10%，而基准纹丝不动。**不是市场差，是你的策略烂**。
 
-### 4. 最终结论
-- **别做梦了**：你的策略在5天内亏掉近10%，且波动率堪比加密货币。  
-- **唯一行动**：清仓，等市场企稳后再考虑入场。否则，下一轮压力测试（比如2022年）可能直接让你本金腰斩。
+- **压力测试缺失**：2008、2015、2022年极端年份均无数据。这意味着你根本不知道自己的策略在真正的股灾里会死成什么样。**历史不会重复，但人性永远贪婪**——如果你现在不减仓，遇到2015年那样的杠杆牛市崩盘，你将面临约¥0的浮亏（数据不足无法计算），但按当前波动率，实际浮亏可能远超¥2,694，这是否超出了你的心理防线？
+
+- **调仓建议**：立即停止当前策略。年化波动76%+夏普-8，说明策略在持续亏损且风险失控。**换仓理由**：要么换低波动资产（如债基、货基），要么空仓等待。继续持有等于每天往火坑里扔¥2,694。
 
 ## 13. 持仓相关性矩阵
 
@@ -527,7 +487,7 @@
 </div>
 
 <script>
-    window.REPORT_CONTEXT = {"current_mv": 24471.630609, "total_return": 5.249292934796035, "weekly_return": -2.1021596103362072, "hold_metrics": {"total_return_pct": -9.77, "max_drawdown_pct": 11.01, "sharpe_ratio": -8.04, "volatility_pct": 76.63, "label": "躺平（当前持仓不动）"}, "stress_test_results": {"2008": {"return_pct": null, "max_drawdown_pct": null, "note": "无该年数据"}, "2015": {"return_pct": null, "max_drawdown_pct": null, "note": "无该年数据"}, "2022": {"return_pct": null, "max_drawdown_pct": null, "note": "无该年数据"}}, "strategy_metrics": {"total_return_pct": -9.77, "max_drawdown_pct": 11.01, "sharpe_ratio": -8.04, "volatility_pct": 76.63, "label": "模拟策略（当前与躺平一致）"}, "sectors": [{"label": "Pension", "value": 8000.09016, "color": "#5ba3f5"}, {"label": "Dividend", "value": 7726.638384000001, "color": "#4a90e2"}, {"label": "Tech", "value": 4022.123785, "color": "#ffa726"}, {"label": "Resource", "value": 3502.259319, "color": "#00c853"}], "weekly_plan": ["减仓黄金ETF联接基金，降低高位震荡风险；金额/比例：约¥1,200（当前持仓的50%）；触发：周一开盘执行", "加仓纳斯达克100指数基金，捕捉美股科技趋势；金额/比例：约¥1,200；触发：周二前完成申购", "持有红利基金和固收基金，维持防御底仓；金额/比例：当前持仓不变；触发：无触发条件"]};
+    window.REPORT_CONTEXT = {"current_mv": 24471.630609, "total_return": 5.249292934796035, "weekly_return": -2.1021596103362072, "hold_metrics": {"total_return_pct": -9.77, "max_drawdown_pct": 11.01, "sharpe_ratio": -8.04, "volatility_pct": 76.63, "label": "躺平（当前持仓不动）"}, "stress_test_results": {"2008": {"return_pct": null, "max_drawdown_pct": null, "note": "无该年数据"}, "2015": {"return_pct": null, "max_drawdown_pct": null, "note": "无该年数据"}, "2022": {"return_pct": null, "max_drawdown_pct": null, "note": "无该年数据"}}, "strategy_metrics": {"total_return_pct": -9.77, "max_drawdown_pct": 11.01, "sharpe_ratio": -8.04, "volatility_pct": 76.63, "label": "模拟策略（当前与躺平一致）"}, "sectors": [{"label": "Pension", "value": 8000.09016, "color": "#5ba3f5"}, {"label": "Dividend", "value": 7726.638384000001, "color": "#4a90e2"}, {"label": "Tech", "value": 4022.123785, "color": "#ffa726"}, {"label": "Resource", "value": 3502.259319, "color": "#00c853"}], "weekly_plan": ["下周持有不动；金额/比例：0；触发：无强触发信号"]};
 </script>
 <script>
     // ── 圆环图 ──
