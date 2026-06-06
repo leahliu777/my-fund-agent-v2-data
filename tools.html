@@ -312,7 +312,7 @@ function switchTab(id) {
 // ══════════════════════════════════════
 // 行业热度
 // ══════════════════════════════════════
-function renderHeatFallback(items) {
+function renderHeatFallback(items, isProxy) {
   var el = document.getElementById('industry-heat-treemap');
   if (!el) return;
   var top = (items || []).slice(0, 24);
@@ -323,8 +323,11 @@ function renderHeatFallback(items) {
   }
   el.innerHTML = '<div class="heat-fallback">' + top.map(function(x) {
     var score = x.heat_score != null ? Number(x.heat_score).toFixed(1) : '--';
-    var pct = x.change_pct != null ? ((x.change_pct >= 0 ? '+' : '') + Number(x.change_pct).toFixed(2) + '%') : '涨跌 --';
-    return '<div class="heat-item"><div class="hn">' + (x.name || '未命名行业') + '</div><div class="hv">热度 ' + score + ' · ' + pct + '</div></div>';
+    var pct = x.change_pct != null ? ((x.change_pct >= 0 ? '+' : '') + Number(x.change_pct).toFixed(2) + '%') : '--';
+    var weight = x.weight_pct != null ? ' · 权重 ' + Number(x.weight_pct).toFixed(1) + '%' : '';
+    var label = isProxy ? '偏离 ' : '涨跌 ';
+    var metric = isProxy ? '暴露 ' : '热度 ';
+    return '<div class="heat-item"><div class="hn">' + (x.name || '未命名行业') + '</div><div class="hv">' + metric + score + ' · ' + label + pct + weight + '</div></div>';
   }).join('') + '</div>';
 }
 
@@ -337,6 +340,7 @@ function loadHeat() {
       document.getElementById('heatContent').style.display='block';
       var updated=data.updated_at||'', hot=(data.summary&&data.summary.hot)||[], cold=(data.summary&&data.summary.cold)||[];
       var items=data.items||[];
+      var isProxy=data.source==='portfolio_proxy';
       var freshHtml='';
       var stale=false, staleReason=data.stale_reason||'';
       if(updated){
@@ -350,14 +354,19 @@ function loadHeat() {
       document.getElementById('heatSummary').innerHTML=
         '<span class="hot-tag">🔥 '+hot.slice(0,5).join('、')+'</span>'+
         '<span class="cold-tag">❄️ '+cold.slice(0,5).join('、')+'</span>'+freshHtml;
+      if (isProxy) {
+        document.getElementById('heatSummary').innerHTML +=
+          '<div class="heat-stale">外部行业热度接口不可用，当前显示基于真实持仓与目标权重的组合主题代理。' +
+          (data.proxy_reason ? '<br>原因：'+data.proxy_reason : '') + '</div>';
+      }
       if (stale) {
         document.getElementById('heatSummary').innerHTML +=
           '<div class="heat-stale">行业热度数据已过期或本次更新失败，仅供参考，不用于加仓决策。' +
           (staleReason ? '<br>原因：'+staleReason : '') + '</div>';
       }
-      renderHeatFallback(items);
+      renderHeatFallback(items, isProxy);
       return;
-      if (!items.length || typeof echarts === 'undefined') { renderHeatFallback(items); return; }
+      if (!items.length || typeof echarts === 'undefined') { renderHeatFallback(items, isProxy); return; }
       var hmin=Math.min.apply(null,items.map(function(x){return x.heat_score||0;}));
       var hmax=Math.max.apply(null,items.map(function(x){return x.heat_score||100;}));
       if(hmax<=hmin) hmax=hmin+1;
@@ -386,7 +395,7 @@ function loadHeat() {
         });
         window.addEventListener('resize',function(){chart.resize();});
       } catch (err) {
-        renderHeatFallback(items);
+        renderHeatFallback(items, isProxy);
       }
     })
     .catch(function(e){
