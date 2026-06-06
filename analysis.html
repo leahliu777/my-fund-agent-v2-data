@@ -1,112 +1,275 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
-<title>CIO Weekly Audit</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>CIO 周报 | 2026-06-06 18:15:36</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#121212">
-<link rel="stylesheet" href="modern-financial-theme.css">
-<script src="https://cdn.tailwindcss.com"></script>
+<meta name="theme-color" content="#050505">
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <style>
-    /* 深度归因页面专属 */
+    :root {
+        --bg: #1a1a1a; --card: #242424; --primary: #d4af37;
+        --text: #e0e0e0; --text-muted: #aaa; --text-dim: #666;
+        --up: #ff4d4d; --down: #2ecc71; --border: #333;
+        --accent: rgba(212,175,55,0.15);
+    }
+    html, body {
+        margin: 0; padding: 0;
+        background: var(--bg); color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        overflow-x: hidden; width: 100%;
+    }
+
+    /* ── 导航 ── */
+    .tab-nav {
+        background: var(--card); border-bottom: 1px solid var(--border);
+        display: flex; justify-content: center;
+        position: sticky; top: 0; z-index: 1000; width: 100%;
+        overflow-x: auto; -webkit-overflow-scrolling: touch;
+    }
+    .tab-nav a {
+        padding: 14px 18px; color: #888; text-decoration: none;
+        font-weight: bold; font-size: 13px; white-space: nowrap;
+    }
+    .tab-nav a.active { color: var(--primary); border-bottom: 2px solid var(--primary); }
+    .tab-nav a::before { margin-right: 4px; }
+
+    /* ── 主容器 ── */
+    .container { max-width: 680px; margin: 0 auto; padding: 16px; box-sizing: border-box; }
+
+    /* ── 统计卡片网格：2列 ── */
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .card {
+        background: var(--card); padding: 16px; border-radius: 10px;
+        border: 1px solid var(--border); border-left: 4px solid var(--primary);
+        box-sizing: border-box;
+    }
+    .card-label { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+    .card-value { font-size: 26px; font-weight: 700; font-family: monospace; }
+    .card-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+    .card-full { grid-column: 1 / -1; }
+
+    /* ── 目标进度条 ── */
+    .progress-bar {
+        height: 6px; background: #333; border-radius: 3px; margin-top: 8px; overflow: hidden;
+    }
+    .progress-fill { height: 100%; background: var(--primary); border-radius: 3px; }
+
+    /* ── 行业色块条 ── */
+    .sector-bar {
+        height: 14px; display: flex; border-radius: 7px;
+        overflow: hidden; margin: 10px 0; background: #111;
+    }
+
+    /* ── 圆环图容器 ── */
+    .donut-wrap { height: 260px; margin: 0; }
+
+    /* ── 基金穿透表格 ── */
+    .table-scroll-wrapper {
+        width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
+        margin: 12px 0; border-radius: 8px;
+        background: var(--card); border: 1px solid var(--border);
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 500px; }
+    th, td { padding: 10px 10px; text-align: left; border-bottom: 1px solid var(--border); font-size: 13px; white-space: nowrap; }
+    th { background: #2a2a2a; color: var(--primary); font-size: 10px; text-transform: uppercase; }
+    .text-right { text-align: right; }
+
+    /* ── AI 报告 ── */
+    .weekly-brief {
+        background: linear-gradient(180deg, rgba(212,175,55,0.12), rgba(212,175,55,0.04));
+        border: 1px solid rgba(212,175,55,0.28);
+        border-left: 4px solid var(--primary);
+        border-radius: 10px;
+        padding: 14px 16px;
+        margin-bottom: 14px;
+    }
+    .weekly-brief-label { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 7px; }
+    .weekly-brief-title { font-size: 20px; line-height: 1.25; color: var(--text); font-weight: 700; margin-bottom: 10px; }
+    .weekly-brief ul { margin: 0; padding-left: 18px; color: #ddd; font-size: 13px; line-height: 1.7; }
+    .weekly-brief li { margin-bottom: 5px; }
+    .detail-block { margin-top: 14px; }
+    .detail-block > summary {
+        cursor: pointer; list-style: none; color: var(--primary); font-size: 12px;
+        padding: 12px 0; border-top: 1px solid var(--border);
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .detail-block > summary::after { content: "展开"; color: var(--text-dim); font-size: 11px; }
+    .detail-block[open] > summary::after { content: "收起"; }
+    .ai-report { padding-bottom: 18px; }
+    .ai-report h2 {
+        font-size: 15px; color: var(--primary); font-weight: bold;
+        margin: 28px 0 12px; border-left: 4px solid var(--primary);
+        padding: 8px 12px; background: var(--accent); border-radius: 0 6px 6px 0;
+        line-height: 1.5;
+    }
+    .ai-report ul { list-style: none; padding-left: 8px; margin: 0; }
+    .ai-report li {
+        margin-bottom: 10px; color: #ccc; line-height: 1.75;
+        position: relative; padding-left: 18px; font-size: 14px;
+    }
+    .ai-report li::before { content: "•"; color: var(--primary); position: absolute; left: 0; font-weight: bold; }
+    .ai-report strong { color: var(--primary); font-weight: 700; }
+    .ai-report p { font-size: 14px; color: var(--text-muted); line-height: 1.75; margin: 8px 0; }
+    .ai-report table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 12px; }
+    .ai-report th { background: #2a2a2a; color: var(--primary); padding: 8px; text-align: left; }
+    .ai-report td { padding: 8px; border-bottom: 1px solid var(--border); color: #ccc; }
+
+    /* ── 词典高亮 ── */
+    .glossary-term { border-bottom: 1px dashed var(--primary); cursor: help; color: var(--primary); font-weight: 600; }
+    .tooltip {
+        position: fixed; background: rgba(20,20,20,0.97); color: #fff;
+        padding: 12px 15px; border-radius: 8px; border: 1px solid var(--primary);
+        display: none; z-index: 3000; font-size: 13px; max-width: 240px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.6); line-height: 1.5;
+    }
+
+    /* ── 周报问答框：内联，不遮挡底部导航 ── */
+    .chat-bar {
+        position: relative;
+        background: var(--card); border-top: 1px solid var(--border);
+        border: 1px solid var(--border); border-radius: 10px;
+        margin-top: 16px;
+        padding: 10px 14px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+        box-shadow: none;
+    }
+    .chat-bar input {
+        flex: 1; padding: 10px 14px; border-radius: 20px;
+        border: 1px solid var(--border); background: #2a2a2a;
+        color: var(--text); font-size: 14px; outline: none;
+    }
+    .chat-bar button {
+        padding: 10px 18px; border-radius: 20px;
+        background: var(--primary); color: #000;
+        border: none; font-weight: 700; cursor: pointer; font-size: 13px;
+        flex-shrink: 0;
+    }
+    .chat-reply {
+        display: none; position: static; flex-basis: 100%;
+        margin-top: 8px; padding: 12px 14px;
+        background: #2a2a2a; border: 1px solid var(--border);
+        border-radius: 10px; font-size: 13px; line-height: 1.6;
+        max-height: 220px; overflow-y: auto;
+        box-shadow: none;
+    }
+
+    /* ── 登录弹层 ── */
+    .modal {
+        display: none; position: fixed; inset: 0; z-index: 9000;
+        background: rgba(0,0,0,0.75); justify-content: center; align-items: center;
+    }
+    .modal.show { display: flex; }
+    .modal-content {
+        background: var(--card); padding: 28px 24px; border-radius: 12px;
+        border: 1px solid var(--border); width: 300px; max-width: 90vw;
+    }
+    .modal-content h2 { color: var(--primary); margin: 0 0 16px; font-size: 18px; }
+    .modal-content input {
+        width: 100%; padding: 10px 12px; border-radius: 8px;
+        border: 1px solid var(--border); background: #2a2a2a;
+        color: var(--text); font-size: 14px; box-sizing: border-box;
+    }
+    .modal-content button {
+        width: 100%; margin-top: 12px; padding: 11px;
+        background: var(--primary); color: #000; border: none;
+        border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 14px;
+    }
+
+    /* ── 状态标签 ── */
+    #loginStatus {
+        position: fixed; top: 52px; right: 12px; z-index: 2000;
+        font-size: 11px; color: #666; cursor: pointer; padding: 4px 8px;
+        background: var(--card); border-radius: 12px; border: 1px solid var(--border);
+    }
+
+    /* ── 战略指挥室 (来自 _build_goals_dashboard_html) ── */
     .dashboard-grid {
         display: grid;
         grid-template-columns: 1.2fr 1fr 1fr;
         grid-template-rows: auto auto;
-        gap: 15px;
-        margin-bottom: 24px;
+        gap: 12px;
+        margin-bottom: 16px;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 600px) {
         .dashboard-grid { grid-template-columns: 1fr; }
         .card-main-stats { grid-row: auto; }
         .card-bench { grid-column: auto; grid-row: auto; }
     }
     .dashboard-grid .card { margin: 0; }
-    .dashboard-grid .text-secondary { font-size: 11px; color: var(--text-tertiary); margin-bottom: 4px; }
-    .dashboard-grid .value { font-weight: bold; font-size: 1.5rem; color: var(--text); }
+    .dashboard-grid .text-secondary { font-size: 11px; color: #666; margin-bottom: 4px; }
+    .dashboard-grid .value { font-weight: bold; font-size: 1.4rem; color: var(--text); }
     .card-main-stats { grid-row: span 2; }
-    .card-main-stats .value-lg { font-size: 1.75rem; }
-    .goals-progress-bar { height: 8px; background: var(--bg-tertiary); border-radius: 4px; overflow: hidden; margin-top: 8px; }
-    .goals-progress-fill { height: 100%; background: var(--primary); border-radius: 4px; }
+    .goals-progress-bar { height: 6px; background: #333; border-radius: 3px; overflow: hidden; margin-top: 8px; }
+    .goals-progress-fill { height: 100%; background: var(--primary); border-radius: 3px; }
     .card-drawdown { border-left: 4px solid var(--down); }
-    .card-drawdown.alert { border-left-color: var(--danger); box-shadow: 0 0 0 1px rgba(245,67,67,0.25); }
+    .card-drawdown.alert { border-left-color: var(--up); box-shadow: 0 0 0 1px rgba(255,77,77,0.25); }
     .card-bench { grid-column: 2 / span 2; grid-row: 2; }
-    .bench-card { background: var(--bg-tertiary); border-radius: 8px; padding: 12px; margin-top: 8px; border: 1px solid var(--border-color); }
-    .bench-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px dashed var(--border-color-light); font-size: 13px; }
+    .bench-card { background: #2a2a2a; border-radius: 8px; padding: 12px; margin-top: 8px; border: 1px solid var(--border); }
+    .bench-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px dashed #333; font-size: 13px; }
     .bench-row:last-child { border-bottom: none; }
     .bench-row-header { border-bottom-color: transparent; padding-top: 0; }
-    .bench-section { margin-bottom: 14px; }
+    .bench-section { margin-bottom: 12px; }
     .bench-section:last-child { margin-bottom: 0; }
     .bench-title { font-weight: bold; color: var(--text); flex-shrink: 0; }
     .bench-metrics { display: flex; gap: 8px; align-items: center; min-width: 0; flex: 1; }
-    .bench-metrics-header { font-size: 11px; color: var(--text-tertiary); }
+    .bench-metrics-header { font-size: 11px; color: #666; }
     .metric-tag { padding: 2px 6px; border-radius: 4px; font-size: 0.9em; font-weight: 500; }
-    .tag-me { background: rgba(74,144,226,0.2); color: var(--accent-primary); }
-    .tag-bench { background: var(--bg-tertiary); color: var(--text-secondary); }
-    .bench-bar-mine { flex: 1 1 0; min-width: 20px; max-width: 80px; height: 6px; background: var(--primary); border-radius: 3px; }
-    .bench-bar-bm { flex: 1 1 0; min-width: 20px; max-width: 80px; height: 6px; background: var(--bg-elevated); border-radius: 3px; }
-    .bench-alpha { flex: 0 0 48px; text-align: center; font-weight: 600; font-size: 12px; }
+    .tag-bench { background: #333; color: #aaa; }
+    .bench-bar-mine { flex: 1 1 0; min-width: 10px; max-width: 60px; height: 5px; background: var(--primary); border-radius: 3px; }
+    .bench-bar-bm { flex: 1 1 0; min-width: 10px; max-width: 60px; height: 5px; background: #444; border-radius: 3px; }
+    .bench-alpha { flex: 0 0 44px; text-align: center; font-weight: 600; font-size: 12px; }
     .bench-alpha.positive { color: var(--down); }
     .bench-alpha.negative { color: var(--up); }
+    .goals-diagnosis {
+        color: var(--up); font-size: 13px; padding: 10px 14px; margin: 0 0 16px;
+        background: rgba(255,77,77,0.08); border-radius: 0 6px 6px 0;
+        border-left: 4px solid var(--up);
+    }
     @media (max-width: 600px) {
         .bench-row { flex-direction: column; align-items: flex-start; gap: 6px; padding: 10px 0; font-size: 12px; }
-        .bench-metrics { width: 100%; justify-content: space-between; background: var(--bg-tertiary); padding: 6px 8px; border-radius: 8px; }
-        .metric-tag { font-size: 0.85em; }
+        .bench-metrics { width: 100%; justify-content: space-between; background: #2a2a2a; padding: 6px 8px; border-radius: 8px; }
         .bench-bar-mine, .bench-bar-bm { max-width: none; }
     }
-    .goals-diagnosis { color: var(--danger); font-size: 13px; padding: 10px 14px; margin: 0 0 24px 0; background: var(--color-up-bg); border-radius: 0 6px 6px 0; border-left: 4px solid var(--danger); }
 
-    /* Markdown / AI 报告 */
-    .md-box { line-height: 1.8; color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important; }
-    .md-box table { width: 100%; border-collapse: collapse; margin: 20px 0; background: var(--bg-tertiary); border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
-    .md-box th { background: rgba(74,144,226,0.2); color: var(--accent-primary); padding: 12px; text-align: left; font-size: 12px; }
-    .md-box td { padding: 12px; border-bottom: 1px solid var(--border-color-light); font-size: 12px; color: var(--text-primary); }
-    .md-box ul { list-style: none; padding-left: 10px; }
-    .md-box li { margin-bottom: 12px; color: var(--text-muted); line-height: 1.8; position: relative; padding-left: 20px; font-size: 14px; }
-    .md-box li::before { content: "•"; color: var(--primary); position: absolute; left: 0; font-weight: bold; }
-    .md-box h2 { margin-top: 35px; padding: 10px; border-radius: 0 4px 4px 0; }
-    .md-box strong { color: var(--primary); font-weight: 700; font-size: 14px; }
-    .md-box p strong { background: rgba(74,144,226,0.2); padding: 2px 6px; border-radius: 4px; margin-right: 4px; font-size: 14px; }
-    .analysis-section { margin: 20px 0; border-left: 4px solid var(--primary); padding: 10px 20px; }
-    .glossary-term { border-bottom: 1px dashed var(--primary); cursor: help; color: var(--primary); font-weight: 600; }
-    .mask-pierced-mv table th:nth-child(3), .mask-pierced-mv table td:nth-child(3) { filter: blur(6px); user-select: none; pointer-events: none; }
-    .tooltip { position: fixed; background: var(--bg-elevated); color: var(--text-primary); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); display: none; z-index: 3000; font-size: 14px; max-width: 250px; box-shadow: var(--shadow-lg); }
-    .chart-container { position: relative; height: 300px; margin: 20px 0; }
-    #loginModal.modal { display: none; position: fixed; inset: 0; width: 100%; height: 100%; z-index: 11000; background: rgba(10,10,10,0.25); backdrop-filter: blur(3px); justify-content: center; align-items: center; padding: 0; max-width: none; border: 0; border-radius: 0; }
-    #loginModal.modal.show { display: flex; }
-    #loginModal .modal-content { background: var(--bg-card); padding: 24px; border-radius: var(--r-xl); max-width: 380px; width: 90%; text-align: center; border: 0.5px solid var(--line-md); }
-    .weekly-brief { background: var(--bg-card); border: 0.5px solid var(--line-md); border-left: 3px solid var(--primary); border-radius: var(--r-md); padding: 14px 16px; margin-bottom: 18px; }
-    .weekly-brief-label { font-size: 10px; color: var(--text-tertiary); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
-    .weekly-brief-title { font-size: 20px; color: var(--text); font-weight: 600; margin-bottom: 8px; }
-    .weekly-brief ul { margin: 0; padding-left: 18px; color: var(--text-secondary); font-size: 13px; line-height: 1.7; }
-    .analysis-details > summary { cursor: pointer; list-style: none; color: var(--primary); font-size: 12px; padding: 12px 0; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; }
-    .analysis-details > summary::after { content: "展开"; color: var(--text-tertiary); }
-    .analysis-details[open] > summary::after { content: "收起"; }
-    #chat-root { position: relative !important; bottom: auto !important; left: auto !important; right: auto !important; z-index: 1 !important; margin: 18px 0 0; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: none !important; flex-wrap: wrap; }
-    #chat-reply { position: static !important; flex-basis: 100%; margin: 8px 0 0 !important; box-shadow: none !important; }
+    /* ── 手机端微调 ── */
+    @media (max-width: 480px) {
+        .stat-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+        .card-value { font-size: 22px; }
+        .tab-nav a { padding: 12px 14px; font-size: 12px; }
+        .container { padding: 12px; }
+    }
 </style>
 </head><body>
+
 <div id="loginStatus" onclick="handleStatusClick()"><span id="statusText"></span></div>
 <div id="loginModal" class="modal">
     <div class="modal-content">
         <h2>🔐 查看完整数据</h2>
         <input type="password" id="passwordInput" placeholder="请输入密码" onkeypress="if(event.key==='Enter') login()">
         <button onclick="login()">授权</button>
-        <p id="loginError" style="color:var(--color-up); margin-top:10px;"></p>
+        <p id="loginError" style="color:var(--up); margin-top:10px; font-size:13px;"></p>
     </div>
 </div>
 <div id="tooltip" class="tooltip"></div>
-<nav class="nav-tabs tab-nav"><a href="index.html" class="nav-tab">今日</a><a href="analysis.html" class="nav-tab active">分析</a><a href="tools.html" class="nav-tab">工具</a></nav>
+
+<nav class="nav-tabs tab-nav">
+    <a href="index.html" class="nav-tab">今日</a>
+    <a href="analysis.html" class="nav-tab active">分析</a>
+    <a href="tools.html" class="nav-tab">工具</a>
+</nav>
+
 <div class="container">
-    <p style="color:var(--text-tertiary); font-size:11px;">PERIOD: 7D | 2026-06-06 00:28:27</p>
+    <p style="color:#555; font-size:11px; margin: 8px 0 14px;">WEEKLY AUDIT | 2026-06-06 18:15:36</p>
+
     <section class="weekly-brief">
         <div class="weekly-brief-label">下周计划</div>
         <div class="weekly-brief-title">先看结论，再看证据</div>
-        <ul>
-            <li>周一先处理 Tech 低配：只做小额纠偏，不一次性打满。</li>
-            <li>周中观察回撤是否继续逼近 -10%，若触线优先降风险。</li>
-            <li>周五复盘基准差距和行业热度，再决定是否扩大调仓。</li>
-        </ul>
+        <ul><li>减仓黄金ETF联接基金，降低高位震荡风险；金额/比例：约¥1,200（当前持仓的50%）；触发：周一开盘执行</li><li>加仓纳斯达克100指数基金，捕捉美股科技趋势；金额/比例：约¥1,200；触发：周二前完成申购</li><li>持有红利基金和固收基金，维持防御底仓；金额/比例：当前持仓不变；触发：无触发条件</li></ul>
     </section>
+
+    <!-- 战略指挥室（由 _build_goals_dashboard_html 输出，含 dashboard-grid） -->
     
     <h2>战略指挥室</h2>
     <div class="dashboard-grid">
@@ -140,8 +303,8 @@
         <div class="bench-row">
             <div class="bench-title">沪深300</div>
             <div class="bench-metrics">
-                <div class="bench-bar-mine" style="width:25.764883166889277%"></div>
-                <span class="bench-alpha negative">-8.2%</span>
+                <div class="bench-bar-mine" style="width:44.74460097415948%"></div>
+                <span class="bench-alpha negative">-0.6%</span>
                 <div class="bench-bar-bm" style="width:46.157085271824904%"></div>
                 <span class="metric-tag tag-bench">-1.5%</span>
             </div>
@@ -149,10 +312,10 @@
         <div class="bench-row">
             <div class="bench-title">纳斯达克100</div>
             <div class="bench-metrics">
-                <div class="bench-bar-mine" style="width:25.764883166889277%"></div>
-                <span class="bench-alpha negative">-7.0%</span>
-                <div class="bench-bar-bm" style="width:43.223662877413275%"></div>
-                <span class="metric-tag tag-bench">-2.7%</span>
+                <div class="bench-bar-mine" style="width:44.74460097415948%"></div>
+                <span class="bench-alpha positive">+2.4%</span>
+                <div class="bench-bar-bm" style="width:38.66274412791068%"></div>
+                <span class="metric-tag tag-bench">-4.5%</span>
             </div>
         </div>
     </div><div class="bench-section">
@@ -163,8 +326,8 @@
         <div class="bench-row">
             <div class="bench-title">沪深300</div>
             <div class="bench-metrics">
-                <div class="bench-bar-mine" style="width:64.03235400571961%"></div>
-                <span class="bench-alpha positive">+1.2%</span>
+                <div class="bench-bar-mine" style="width:63.123232336990085%"></div>
+                <span class="bench-alpha positive">+0.9%</span>
                 <div class="bench-bar-bm" style="width:60.912238433438915%"></div>
                 <span class="metric-tag tag-bench">+4.4%</span>
             </div>
@@ -172,10 +335,10 @@
         <div class="bench-row">
             <div class="bench-title">纳斯达克100</div>
             <div class="bench-metrics">
-                <div class="bench-bar-mine" style="width:64.03235400571961%"></div>
-                <span class="bench-alpha negative">-12.6%</span>
-                <div class="bench-bar-bm" style="width:95.51205847872237%"></div>
-                <span class="metric-tag tag-bench">+18.2%</span>
+                <div class="bench-bar-mine" style="width:63.123232336990085%"></div>
+                <span class="bench-alpha negative">-10.7%</span>
+                <div class="bench-bar-bm" style="width:89.98185741997492%"></div>
+                <span class="metric-tag tag-bench">+16.0%</span>
             </div>
         </div>
     </div></div>
@@ -183,92 +346,153 @@
     </div>
     <p class="goals-diagnosis">激进仓跑输纳指，可审视仓位与成本。</p>
     
-    <details class="analysis-details">
-    <summary>配置、穿透与完整周报</summary>
-    <h2>组合底层穿透</h2>
-    <div class="card">
-        <div id="assetDonut" class="chart-container" style="height:300px"></div>
+
+    <details class="detail-block">
+        <summary>配置、穿透与完整周报</summary>
+
+    <!-- 配置圆环图 -->
+    <div class="card card-full" style="margin-bottom:14px;">
+        <div class="card-label">资产配置分布</div>
+        <div class="donut-wrap" id="assetDonut"></div>
+    </div>
+
+    <!-- 基金穿透明细 -->
+    <div style="font-size:12px; color:#555; margin-bottom:6px;">基金底层穿透</div>
+    <div class="table-scroll-wrapper">
         <script type="text/template" id="xray-source">#### 组合底层穿透 - 重仓标的 TOP 10 (量化增强版)
 
 > 注：穿透权重基于最新披露的基金重仓股数据自动计算；本周涨跌与收益贡献需行情接口支持。
 
 | 排名 | 标的名称 | 穿透持仓市值 | 组合权重 | 本周涨跌 | 收益贡献 | 角色定位 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | 实物黄金 (Au9999) | ¥2,831 | 13.3% | — | — | 核心重仓 |
-| 2 | 其他优质资产 | ¥2,662 | 12.5% | — | — | 核心重仓 |
-| 3 | 其他债基/混合基金 | ¥2,127 | 10.0% | — | — | 核心重仓 |
-| 4 | 洛阳钼业 | ¥393 | 1.8% | — | — | 卫星配置 |
-| 5 | 紫金矿业 | ¥391 | 1.8% | — | — | 卫星配置 |
-| 6 | 兴业银行 | ¥366 | 1.7% | — | — | 卫星配置 |
-| 7 | 中国银行 | ¥303 | 1.4% | — | — | 卫星配置 |
-| 8 | 其他 | ¥300 | 1.4% | — | — | 卫星配置 |
-| 9 | 农业银行 | ¥270 | 1.3% | — | — | 卫星配置 |
-| 10 | 江西铜业 | ¥257 | 1.2% | — | — | 卫星配置 |
+| 1 | 其他债基/混合基金 | ¥2,127 | 9.1% | — | — | 核心重仓 |
+| 2 | 实物黄金 (Au9999) | ¥2,123 | 9.1% | — | — | 核心重仓 |
+| 3 | 其他优质资产 | ¥1,671 | 7.2% | — | — | 核心重仓 |
+| 4 | 寒武纪 | ¥683 | 2.9% | — | — | 卫星配置 |
+| 5 | 三环集团 | ¥668 | 2.9% | — | — | 卫星配置 |
+| 6 | 柏楚电子 | ¥608 | 2.6% | — | — | 卫星配置 |
+| 7 | 北汽蓝谷 | ¥578 | 2.5% | — | — | 卫星配置 |
+| 8 | 其他 | ¥500 | 2.2% | — | — | 卫星配置 |
+| 9 | 洛阳钼业 | ¥452 | 1.9% | — | — | 卫星配置 |
+| 10 | 江西铜业 | ¥429 | 1.8% | — | — | 卫星配置 |
 </script>
-        <div id="xray-target" class="md-box"></div>
+        <div id="xray-target"></div>
     </div>
-    
-    <div class="analysis-section md-box">
-        <script type="text/template" id="ai-source">## 1. 本周表现审计
-- 本周收益-9.69%，大幅跑输纳斯达克100（+18.20%），Alpha为-12.59%。亏损主要由高权重黄金/固收类资产拖累（收益贡献均为0.00%），显示市场风格切换至科技成长时，组合防御性仓位未能对冲。
-- 最大回撤-9.47%已接近风控阈值，需警惕进一步下行风险。
 
-## 2. 资产配置X光
-- **穿透后核心重仓**：前十大持仓中，黄金（13.3%）+银行股（5.6%）+有色（4.8%）占比超23%，与基准相比严重超配黄金（+20pp）、低配消费（-15pp）。本周板块收益贡献均为0.00%，说明这些仓位在科技主导行情中完全失效。
-- **逻辑冲突**：组合同时持有高股息（15.9%）和有色（9.4%）——前者受益于利率下行，后者与商品价格正相关，在利率与商品价格反向运动时会产生对冲损耗。
+    <!-- AI 周报正文 -->
+    <div class="ai-report" id="ai-report">
+        <script type="text/template" id="ai-source">## 1. 本周表现审计
+- 组合本周收益-2.10%，显著跑输激进基准纳斯达克100（+15.99%），Alpha为-10.74%，主因科技主题基金（如**AI算力、科技软件类基金**）未能跟上美股科技反弹节奏，且黄金、有色类基金本周贡献为0，拖累整体。
+- 表现最好的基金应为固收/高股息类基金（如**Pension、Dividend相关基金**），本周收益贡献为0，起到稳定器作用；表现最差的应为科技主题基金（如**AI算力、半导体类基金**），因A股科技板块本周调整，与美股走势背离。
+- 基金表现符合产品定位：红利/固收基金提供防御，科技基金暴露于A股风险，但未捕捉到美股行情，暴露了组合的A股集中风险。
+
+## 2. 基金持仓X光
+- 组合穿透行业暴露显示：固收（26.2%）、高股息（15.2%）、黄金（14.9%）合计超56%，风格偏向防御；科技类（AI算力10.9%+科技软件6.2%+半导体5.8%）合计约23%，暴露不足。
+- 风格漂移检查显示：黄金超配14pp，消费低配15pp，说明**黄金主题基金**（如**实物黄金相关ETF联接基金**）权重过高，偏离了均衡配置；**消费主题基金**（如**消费类指数基金**）缺失，未参与近期消费复苏行情。
+- 板块收益贡献点数均为0，说明本周各板块基金均未产生正收益，组合缺乏进攻性资产。
 
 ## 3. 宏观因子敏感度
-- **利率敏感度**：高股息+固收占比40%，若下周美联储意外加息或国内利率上行，组合将承压。
-- **大宗商品敏感度**：黄金+有色占比30%，若美元走强或全球需求放缓，商品价格回调将直接拖累净值。
-- **当前无汇率对冲**：若人民币升值，黄金（以美元计价）的国内持仓将产生汇兑损失。
+- 利率敏感度：高股息/固收占比41%，若下周美联储或国内央行释放鹰派信号，利率上行将压制**红利基金**和**债券基金**净值，需警惕。
+- 大宗商品敏感度：有色/黄金占比22%，若下周黄金、铜价回调，**黄金ETF联接基金**和**有色主题基金**将直接承压；本周黄金贡献为0，已反映高位震荡。
+- 本周宏观变量：美股科技大涨（纳斯达克+15.99%），但组合中**QDII科技基金**缺失，未能受益；A股科技调整，**AI算力基金**反而受损，暴露了跨境配置不足的短板。
 
 ## 4. 核心风险指标审计
-- 波动率24.37%处于历史高位，接近激进型组合水平；最大回撤-9.47%已超过个人投资者通常的舒适区（-5%~-8%）。
-- 夏普比率未提供，但结合本周负收益与高波动，风险调整后收益大概率恶化。建议将回撤控制在-10%以内，否则需启动强制减仓。
+- 组合波动率23.05%，处于中高水平，主要波动贡献来自科技主题基金（如**AI算力、半导体基金**）；最大回撤-9.47%，接近10%警戒线，需关注。
+- 各基金波动贡献不均衡：固收/红利基金波动低，但科技基金波动高，且仓位集中（科技类约23%），导致组合整体波动率偏高。
+- 夏普比率未直接给出，但本周收益为负，且波动率高，夏普比率大概率恶化；建议降低科技基金仓位或增加低波动资产（如短债基金）以平滑波动。
 
 ## 5. 行业/板块热力图
-- **最热**：AI算力、半导体、科技软件（本周纳斯达克100大涨18.2%驱动）。
-- **最冷**：黄金、固收、高股息（收益贡献均为0.00%）。
-- **持仓匹配度**：完全错配——组合重仓冷门板块，几乎零暴露于热门科技。需警惕持续踏空风险。
+- 当前市场最热板块：美股科技（纳斯达克100本周+15.99%）、A股消费（政策刺激预期）；最冷板块：A股科技（半导体、AI算力调整）、黄金（高位震荡）。
+- 组合持有的**AI算力基金**、**半导体基金**处于冷板块，本周拖累组合；**黄金ETF联接基金**虽未下跌，但已失去上涨动能。
+- 未持有热门板块基金：**消费主题基金**（如消费ETF联接）缺失，未参与消费行情；**QDII科技基金**（如纳斯达克100指数基金）缺失，错失美股反弹。
 
 ## 6. 潜在机会提示
-- **AI算力ETF**（如：159995）：当前科技板块资金流入明确，组合中AI算力仅占8.3%，可适度加仓至15%以捕捉趋势。
-- **纳斯达克100指数基金**：若看好美股科技延续，可直接配置（如：513100），对冲当前组合的防御性过重问题。
+- 可关注**QDII科技主题指数基金**（如纳斯达克100指数基金或标普500科技指数基金），以捕捉美股科技趋势，弥补组合跨境科技暴露不足。
+- 可关注**消费主题指数基金**（如中证消费ETF联接），受益于国内消费刺激政策，当前组合消费低配15pp，存在补涨空间。
 
 ## 7. 潜在风险预警
-- **黄金回调风险**：若美国经济数据超预期（如非农就业强劲），美元走强将打压金价，黄金13.3%的仓位可能成为主要拖累。
-- **银行股流动性风险**：前十大持仓中4只银行股（兴业、中国、农业、其他），总权重5.6%，若市场利率下行或坏账率上升，银行板块可能补跌。
+- **黄金ETF联接基金**：黄金价格已高位震荡，若美元走强或风险偏好回升，黄金可能回调，该基金权重9.1%，风险集中。
+- **AI算力基金**：本周A股科技调整，若下周继续下跌，该基金可能进一步拖累组合；且其重仓股（如寒武纪）波动大，需警惕。
+- **FOF养老基金**：若其子基金中包含高集中度科技基金，可能放大回撤；建议检查子基金持仓是否与组合现有科技基金重叠。
 
-## 8. 持仓优化建议
-- **减仓**：实物黄金（Au9999）从13.3%降至8%，释放资金；银行股（兴业、中国、农业）合计减仓2%，降低利率敏感度。
-- **加仓**：AI算力（当前8.3%）加至12%，纳斯达克100指数基金配置5%。
-- **持有**：固收类（23.9%）维持，作为组合稳定器；有色（紫金、洛阳钼业）暂持，等待商品价格反弹信号。
+## 8. 调仓优化建议
+- **减仓**：**黄金ETF联接基金**（权重9.1%），理由：黄金高位震荡，贡献为0，可降低至5%以下，释放资金。
+- **加仓**：**纳斯达克100指数基金**（QDII），理由：弥补跨境科技暴露，捕捉美股趋势，建议配置5-10%。
+- **持有不动**：**红利基金**、**固收基金**，理由：提供防御，波动低，符合组合稳定器定位。
 
 ## 9. 下周行动计划
-- **周一开盘**：卖出10%的黄金仓位（约¥283），买入AI算力ETF（如：159995）至组合权重12%。
-- **周三前**：将银行股（兴业、中国、农业）各减仓1/3，合计释放约¥300，配置纳斯达克100指数基金（513100）。
-- **周五复盘**：检查组合科技板块权重是否达到20%以上，若未达标则继续调仓。
+- 周一开盘：**减仓黄金ETF联接基金**，卖出约50%仓位（对应约¥1,200），降低黄金暴露。
+- 周二前：**申购纳斯达克100指数基金**（QDII），金额约¥1,200，利用减仓资金配置。
+- 全周观察：若A股科技板块反弹，**AI算力基金**可暂持有；若继续下跌，考虑减仓10%以控制风险。
 
 ## 10. 分析师信心指数
-**4/10**——组合防御性过重且与市场主线背离，若不立即调仓，下周可能继续跑输基准。
+- **6/10**：组合防御性尚可，但进攻性不足且暴露于A股科技风险；下周若美股持续强势，加仓QDII科技可改善表现，但黄金和A股科技仍有下行风险。
+
+```PLAN_JSON
+{
+  "weekly_plan": [
+    {
+      "action": "sell",
+      "title": "减仓黄金ETF联接基金，降低高位震荡风险",
+      "fund": "黄金ETF联接基金",
+      "amount": "约¥1,200（当前持仓的50%）",
+      "trigger": "周一开盘执行",
+      "reason": "黄金高位震荡，本周贡献为0，释放资金用于配置美股科技",
+      "risk_line": "若黄金价格跌破前低5%，则暂停减仓，等待反弹"
+    },
+    {
+      "action": "buy",
+      "title": "加仓纳斯达克100指数基金，捕捉美股科技趋势",
+      "fund": "纳斯达克100指数基金（QDII）",
+      "amount": "约¥1,200",
+      "trigger": "周二前完成申购",
+      "reason": "弥补组合跨境科技暴露不足，本周纳斯达克100大涨15.99%，趋势延续性强",
+      "risk_line": "若纳斯达克100指数单周回调超5%，则暂停加仓，观察后再定"
+    },
+    {
+      "action": "hold",
+      "title": "持有红利基金和固收基金，维持防御底仓",
+      "fund": "红利基金、固收基金",
+      "amount": "当前持仓不变",
+      "trigger": "无触发条件",
+      "reason": "波动低，提供稳定收益，符合组合防御定位",
+      "risk_line": "若利率大幅上行超50bp，则考虑减仓固收基金"
+    }
+  ],
+  "confidence": 6
+}
+```
 
 ## 11. CIO 总结陈词
 
 **本周 CIO 核心洞察：**
 
-- 抱团警示：底层个股 实物黄金 (Au9999) 的穿透总暴露已达组合的 13.3%，分散投资效果正在失效。
+- 抱团警示：底层个股 实物黄金 (Au9999) 的穿透总暴露已达组合的 9.1%，分散投资效果正在失效。
 - 超额收益审计：本周板块贡献有限，暂无显著超额/跑输信号。
-- 行动触发点：当前 固收 的暴露已触及预警线（29%），下周若 大宗商品价格 波动，建议启动利润保护机制。
+- 行动触发点：当前 固收 的暴露已触及预警线（26%），下周若 利率 波动，建议启动利润保护机制。
 
 ## 12. 投资策略评估与风险预警
 
-### 投资策略评估与风险预警
+### 1. 策略表现：躺平 vs 模拟策略（完全一致）
+- **总收益**：-9.77%，**极端生存考验**下最大浮亏约 ¥2,694（回撤11.01%）。  
+- **赚钱的性价比（夏普比率）**：-8.04——每承担1%波动，亏8.04%收益，性价比极差。  
+- **年化波动率**：76.63%，相当于每天账户可能上下跳5%以上，心脏不好别碰。  
+- **结论**：躺平与模拟策略表现完全相同，说明当前持仓本身已无优化余地——要么全仓死扛，要么清仓认输。
 
-- **躺平策略 vs 模拟策略**：两者数据完全一致，总收益 -9.77%，最大回撤 11.01%（极端生存考验下浮亏约 ¥2,480）。**躺平并不比模拟策略更差，但两者均显著跑输业绩基准（沪深300收益0%）。** 当前持仓仅¥2.25万，亏损绝对值可控，但夏普比率 -8.04（赚钱的性价比极低），年化波动率 76.63%（相当于每持有1年，可能经历近8成的市值震荡）。**结论：躺平尚可接受，但绝非好选择——你只是在用时间赌运气，而非投资。**
+### 2. 换仓理由（针对躺平更差的情况）
+- **躺平已无优势**：收益、回撤、波动率全部与模拟策略一致，且远跑输沪深300（+0.00%）。  
+- **建议**：立即清仓，转投货币基金或国债逆回购。理由：  
+  - 当前持仓波动率76.63%，但收益-9.77%，属于“高波动+负收益”的死亡组合。  
+  - 沪深300同期收益为0，说明市场整体未跌，你的亏损来自选股/择时错误，而非系统性风险。
 
-- **换仓理由**：若你无法承受当前波动率（76.63%），建议减仓至低波动资产（如货币基金或债券ETF）。**别指望“回本再走”——-9.77%的亏损需要+10.83%的涨幅才能抹平，而你的波动率是基准的76倍。**
+### 3. 压力测试警示（数据缺失，但必须假设）
+- **2008/2015/2022年**：回测无数据，但根据你当前持仓的极端波动率（76.63%），若遭遇2015年杠杆崩盘（通常回撤40%+），你的组合可能浮亏 **¥9,800以上**（按当前市值¥2.45万计算）。  
+- **警示**：如果你现在不减仓，遇到2015年那样的杠杆牛市崩盘，你将面临约 ¥9,800 的浮亏，这是否超出了你的心理防线？  
+  （注：实际金额需根据历史回撤幅度调整，但76.63%的波动率意味着任何极端行情都可能放大亏损。）
 
-- **压力测试警示**：数据缺失2008/2015/2022年极端行情，无法量化历史崩盘影响。**但请注意：** 若未来出现类似2015年杠杆牛市崩盘（单月跌幅超30%），以当前76.63%的年化波动率，你的组合可能单日浮亏超¥1,000（约4.4%本金）。**如果你现在不减仓，遇到2015年那样的杠杆牛市崩盘，你将面临约¥0的浮亏（因无历史数据），但心理防线能否承受单日跌停级亏损？** 建议至少设置-15%的硬止损线。
+### 4. 最终结论
+- **别做梦了**：你的策略在5天内亏掉近10%，且波动率堪比加密货币。  
+- **唯一行动**：清仓，等市场企稳后再考虑入场。否则，下一轮压力测试（比如2022年）可能直接让你本金腰斩。
 
 ## 13. 持仓相关性矩阵
 
@@ -292,56 +516,54 @@
 - ⚠️ 南方纳斯达克 与 华夏人工智能 高度相关（0.75），分散效果有限</script>
         <div id="ai-target"></div>
     </div>
-</details>
 
-<!-- 即时互动：内联框，避免遮挡底部导航 -->
-<div id="chat-root" style="position:relative;background:var(--bg-secondary);border:1px solid var(--border-color);border-radius:8px;padding:10px 16px;display:flex;gap:10px;align-items:center;box-shadow:none;">
-    <input type="text" id="chat-input" placeholder="针对报告提问…" style="flex:1;max-width:400px;padding:10px 14px;border-radius:8px;border:1px solid var(--border-color);background:var(--bg-tertiary);color:var(--text-primary);font-size:14px;">
-    <button id="chat-send" style="padding:10px 20px;border-radius:8px;background:var(--accent-primary);color:#fff;border:none;font-weight:600;cursor:pointer;">发送</button>
-    <div id="chat-reply" style="display:none;position:absolute;bottom:100%;left:16px;right:16px;margin-bottom:8px;padding:12px;background:var(--bg-elevated);border:1px solid var(--border-color);border-radius:8px;font-size:13px;line-height:1.5;max-height:200px;overflow-y:auto;box-shadow:var(--shadow-lg);"></div>
-</div>
+    </details>
+
+    <div class="chat-bar">
+        <input type="text" id="chat-input" placeholder="针对周报提问…">
+        <button id="chat-send">发送</button>
+        <div class="chat-reply" id="chat-reply"></div>
+    </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
-    window.REPORT_CONTEXT = {"current_mv": 22523.608853, "total_return": 5.612941602287846, "weekly_return": -9.694046733244289, "hold_metrics": {"total_return_pct": -9.77, "max_drawdown_pct": 11.01, "sharpe_ratio": -8.04, "volatility_pct": 76.63, "label": "躺平（当前持仓不动）"}, "stress_test_results": {"2008": {"return_pct": null, "max_drawdown_pct": null, "note": "无该年数据"}, "2015": {"return_pct": null, "max_drawdown_pct": null, "note": "无该年数据"}, "2022": {"return_pct": null, "max_drawdown_pct": null, "note": "无该年数据"}}, "strategy_metrics": {"total_return_pct": -9.77, "max_drawdown_pct": 11.01, "sharpe_ratio": -8.04, "volatility_pct": 76.63, "label": "模拟策略（当前与躺平一致）"}, "sectors": [{"label": "Dividend", "value": 7226.612858, "color": "#4a90e2"}, {"label": "Pension", "value": 5999.896484, "color": "#5ba3f5"}, {"label": "Resource", "value": 5092.043411000001, "color": "#00c853"}, {"label": "Tech", "value": 3008.008662, "color": "#ffa726"}]};
+    window.REPORT_CONTEXT = {"current_mv": 24471.630609, "total_return": 5.249292934796035, "weekly_return": -2.1021596103362072, "hold_metrics": {"total_return_pct": -9.77, "max_drawdown_pct": 11.01, "sharpe_ratio": -8.04, "volatility_pct": 76.63, "label": "躺平（当前持仓不动）"}, "stress_test_results": {"2008": {"return_pct": null, "max_drawdown_pct": null, "note": "无该年数据"}, "2015": {"return_pct": null, "max_drawdown_pct": null, "note": "无该年数据"}, "2022": {"return_pct": null, "max_drawdown_pct": null, "note": "无该年数据"}}, "strategy_metrics": {"total_return_pct": -9.77, "max_drawdown_pct": 11.01, "sharpe_ratio": -8.04, "volatility_pct": 76.63, "label": "模拟策略（当前与躺平一致）"}, "sectors": [{"label": "Pension", "value": 8000.09016, "color": "#5ba3f5"}, {"label": "Dividend", "value": 7726.638384000001, "color": "#4a90e2"}, {"label": "Tech", "value": 4022.123785, "color": "#ffa726"}, {"label": "Resource", "value": 3502.259319, "color": "#00c853"}], "weekly_plan": ["减仓黄金ETF联接基金，降低高位震荡风险；金额/比例：约¥1,200（当前持仓的50%）；触发：周一开盘执行", "加仓纳斯达克100指数基金，捕捉美股科技趋势；金额/比例：约¥1,200；触发：周二前完成申购", "持有红利基金和固收基金，维持防御底仓；金额/比例：当前持仓不变；触发：无触发条件"]};
 </script>
 <script>
-    // 1. Plotly 交互式圆环图（悬停、缩放、下载）
+    // ── 圆环图 ──
     const pieData = [{
-        labels: ['Dividend', 'Pension', 'Resource', 'Tech'],
-        values: [7226.612858, 5999.896484, 5092.043411000001, 3008.008662],
+        labels: ['Pension', 'Dividend', 'Tech', 'Resource'],
+        values: [8000.09016, 7726.638384000001, 4022.123785, 3502.259319],
         type: 'pie',
-        hole: 0.7,
-        marker: { colors: ['#4a90e2', '#5ba3f5', '#00c853', '#ffa726'] },
+        hole: 0.65,
+        marker: { colors: ['#5ba3f5', '#4a90e2', '#ffa726', '#00c853'] },
         textinfo: 'label+percent',
         hovertemplate: '%{label}: %{value:.1f}%<extra></extra>'
     }];
     const pieLayout = {
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor: 'rgba(0,0,0,0)',
-        font: { color: '#e8e8e8', size: 12 },
+        font: { color: '#e0e0e0', size: 12 },
         showlegend: true,
-        legend: { orientation: 'h', y: -0.15, font: { color: '#e8e8e8' } },
-        margin: { t: 20, b: 60, l: 20, r: 20 },
-        height: 300
+        legend: { orientation: 'h', y: -0.18, font: { color: '#aaa', size: 11 } },
+        margin: { t: 10, b: 50, l: 10, r: 10 },
+        height: 260
     };
-    Plotly.newPlot('assetDonut', pieData, pieLayout, { responsive: true, displayModeBar: true, modeBarButtonsToRemove: ['lasso2d', 'select2d'] });
+    Plotly.newPlot('assetDonut', pieData, pieLayout, {
+        responsive: true, displayModeBar: false
+    });
 
-    // 1. 词典配置（core + pending，来自 glossary_manager）
+    // ── 词典 ──
     const GLOSSARY = {"ETF": "ETF是打包一篮子资产的交易所交易基金，像一盒精选巧克力让你一次尝遍多种口味。", "FOF": "FOF是投资于其他基金的基金，帮你一键买入一篮子基金组合。它就像基金世界的专业买手，替你精选并搭配多个基金构建投资菜单。", "战术调仓": "战术调仓是投资者根据短期市场预测调整持仓以增强回报或控制风险的行为，这就像船长根据实时风浪微调航向，而非固守原定航线。", "Alpha": "Alpha是投资组合超越基准回报的超额收益。它好比赛车中车手凭借技术而非快车取得的额外优势。", "CIO": "首席投资官是公司投资决策的最终负责人，如同船长在金融市场中为投资组合掌舵导航。", "GPU": "GPU是驱动人工智能和复杂图形任务的核心处理器。它就像金融市场的做市商，同时处理海量交易指令，确保高效执行。", "TOP": "TOP是追踪台湾股市表现的基准指数，如同美股投资者观察标普500来把握市场脉搏。", "压舱石": "压舱石是投资组合中用于抵御市场波动的稳健资产，它如同远洋货轮的压舱石，在风浪中维持船身稳定。", "因子敏感度": "因子敏感度衡量投资组合对特定风险因子的暴露程度，就像体检报告显示你对不同过敏原的反应强度。", "夏普": "夏普比率衡量每承担一单位风险所获得的超额回报。就像衡量一辆车的燃油效率，它告诉你每消耗一升油能跑多远。", "抱团": "抱团是投资者集中买入少数热门资产导致其价格脱离基本面的群体行为；这就像粉丝抢购演唱会门票，无关歌手实力而纯粹因为害怕错过。", "资产配置": "资产配置是决定投资组合中各类资产比例的过程，如同规划一场晚宴的菜单，你需要平衡营养、口味与风险，确保无论主菜是否合胃口，沙拉和甜点都能稳定整体体验。", "超额收益": "超额收益是投资组合回报超过基准回报的部分，如同赛车手在标准圈速上额外争取到的领先优势。", "AI": "AI是让机器模拟人类智能的技术，它像一位不知疲倦的分析师，能瞬间处理海量数据并给出洞察。", "灰犀牛": "灰犀牛指那些概率极高、冲击巨大的潜在危机，它就像远处尘土飞扬中一头缓缓冲来的犀牛，人们往往因它行动看似缓慢而忽视，直到被撞倒才后悔莫及。", "风格漂移": "风格漂移是基金经理偏离其宣称的投资策略，就像承诺只做川菜的厨师开始偷偷加入法餐元素。", "止盈": "止盈是设定一个目标价位并在达到时卖出以锁定利润的交易策略；这就像在派对高潮时离场，确保你带着美好回忆而非一片狼藉回家。", "CNH": "CNH是离岸市场交易的人民币，汇率由国际市场供需决定；它就像人民币的海外分身，价格更自由地随全球投资者情绪波动。", "QDII": "QDII是合格境内机构投资者，允许中国内地居民通过本地基金投资海外市场。这就像给你的资金一本国际护照，可以出境在全球范围内寻找增长机会。", "止损": "止损是当投资亏损达到预定幅度时及时卖出以避免更大损失的纪律性操作；如同汽车安全带，未必常用但能在意外时限制伤害保护本金。", "GRID": "GRID是一种基于价格区间自动低买高卖的交易策略；它就像在震荡市里设置一张渔网，价格波动时会自动捕捉其中的差价利润。", "黑天鹅": "黑天鹅指不可预测的罕见事件，能颠覆市场常规逻辑；它就像金融市场的突然地震，虽百年一遇，却足以重塑所有建筑规则。", "Beta": "Beta衡量一项资产相对于整体市场的波动性。它就像一只小船在股市大海中的摇摆幅度——如果市场海浪上涨1%，Beta为1.5的股票就会上下颠簸1.5%。", "RSI": "RSI，即相对强弱指标，是一种衡量资产近期价格变动速度和幅度的动量震荡指标，用于识别超买或超卖状态。它就像汽车的油量表——当读数超过70时表示市场可能“加满油”过热，低于30则意味着“油箱见底”可能反弹，但油量表本身不决定车能开多远，只提示当前状态是否极端。", "NAV": "净资产价值（NAV）是基金或信托每单位份额所对应的实际资产净值，等于总资产减去总负债后除以发行总份额。它就像你与朋友合买一个披萨，扣除外卖费后，按切片数算出的每片实际价值。", "贡献点数": "贡献点数是衡量投资组合中每项资产对整体收益或风险贡献程度的指标。它就像一场接力赛里每位选手跑出的具体时间，能帮你看出谁在拖后腿、谁在领跑。", "US10Y": "美债10Y收益率。全球资产定价之锚，反映市场对长期通胀与无风险利率的预期。", "DXY": "美元指数。衡量美元对一篮子货币的强度，其走强通常对新兴市场流动性构成压力。", "VIX": "波动率指数（恐慌指数）。衡量标普500期权蕴含的隐含波动率，数值高企反映避险情绪浓厚。", "YTD": "今年以来（Year to Date）。从年初至今的累计收益或指标，用于跨周期比较。", "回撤": "最大回撤（MDD）。资产净值从历史高点回落的百分比，是评估风险控制能力的关键指标。", "历史回撤": "净值从历史高点回落的百分比，衡量最大亏损幅度。", "累计收益率": "从期初至今的复合收益百分比，反映长期投资表现。", "阿尔法": "超额收益（Alpha）。独立于市场波动之外的获利能力，体现主动管理的选股溢价。", "贝塔": "系统性收益（Beta）。与大盘波动相关的收益部分，反映组合对市场整体风险的暴露程度。", "波动率": "收益率离散程度。量化资产价格波动的剧烈程度，是现代投资组合风险定价的核心。", "再平衡": "资产权重纠偏。通过减持超配资产、增持低配资产，强制使组合回归目标风险水平。", "基准": "业绩比较基准（Benchmark）。客观评价组合获利能力是否达标的参照系。", "夏普比率": "风险调整后的收益效率，高夏普即收益拿得相对安稳。", "最大回撤": "特定时间内从巅峰到谷底的最惨跌幅，定义痛苦阈值与风险底线。", "区间收益率": "选定区间内，扣除增投/赎回后的投资回报率。", "年化收益率": "将区间收益率按年化折算，便于跨周期比较。", "胜率": "盈利交易日占比，如 60% 表示 10 天中有 6 天赚钱。", "盈亏比": "平均盈利日收益 ÷ 平均亏损日收益，衡量盈亏不对称性。", "真实收益": "(期末市值 - 期初市值) - 净流入，排除增投/赎回后的纯投资回报。", "净流入": "期间买入总额 - 卖出总额，正数表示净投入资金。", "行业热度": "根据市场资金流向与行业轮动，量化各行业当前热度，用于辅助择时与行业配置。", "综合分": "综合评分，结合行业热度、历史表现等维度的量化得分，用于排序筛选。"};
-
-    // 2. 词典渲染引擎 (防止标签嵌套)
     const sortedTerms = Object.keys(GLOSSARY).sort((a, b) => b.length - a.length);
 
     function walkAndReplace(node) {
-        if (node.nodeType === 3) { // 文本节点
+        if (node.nodeType === 3) {
             let text = node.data;
             let hasChange = false;
             sortedTerms.forEach(term => {
                 if (text.includes(term)) {
-                    const regex = new RegExp(term, 'g');
-                    text = text.replace(regex, `@@${term}@@`);
+                    text = text.replace(new RegExp(term, 'g'), `@@${term}@@`);
                     hasChange = true;
                 }
             });
@@ -355,30 +577,53 @@
             }
         } else {
             for (let i = node.childNodes.length - 1; i >= 0; i--) {
-                if (node.childNodes[i].className !== 'glossary-term') {
-                    walkAndReplace(node.childNodes[i]);
-                }
+                if (node.childNodes[i].className !== 'glossary-term') walkAndReplace(node.childNodes[i]);
             }
         }
     }
 
-    // 3. 执行渲染
-    const renderWithGlossary = (sourceId, targetId) => {
+    function renderWithGlossary(sourceId, targetId) {
         const target = document.getElementById(targetId);
         target.innerHTML = marked.parse(document.getElementById(sourceId).innerHTML);
         walkAndReplace(target);
-    };
-
+    }
     renderWithGlossary('xray-source', 'xray-target');
     renderWithGlossary('ai-source', 'ai-target');
 
-    // 即时互动：吸底框发送，回复展示在输入框上方
+    // ── 词典 tooltip ──
+    const tooltip = document.getElementById('tooltip');
+    document.addEventListener('mousemove', e => {
+        if (e.target.classList.contains('glossary-term')) {
+            tooltip.innerText = e.target.getAttribute('data-tip');
+            tooltip.style.display = 'block';
+            let x = e.clientX + 10;
+            if (x + 260 > window.innerWidth) x = e.clientX - 270;
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = (e.clientY + 10) + 'px';
+        } else {
+            tooltip.style.display = 'none';
+        }
+    });
+    document.addEventListener('click', e => {
+        if (e.target.classList.contains('glossary-term')) {
+            tooltip.innerText = e.target.getAttribute('data-tip');
+            tooltip.style.display = 'block';
+            tooltip.style.left = '16px';
+            tooltip.style.top = (e.clientY + 10) + 'px';
+            setTimeout(() => { tooltip.style.display = 'none'; }, 3000);
+        }
+    });
+
+    // ── 吸底问答 ──
     (function initChat() {
         const input = document.getElementById('chat-input');
         const sendBtn = document.getElementById('chat-send');
         const replyEl = document.getElementById('chat-reply');
         const CHAT_API_URL = "https://my-fund-api.liuyuyin19950805.workers.dev";
-        const API_BASE = CHAT_API_URL || (function() { if (window.location.protocol === 'file:') return 'http://127.0.0.1:8000'; var o = window.location.origin; return o.replace(/:\d+$/, '') + ':8000'; })();
+        const API_BASE = CHAT_API_URL || (function() {
+            if (window.location.protocol === 'file:') return 'http://127.0.0.1:8000';
+            return window.location.origin.replace(/:[0-9]+$/, '') + ':8000';
+        })();
         sendBtn.addEventListener('click', async function() {
             const q = (input.value || '').trim();
             if (!q) return;
@@ -386,29 +631,32 @@
             replyEl.style.display = 'block';
             replyEl.textContent = '思考中…';
             try {
-                const res = await fetch(API_BASE + '/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: q, context_data: window.REPORT_CONTEXT || { } }) });
+                const res = await fetch(API_BASE + '/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question: q, context_data: window.REPORT_CONTEXT || {} })
+                });
                 const data = await res.json();
                 replyEl.textContent = data.answer || '无回复';
             } catch (e) {
-                replyEl.textContent = '请求失败：请先运行 python main.py 启动 API；若用 file:// 打开请用本地服务器打开页面';
+                replyEl.textContent = '请求失败：请先运行 python main.py 启动 API';
             }
         });
-        input.addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); sendBtn.click(); } });
+        input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); sendBtn.click(); } });
     })();
 
-    // 5. 登录与数据脱敏
-    const privateData = {"current_mv": "¥22,523.61", "total_return": "+5.61%", "weekly_return": "-9.69%", "ytd_pnl_value": "¥+1,074", "ytd_pnl_rate": "+4.51%", "goal_target": "¥50,000", "goal_current": "¥25,000"};
-    const publicData = {"current_mv": "已隐藏", "total_return": "+5.61%", "weekly_return": "-9.69%", "ytd_pnl_value": "已隐藏", "ytd_pnl_rate": "+4.51%", "goal_target": "已隐藏", "goal_current": "已隐藏"};
+    // ── 登录与脱敏 ──
+    const privateData = {"current_mv": "¥24,471.63", "total_return": "+5.25%", "weekly_return": "-2.10%", "ytd_pnl_value": "¥+3,022", "ytd_pnl_rate": "+12.68%", "goal_target": "¥50,000", "goal_current": "¥25,000"};
+    const publicData = {"current_mv": "已隐藏", "total_return": "+5.25%", "weekly_return": "-2.10%", "ytd_pnl_value": "已隐藏", "ytd_pnl_rate": "+12.68%", "goal_target": "已隐藏", "goal_current": "已隐藏"};
     const PASSWORD_HASH = "608f4a69d48963560e8c0fcb2f6da1a51e87b117dcf1b3054038f7cbd8660def";
 
     async function sha256(message) {
         const msgBuffer = new TextEncoder().encode(message);
         const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2,'0')).join('');
     }
 
-    function renderData(data, isPrivate) {
+    function renderData(data) {
         document.getElementById('current_mv').textContent = data.current_mv;
         document.getElementById('total_return').textContent = data.total_return;
         document.getElementById('weekly_return').textContent = data.weekly_return;
@@ -420,31 +668,25 @@
 
     function showPrivateData() {
         document.getElementById('statusText').textContent = '🟢 完整模式';
-        document.getElementById('loginModal').style.display = 'none';
         document.getElementById('loginModal').classList.remove('show');
         document.body.classList.remove('public-mode');
-        var xray = document.getElementById('xray-target');
-        if (xray) xray.classList.remove('mask-pierced-mv');
-        renderData(privateData, true);
+        renderData(privateData);
     }
 
     function showPublicData() {
         document.getElementById('statusText').textContent = '⚪️ 公开模式';
         document.body.classList.add('public-mode');
-        var xray = document.getElementById('xray-target');
-        if (xray) xray.classList.add('mask-pierced-mv');
-        renderData(publicData, false);
+        renderData(publicData);
     }
 
     function handleStatusClick() {
         const isLoggedIn = localStorage.getItem('fundAgentLoggedIn') === 'true';
         if (isLoggedIn) {
-            if(confirm('确定要退出登录吗？')) {
+            if (confirm('确定要退出登录吗？')) {
                 localStorage.removeItem('fundAgentLoggedIn');
                 showPublicData();
             }
         } else {
-            document.getElementById('loginModal').style.display = 'flex';
             document.getElementById('loginModal').classList.add('show');
         }
     }
@@ -459,36 +701,16 @@
         if (hash === PASSWORD_HASH) {
             localStorage.setItem('fundAgentLoggedIn', 'true');
             showPrivateData();
-            document.getElementById('passwordInput').value = '';
-            document.getElementById('loginError').textContent = '';
         } else {
             document.getElementById('loginError').textContent = '密码错误';
-            setTimeout(() => { document.getElementById('loginError').textContent = ''; }, 2000);
         }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        if (localStorage.getItem('fundAgentLoggedIn') === 'true') {
-            showPrivateData();
-        } else {
-            showPublicData();
-        }
-    });
-
-    // 4. 悬浮窗监听
-    const tooltip = document.getElementById('tooltip');
-    document.addEventListener('mousemove', e => {
-        if (e.target.classList.contains('glossary-term')) {
-            tooltip.innerText = e.target.getAttribute('data-tip');
-            tooltip.style.display = 'block';
-            let x = e.clientX + 10;
-            if (x + 280 > window.innerWidth) x = e.clientX - 290;
-            tooltip.style.left = x + 'px';
-            tooltip.style.top = (e.clientY + 10) + 'px';
-        } else {
-            tooltip.style.display = 'none';
-        }
-    });
+    // ── 初始化 ──
+    (function init() {
+        const isLoggedIn = localStorage.getItem('fundAgentLoggedIn') === 'true';
+        if (isLoggedIn) { showPrivateData(); } else { showPublicData(); }
+    })();
 </script>
 <script>if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(function(){}); }</script>
 </body></html>
