@@ -20,7 +20,7 @@
 .inner-pane { display:none; }
 .inner-pane.active { display:block; }
 
-/* ── 行业热度 ── */
+/* ── 组合决策 ── */
 .heat-summary { display:flex; flex-wrap:wrap; gap:var(--s2); margin-bottom:var(--s3); font-size:var(--t-xs); }
 .hot-tag  { background:var(--up-bg);   color:var(--up);   padding:3px 10px; border-radius:var(--r-full); }
 .cold-tag { background:var(--down-bg); color:var(--down); padding:3px 10px; border-radius:var(--r-full); }
@@ -30,6 +30,26 @@
 .heat-item .hn { font-size:var(--t-xs); color:var(--tx-1); margin-bottom:4px; }
 .heat-item .hv { font-size:var(--t-xs); color:var(--tx-3); font-family:var(--f-mono); }
 .heat-stale { border:0.5px solid rgba(217,119,6,0.28); background:rgba(217,119,6,0.08); color:#92400e; border-radius:var(--r-sm); padding:var(--s3); font-size:var(--t-xs); line-height:1.55; margin-bottom:var(--s3); }
+.decision-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--s3); margin-bottom:var(--s4); }
+.decision-card { border:0.5px solid var(--line); border-radius:var(--r-md); background:var(--bg-card); padding:var(--s4); min-width:0; }
+.decision-card .dl { font-size:var(--t-xs); color:var(--tx-3); margin-bottom:var(--s2); }
+.decision-card .dv { font-size:clamp(18px,5vw,26px); color:var(--tx-1); font-weight:var(--w-normal); line-height:1.25; overflow-wrap:anywhere; }
+.decision-card .dd { font-size:var(--t-xs); color:var(--tx-2); line-height:1.55; margin-top:var(--s2); }
+.decision-card.alert { border-color:rgba(239,68,68,0.25); background:rgba(239,68,68,0.05); }
+.decision-card.watch { border-color:rgba(217,119,6,0.24); background:rgba(217,119,6,0.06); }
+.decision-card.ok { border-color:rgba(22,163,74,0.22); background:rgba(22,163,74,0.05); }
+.decision-list { display:grid; gap:var(--s2); margin:var(--s3) 0 var(--s4); }
+.decision-row { display:grid; grid-template-columns:minmax(78px,0.9fr) minmax(120px,1.4fr) minmax(70px,0.7fr); gap:var(--s2); align-items:center; border:0.5px solid var(--line); border-radius:var(--r-sm); padding:var(--s3); background:var(--bg-card); }
+.decision-row .name { font-size:var(--t-sm); color:var(--tx-1); }
+.decision-row .bar { height:8px; border-radius:var(--r-full); background:var(--bg-raised); overflow:hidden; position:relative; }
+.decision-row .fill { height:100%; width:0; border-radius:var(--r-full); background:var(--accent); }
+.decision-row .meta { font-size:var(--t-xs); color:var(--tx-3); font-family:var(--f-mono); text-align:right; }
+.decision-note { font-size:var(--t-xs); color:var(--tx-2); line-height:1.65; border:0.5px solid var(--line); border-radius:var(--r-sm); background:var(--bg-raised); padding:var(--s3); margin-bottom:var(--s3); }
+@media (max-width:560px) {
+  .decision-grid { grid-template-columns:1fr; }
+  .decision-row { grid-template-columns:1fr; }
+  .decision-row .meta { text-align:left; }
+}
 
 /* ── 术语词典 ── */
 .dict-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:var(--s3); margin-bottom:var(--s5); }
@@ -104,17 +124,18 @@
 
 <div class="container" style="padding-top:var(--s4)">
   <div class="inner-tabs">
-    <button class="inner-tab" onclick="switchTab('heat')">行业热度</button>
+    <button class="inner-tab" onclick="switchTab('heat')">组合决策</button>
     <button class="inner-tab" onclick="switchTab('screener')">基金筛选</button>
     <button class="inner-tab active" onclick="switchTab('trade')">交易记录</button>
     <button class="inner-tab" onclick="switchTab('dict')">术语词典</button>
   </div>
 
-  <!-- ══ 行业热度 ══ -->
+  <!-- ══ 组合决策 ══ -->
   <div id="pane-heat" class="inner-pane">
     <div id="heatLoading" style="padding:20px;text-align:center;color:var(--tx-3)">加载中…</div>
     <div id="heatContent" style="display:none">
       <div class="heat-summary" id="heatSummary"></div>
+      <div id="decisionPanel"></div>
       <div id="industry-heat-treemap" class="industry-heat-treemap"></div>
     </div>
     <div id="heatError" style="display:none;color:var(--up);font-size:var(--t-sm);padding:var(--s4)"></div>
@@ -310,15 +331,66 @@ function switchTab(id) {
 }
 
 // ══════════════════════════════════════
-// 行业热度
+// 组合决策
 // ══════════════════════════════════════
+function actionForDrift(item) {
+  var drift = Number(item.change_pct || 0);
+  var sector = item.sector || item.name || '';
+  if (drift >= 5) return {level:'alert', title:'优先减仓', text:sector + ' 超配 ' + drift.toFixed(1) + '%，先停止加仓，若需要操作优先减这里。'};
+  if (drift <= -5) return {level:'watch', title:'候选补仓', text:sector + ' 低配 ' + Math.abs(drift).toFixed(1) + '%，只有在宏观和基金趋势确认后小额补。'};
+  return {level:'ok', title:'保持观察', text:sector + ' 偏离在阈值内，不需要为了配平而交易。'};
+}
+
+function renderDecisionPanel(data) {
+  var panel = document.getElementById('decisionPanel');
+  if (!panel) return;
+  var items = (data.items || []).filter(function(x){ return x.type === 'portfolio_proxy' || x.weight_pct != null; });
+  if (!items.length) {
+    panel.innerHTML = '<div class="decision-note">当前展示的是外部市场行业数据。基金组合操作请优先参考分析页的下周计划和交易记录页。</div>';
+    return;
+  }
+  var sorted = items.slice().sort(function(a,b){ return Math.abs(b.change_pct||0) - Math.abs(a.change_pct||0); });
+  var top = sorted[0] || {};
+  var topAction = actionForDrift(top);
+  var over = items.filter(function(x){ return Number(x.change_pct||0) >= 5; });
+  var under = items.filter(function(x){ return Number(x.change_pct||0) <= -5; });
+  var headline = '持有观察';
+  var reason = '没有必须马上交易的组合级触发。';
+  var cardClass = 'ok';
+  if (over.length) {
+    headline = '先处理超配';
+    reason = over.map(function(x){ return (x.sector || x.name) + ' +' + Number(x.change_pct).toFixed(1) + '%'; }).join('，');
+    cardClass = 'alert';
+  } else if (under.length) {
+    headline = '只列补仓候选';
+    reason = under.map(function(x){ return (x.sector || x.name) + ' ' + Number(x.change_pct).toFixed(1) + '%'; }).join('，') + '。没有趋势确认前不追补。';
+    cardClass = 'watch';
+  }
+  var rows = items.slice().sort(function(a,b){ return (b.weight_pct||0) - (a.weight_pct||0); }).map(function(x){
+    var w = Number(x.weight_pct || 0);
+    var target = Number(x.target_pct || 0);
+    var drift = Number(x.change_pct || 0);
+    var fill = Math.max(2, Math.min(100, w));
+    var color = drift >= 5 ? 'var(--up)' : drift <= -5 ? 'var(--down)' : 'var(--accent)';
+    return '<div class="decision-row"><div class="name">'+(x.sector || x.name)+'</div><div class="bar"><div class="fill" style="width:'+fill+'%;background:'+color+'"></div></div><div class="meta">'+w.toFixed(1)+'% / 目标 '+target.toFixed(1)+'%<br>偏离 '+(drift>=0?'+':'')+drift.toFixed(1)+'%</div></div>';
+  }).join('');
+  panel.innerHTML =
+    '<div class="decision-grid">' +
+      '<div class="decision-card '+cardClass+'"><div class="dl">当前动作</div><div class="dv">'+headline+'</div><div class="dd">'+reason+'</div></div>' +
+      '<div class="decision-card '+topAction.level+'"><div class="dl">最大偏离</div><div class="dv">'+(top.sector || top.name || '--')+'</div><div class="dd">'+topAction.text+'</div></div>' +
+      '<div class="decision-card ok"><div class="dl">交易原则</div><div class="dv">基金优先</div><div class="dd">不因行业热度或个股快照单独交易，只按组合偏离、回撤和周计划执行。</div></div>' +
+    '</div>' +
+    '<div class="decision-note">这里是基于 holdings.csv 和 portfolio_goals.json 生成的组合视角。它回答“我的组合结构是否偏离目标”，不是全市场热点排名。</div>' +
+    '<div class="decision-list">'+rows+'</div>';
+}
+
 function renderHeatFallback(items, isProxy) {
   var el = document.getElementById('industry-heat-treemap');
   if (!el) return;
   var top = (items || []).slice(0, 24);
   el.style.height = 'auto';
   if (!top.length) {
-    el.innerHTML = '<div style="padding:var(--s4);font-size:var(--t-sm);color:var(--tx-3);border:0.5px solid var(--line);border-radius:var(--r-sm)">暂无行业热度明细，等待 workflow 更新 industry_heat.json。</div>';
+    el.innerHTML = '<div style="padding:var(--s4);font-size:var(--t-sm);color:var(--tx-3);border:0.5px solid var(--line);border-radius:var(--r-sm)">暂无组合决策数据，等待 workflow 更新 industry_heat.json。</div>';
     return;
   }
   el.innerHTML = '<div class="heat-fallback">' + top.map(function(x) {
@@ -356,14 +428,15 @@ function loadHeat() {
         '<span class="cold-tag">❄️ '+cold.slice(0,5).join('、')+'</span>'+freshHtml;
       if (isProxy) {
         document.getElementById('heatSummary').innerHTML +=
-          '<div class="heat-stale">外部行业热度接口不可用，当前显示基于真实持仓与目标权重的组合主题代理。' +
+          '<div class="heat-stale">外部市场接口不可用，当前显示基于真实持仓与目标权重的组合主题代理。' +
           (data.proxy_reason ? '<br>原因：'+data.proxy_reason : '') + '</div>';
       }
       if (stale) {
         document.getElementById('heatSummary').innerHTML +=
-          '<div class="heat-stale">行业热度数据已过期或本次更新失败，仅供参考，不用于加仓决策。' +
+          '<div class="heat-stale">外部市场数据已过期或本次更新失败，仅供参考，不用于加仓决策。' +
           (staleReason ? '<br>原因：'+staleReason : '') + '</div>';
       }
+      renderDecisionPanel(data);
       renderHeatFallback(items, isProxy);
       return;
       if (!items.length || typeof echarts === 'undefined') { renderHeatFallback(items, isProxy); return; }
@@ -382,7 +455,7 @@ function loadHeat() {
           series:[{
             type:'treemap',
             leafDepth:1, roam:false,
-            data:[{name:'行业热度',children:items.slice(0,80).map(function(x){
+            data:[{name:'组合决策',children:items.slice(0,80).map(function(x){
               return {name:x.name||'',value:Math.max(1,x.heat_score||50),heat_score:x.heat_score,change_pct:x.change_pct};
             })}],
             label:{show:true,formatter:function(p){
@@ -401,10 +474,10 @@ function loadHeat() {
     .catch(function(e){
       document.getElementById('heatLoading').style.display='none';
       var el=document.getElementById('heatError'); el.style.display='block';
-      el.textContent=(e+'').indexOf('未配置')>=0?'行业热度数据暂未配置，workflow 运行 python industry_heat.py 后自动生效。':'加载失败: '+e;
+      el.textContent=(e+'').indexOf('未配置')>=0?'组合决策数据暂未配置，workflow 运行 python industry_heat.py 后自动生效。':'加载失败: '+e;
     });
 }
-// 默认进入交易记录，行业热度按需加载，避免首屏被图表加载占住。
+// 默认进入交易记录，组合决策按需加载。
 
 // ══════════════════════════════════════
 // 基金筛选

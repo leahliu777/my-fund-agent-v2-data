@@ -1,0 +1,35 @@
+{
+  "updated_at": "2026-06-06 17:10:40",
+  "source": "dynamic_targets_v1",
+  "base_target_weights": {
+    "Dividend": 35.0,
+    "Tech": 20.0,
+    "Resource": 20.0,
+    "Pension": 25.0
+  },
+  "target_weights": {
+    "Dividend": 36.8,
+    "Tech": 18.7,
+    "Resource": 18.7,
+    "Pension": 25.8
+  },
+  "actual_weights": {
+    "Dividend": 33.2,
+    "Pension": 34.4,
+    "Resource": 15.1,
+    "Tech": 17.3
+  },
+  "constraints": {
+    "max_tilt_pct": 5.0,
+    "max_weekly_step_pct": 3.0,
+    "min_weight_pct": 5.0
+  },
+  "signals": {
+    "macro_score": 0.0,
+    "current_drawdown_pct": -35.6
+  },
+  "reasons": [
+    "当前回撤 -35.6% 触及风险线，压低进攻仓目标",
+    "Pension 相对战略目标超配 9.4%，动态目标小幅下调"
+  ]
+}
