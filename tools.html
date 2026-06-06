@@ -25,6 +25,10 @@
 .hot-tag  { background:var(--up-bg);   color:var(--up);   padding:3px 10px; border-radius:var(--r-full); }
 .cold-tag { background:var(--down-bg); color:var(--down); padding:3px 10px; border-radius:var(--r-full); }
 .industry-heat-treemap { width:100%; height:320px; }
+.heat-fallback { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:var(--s2); margin-top:var(--s3); }
+.heat-item { border:0.5px solid var(--line); border-radius:var(--r-sm); padding:var(--s3); background:var(--bg-card); }
+.heat-item .hn { font-size:var(--t-xs); color:var(--tx-1); margin-bottom:4px; }
+.heat-item .hv { font-size:var(--t-xs); color:var(--tx-3); font-family:var(--f-mono); }
 
 /* ── 术语词典 ── */
 .dict-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:var(--s3); margin-bottom:var(--s5); }
@@ -99,14 +103,14 @@
 
 <div class="container" style="padding-top:var(--s4)">
   <div class="inner-tabs">
-    <button class="inner-tab active" onclick="switchTab('heat')">行业热度</button>
+    <button class="inner-tab" onclick="switchTab('heat')">行业热度</button>
     <button class="inner-tab" onclick="switchTab('screener')">基金筛选</button>
-    <button class="inner-tab" onclick="switchTab('trade')">交易记录</button>
+    <button class="inner-tab active" onclick="switchTab('trade')">交易记录</button>
     <button class="inner-tab" onclick="switchTab('dict')">术语词典</button>
   </div>
 
   <!-- ══ 行业热度 ══ -->
-  <div id="pane-heat" class="inner-pane active">
+  <div id="pane-heat" class="inner-pane">
     <div id="heatLoading" style="padding:20px;text-align:center;color:var(--tx-3)">加载中…</div>
     <div id="heatContent" style="display:none">
       <div class="heat-summary" id="heatSummary"></div>
@@ -140,7 +144,7 @@
   </div>
 
   <!-- ══ 交易记录 ══ -->
-  <div id="pane-trade" class="inner-pane">
+  <div id="pane-trade" class="inner-pane active">
     <div class="stats-row" id="txStats"></div>
 
     <div class="tx-grid">
@@ -222,11 +226,12 @@
 
       <div id="tokenSection">
         <p style="font-size:var(--t-xs);color:var(--tx-3);margin-bottom:var(--s3)">
-          粘贴你的 GitHub Token（需要 <code>contents:write</code> 权限），只存在本地浏览器，不会上传。
+          粘贴你的 GitHub Token（需要 <code>contents:write</code> 权限）。按你的设置会记住在本机浏览器 localStorage，请只在自己的设备使用。
         </p>
         <div style="display:flex;gap:var(--s2);margin-bottom:var(--s3)">
           <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx" style="flex:1;font-family:var(--f-mono);font-size:var(--t-xs)">
           <button class="btn btn-secondary btn-sm" onclick="saveToken()">记住</button>
+          <button class="btn btn-secondary btn-sm" onclick="clearToken()">清除</button>
         </div>
         <div id="tokenStatus" style="font-size:var(--t-xs);color:var(--tx-3);margin-bottom:var(--s3)"></div>
       </div>
@@ -306,6 +311,22 @@ function switchTab(id) {
 // ══════════════════════════════════════
 // 行业热度
 // ══════════════════════════════════════
+function renderHeatFallback(items) {
+  var el = document.getElementById('industry-heat-treemap');
+  if (!el) return;
+  var top = (items || []).slice(0, 24);
+  el.style.height = 'auto';
+  if (!top.length) {
+    el.innerHTML = '<div style="padding:var(--s4);font-size:var(--t-sm);color:var(--tx-3);border:0.5px solid var(--line);border-radius:var(--r-sm)">暂无行业热度明细，等待 workflow 更新 industry_heat.json。</div>';
+    return;
+  }
+  el.innerHTML = '<div class="heat-fallback">' + top.map(function(x) {
+    var score = x.heat_score != null ? Number(x.heat_score).toFixed(1) : '--';
+    var pct = x.change_pct != null ? ((x.change_pct >= 0 ? '+' : '') + Number(x.change_pct).toFixed(2) + '%') : '涨跌 --';
+    return '<div class="heat-item"><div class="hn">' + (x.name || '未命名行业') + '</div><div class="hv">热度 ' + score + ' · ' + pct + '</div></div>';
+  }).join('') + '</div>';
+}
+
 function loadHeat() {
   fetch('industry_heat.json')
     .then(function(r){ if(!r.ok) return Promise.reject('HTTP '+r.status); return r.text(); })
@@ -324,32 +345,40 @@ function loadHeat() {
       document.getElementById('heatSummary').innerHTML=
         '<span class="hot-tag">🔥 '+hot.slice(0,5).join('、')+'</span>'+
         '<span class="cold-tag">❄️ '+cold.slice(0,5).join('、')+'</span>'+freshHtml;
-      var items=data.items||[], hmin=Math.min.apply(null,items.map(function(x){return x.heat_score||0;}));
+      var items=data.items||[];
+      renderHeatFallback(items);
+      return;
+      if (!items.length || typeof echarts === 'undefined') { renderHeatFallback(items); return; }
+      var hmin=Math.min.apply(null,items.map(function(x){return x.heat_score||0;}));
       var hmax=Math.max.apply(null,items.map(function(x){return x.heat_score||100;}));
       if(hmax<=hmin) hmax=hmin+1;
-      var chart=echarts.init(document.getElementById('industry-heat-treemap'));
-      chart.setOption({
-        backgroundColor:'transparent',
-        tooltip:{formatter:function(info){
-          var item=items.find(function(x){return x.name===info.name;});
-          var pct=item&&item.change_pct!=null?(item.change_pct>=0?'+':'')+item.change_pct.toFixed(2)+'%':'';
-          return '<b>'+info.name+'</b><br>热度: '+info.value+(pct?'<br>涨跌: '+pct:'');
-        }},
-        series:[{
-          type:'treemap',
-          leafDepth:1, roam:false,
-          data:[{name:'行业热度',children:items.slice(0,80).map(function(x){
-            return {name:x.name||'',value:Math.max(1,x.heat_score||50),heat_score:x.heat_score,change_pct:x.change_pct};
-          })}],
-          label:{show:true,formatter:function(p){
-            var pct=p.data.change_pct;
-            return p.name+(pct!=null?'\n'+(pct>=0?'+':'')+pct.toFixed(1)+'%':'');
-          },fontSize:11},
-          itemStyle:{borderRadius:4},
-          levels:[{},{colorMappingBy:'value',colorAlpha:[0.3,1],color:['#dc2626','#f59e0b','#059669']}]
-        }]
-      });
-      window.addEventListener('resize',function(){chart.resize();});
+      try {
+        var chart=echarts.init(document.getElementById('industry-heat-treemap'));
+        chart.setOption({
+          backgroundColor:'transparent',
+          tooltip:{formatter:function(info){
+            var item=items.find(function(x){return x.name===info.name;});
+            var pct=item&&item.change_pct!=null?(item.change_pct>=0?'+':'')+item.change_pct.toFixed(2)+'%':'';
+            return '<b>'+info.name+'</b><br>热度: '+info.value+(pct?'<br>涨跌: '+pct:'');
+          }},
+          series:[{
+            type:'treemap',
+            leafDepth:1, roam:false,
+            data:[{name:'行业热度',children:items.slice(0,80).map(function(x){
+              return {name:x.name||'',value:Math.max(1,x.heat_score||50),heat_score:x.heat_score,change_pct:x.change_pct};
+            })}],
+            label:{show:true,formatter:function(p){
+              var pct=p.data.change_pct;
+              return p.name+(pct!=null?'\n'+(pct>=0?'+':'')+pct.toFixed(1)+'%':'');
+            },fontSize:11},
+            itemStyle:{borderRadius:4},
+            levels:[{},{colorMappingBy:'value',colorAlpha:[0.3,1],color:['#dc2626','#f59e0b','#059669']}]
+          }]
+        });
+        window.addEventListener('resize',function(){chart.resize();});
+      } catch (err) {
+        renderHeatFallback(items);
+      }
     })
     .catch(function(e){
       document.getElementById('heatLoading').style.display='none';
@@ -357,8 +386,7 @@ function loadHeat() {
       el.textContent=(e+'').indexOf('未配置')>=0?'行业热度数据暂未配置，workflow 运行 python industry_heat.py 后自动生效。':'加载失败: '+e;
     });
 }
-// 首屏自动加载热度
-loadHeat(); heatLoaded=true;
+// 默认进入交易记录，行业热度按需加载，避免首屏被图表加载占住。
 
 // ══════════════════════════════════════
 // 基金筛选
@@ -644,13 +672,21 @@ function showTokenStatus() {
   var el = document.getElementById('tokenStatus');
   if (!el) return;
   if (t) {
-    el.textContent = '已保存 Token：' + t.slice(0,8) + '…';
+    el.textContent = '已记住 Token：' + t.slice(0,8) + '…（仅建议在自己的设备使用）';
     el.style.color = 'var(--green)';
     document.getElementById('ghToken').placeholder = '已保存，如需更换请重新粘贴';
   } else {
     el.textContent = '尚未保存 Token';
     el.style.color = 'var(--tx-3)';
   }
+}
+
+function clearToken() {
+  localStorage.removeItem('gh_token');
+  var input = document.getElementById('ghToken');
+  if (input) input.value = '';
+  showTokenStatus();
+  toast('Token 已清除');
 }
 
 async function getFileSha(token, path) {
