@@ -29,6 +29,7 @@
 .heat-item { border:0.5px solid var(--line); border-radius:var(--r-sm); padding:var(--s3); background:var(--bg-card); }
 .heat-item .hn { font-size:var(--t-xs); color:var(--tx-1); margin-bottom:4px; }
 .heat-item .hv { font-size:var(--t-xs); color:var(--tx-3); font-family:var(--f-mono); }
+.heat-stale { border:0.5px solid rgba(217,119,6,0.28); background:rgba(217,119,6,0.08); color:#92400e; border-radius:var(--r-sm); padding:var(--s3); font-size:var(--t-xs); line-height:1.55; margin-bottom:var(--s3); }
 
 /* ── 术语词典 ── */
 .dict-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:var(--s3); margin-bottom:var(--s5); }
@@ -335,17 +336,25 @@ function loadHeat() {
       document.getElementById('heatLoading').style.display='none';
       document.getElementById('heatContent').style.display='block';
       var updated=data.updated_at||'', hot=(data.summary&&data.summary.hot)||[], cold=(data.summary&&data.summary.cold)||[];
+      var items=data.items||[];
       var freshHtml='';
+      var stale=false, staleReason=data.stale_reason||'';
       if(updated){
         var ms=new Date(updated.replace(' ','T')).getTime(), h=(Date.now()-ms)/3600000;
         var col=isNaN(h)?'var(--tx-3)':h<6?'#16a34a':h<24?'#d97706':'var(--up)';
         var lbl=isNaN(h)?updated:h<6?'数据新鲜 · '+updated:h<24?'⚠️ 已有'+Math.floor(h)+'小时 · '+updated:'⚠️ 超过'+Math.floor(h/24)+'天未更新 · '+updated;
         freshHtml='<span style="color:'+col+';font-size:var(--t-xs)">'+lbl+'</span>';
+        stale = Boolean(data.stale) || (!isNaN(h) && h >= 24);
       }
+      if (data.stale) stale = true;
       document.getElementById('heatSummary').innerHTML=
         '<span class="hot-tag">🔥 '+hot.slice(0,5).join('、')+'</span>'+
         '<span class="cold-tag">❄️ '+cold.slice(0,5).join('、')+'</span>'+freshHtml;
-      var items=data.items||[];
+      if (stale) {
+        document.getElementById('heatSummary').innerHTML +=
+          '<div class="heat-stale">行业热度数据已过期或本次更新失败，仅供参考，不用于加仓决策。' +
+          (staleReason ? '<br>原因：'+staleReason : '') + '</div>';
+      }
       renderHeatFallback(items);
       return;
       if (!items.length || typeof echarts === 'undefined') { renderHeatFallback(items); return; }
@@ -473,35 +482,189 @@ function loadGlossary(){
 // ══════════════════════════════════════
 // 交易记录
 // ══════════════════════════════════════
+// BEGIN GENERATED TRADE DATA - run python3 generate_tools_data.py
 var INIT_HOLDINGS=[
-  {code:'jj005562',name:'创金合信中证红利低波指数C',shares:1656.88,cost:2.0352,category:'active',sector:'Dividend',benchmark:'000300'},
-  {code:'jj016452',name:'南方纳斯达克100指数(QDII)A',shares:699.09,cost:2.0026,category:'active',sector:'Tech',benchmark:'QQQ'},
-  {code:'jj100038',name:'富国沪深300增强A',shares:1573.44,cost:1.8142,category:'active',sector:'Dividend',benchmark:'000300'},
-  {code:'jj016582',name:'嘉实上海金ETF联接C',shares:1371.92,cost:2.1723,category:'active',sector:'Resource',benchmark:'GC=F'},
-  {code:'jj017675',name:'东方红颐和积极养老五年(FOF)Y',shares:2383.96,cost:1.2584,category:'pension',sector:'Pension',benchmark:'000300'},
-  {code:'jj017403',name:'广发养老2050五年持有期混合(FOF)Y',shares:2170.71,cost:1.382,category:'pension',sector:'Pension',benchmark:'000300'},
-  {code:'jj016707',name:'华夏中证有色金属ETF联接A',shares:1692.08,cost:1.9969,category:'active',sector:'Resource',benchmark:'GC=F'},
-  {code:'jj008586',name:'华夏人工智能ETC联接C',shares:1070.01,cost:1.5028,category:'active',sector:'Tech',benchmark:'QQQ'},
-  {code:'jj003016',name:'中金中证3500指数增强A',shares:385.34,cost:2.5951,category:'active',sector:'Dividend',benchmark:'000300'}
+  {
+    "code": "jj005562",
+    "name": "创金合信中证红利低波指数C",
+    "shares": 1656.88,
+    "cost": 2.0352,
+    "category": "active",
+    "sector": "Dividend",
+    "benchmark": "000300"
+  },
+  {
+    "code": "jj016452",
+    "name": "南方纳斯达克100指数(QDII)A",
+    "shares": 962.65,
+    "cost": 2.0257,
+    "category": "active",
+    "sector": "Tech",
+    "benchmark": "QQQ"
+  },
+  {
+    "code": "jj100038",
+    "name": "富国沪深300增强A",
+    "shares": 1573.44,
+    "cost": 1.8142,
+    "category": "active",
+    "sector": "Dividend",
+    "benchmark": "000300"
+  },
+  {
+    "code": "jj016582",
+    "name": "嘉实上海金ETF联接C",
+    "shares": 1028.94,
+    "cost": 2.1723,
+    "category": "active",
+    "sector": "Resource",
+    "benchmark": "GC=F"
+  },
+  {
+    "code": "jj017675",
+    "name": "东方红颐和积极养老五年(FOF)Y",
+    "shares": 2383.96,
+    "cost": 1.2584,
+    "category": "pension",
+    "sector": "Pension",
+    "benchmark": "000300"
+  },
+  {
+    "code": "jj017403",
+    "name": "广发养老2050五年持有期混合(FOF)Y",
+    "shares": 3407.93,
+    "cost": 1.4672,
+    "category": "pension",
+    "sector": "Pension",
+    "benchmark": "000300"
+  },
+  {
+    "code": "jj016707",
+    "name": "华夏中证有色金属ETF联接A",
+    "shares": 634.53,
+    "cost": 1.9969,
+    "category": "active",
+    "sector": "Resource",
+    "benchmark": "GC=F"
+  },
+  {
+    "code": "jj008586",
+    "name": "华夏人工智能ETC联接C",
+    "shares": 1282.23,
+    "cost": 1.616,
+    "category": "active",
+    "sector": "Tech",
+    "benchmark": "QQQ"
+  },
+  {
+    "code": "jj003016",
+    "name": "中金中证3500指数增强A",
+    "shares": 573.6,
+    "cost": 2.6151,
+    "category": "active",
+    "sector": "Dividend",
+    "benchmark": "000300"
+  }
 ];
 var INIT_FLOWS=[
-  {date:'2026-01-08',type:'withdrawal',amount:470.69,note:'卖出创新药(转入沪深)'},
-  {date:'2026-01-08',type:'withdrawal',amount:470.67,note:'卖出创新药(转入沪深)'},
-  {date:'2026-01-09',type:'withdrawal',amount:732.85,note:'卖出中证白酒(给有色金属)'},
-  {date:'2026-01-13',type:'deposit',amount:400,note:'定投纳斯达克(13-23合计)'},
-  {date:'2026-01-14',type:'withdrawal',amount:375.23,note:'卖出华夏房地产(给沪深300)'},
-  {date:'2026-01-14',type:'deposit',amount:500,note:'买入人工智能'},
-  {date:'2026-01-18',type:'withdrawal',amount:611.09,note:'卖出有色金属(给人工智能)'},
-  {date:'2026-01-21',type:'deposit',amount:500,note:'买入人工智能'},
-  {date:'2026-01-21',type:'withdrawal',amount:801.25,note:'卖出上海金'},
-  {date:'2026-01-30',type:'deposit',amount:2000,note:'买入有色金属'},
-  {date:'2026-01-30',type:'deposit',amount:1500,note:'买入上海金'},
-  {date:'2026-02-12',type:'deposit',amount:2000,note:'增投红利低波'},
-  {date:'2026-02-25',type:'withdrawal',amount:872.04,note:'赎回华夏有色金属ETF联接A'},
-  {date:'2026-03-01',type:'deposit',amount:1000,note:'买入中金中证3500指数增强A'},
-  {date:'2026-03-01',type:'deposit',amount:1000,note:'买入富国沪深300增强A'}
+  {
+    "date": "2026-01-08",
+    "type": "withdrawal",
+    "amount": 470.69,
+    "note": "卖出创新药(转入沪深)"
+  },
+  {
+    "date": "2026-01-08",
+    "type": "withdrawal",
+    "amount": 470.67,
+    "note": "卖出创新药(转入沪深)"
+  },
+  {
+    "date": "2026-01-09",
+    "type": "withdrawal",
+    "amount": 732.85,
+    "note": "卖出中证白酒(给有色金属)"
+  },
+  {
+    "date": "2026-01-13",
+    "type": "deposit",
+    "amount": 400,
+    "note": "定投纳斯达克(13-23合计)"
+  },
+  {
+    "date": "2026-01-14",
+    "type": "withdrawal",
+    "amount": 375.23,
+    "note": "卖出华夏房地产(给沪深300)"
+  },
+  {
+    "date": "2026-01-14",
+    "type": "deposit",
+    "amount": 500,
+    "note": "买入人工智能"
+  },
+  {
+    "date": "2026-01-18",
+    "type": "withdrawal",
+    "amount": 611.09,
+    "note": "卖出有色金属(给人工智能)"
+  },
+  {
+    "date": "2026-01-21",
+    "type": "deposit",
+    "amount": 500,
+    "note": "买入人工智能"
+  },
+  {
+    "date": "2026-01-21",
+    "type": "withdrawal",
+    "amount": 801.25,
+    "note": "卖出上海金"
+  },
+  {
+    "date": "2026-01-30",
+    "type": "deposit",
+    "amount": 2000,
+    "note": "买入有色金属"
+  },
+  {
+    "date": "2026-01-30",
+    "type": "deposit",
+    "amount": 1500,
+    "note": "买入上海金"
+  },
+  {
+    "date": "2026-02-12",
+    "type": "deposit",
+    "amount": 2000,
+    "note": "增投红利低波"
+  },
+  {
+    "date": "2026-02-25",
+    "type": "withdrawal",
+    "amount": 872.04,
+    "note": "赎回华夏有色金属ETF联接A"
+  },
+  {
+    "date": "2026-03-01",
+    "type": "deposit",
+    "amount": 1000,
+    "note": "买入中金中证3500指数增强A"
+  },
+  {
+    "date": "2026-03-01",
+    "type": "deposit",
+    "amount": 1000,
+    "note": "买入富国沪深300增强A"
+  },
+  {
+    "date": "2026-06-02",
+    "type": "withdrawal",
+    "amount": 1190.31,
+    "note": "卖出 华夏中证有色金属ETF联接A"
+  }
 ];
-
+// END GENERATED TRADE DATA
 var holdings=JSON.parse(JSON.stringify(INIT_HOLDINGS));
 var flows=JSON.parse(JSON.stringify(INIT_FLOWS));
 var txType='buy', newFundOpen=false;

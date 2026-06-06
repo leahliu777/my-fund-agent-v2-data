@@ -587,5 +587,8 @@
       "通信线缆及配套",
       "半导体材料"
     ]
-  }
+  },
+  "last_attempt_at": "2026-06-06 09:42:05",
+  "stale": true,
+  "stale_reason": "fetch_failed: ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
 }
