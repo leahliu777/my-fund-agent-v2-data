@@ -1,0 +1,29 @@
+{
+  "capital_goal": {
+    "target": 50000,
+    "current": 25000
+  },
+  "risk_limit": {
+    "max_drawdown": -0.1
+  },
+  "benchmarks": {
+    "safe_portfolio": {
+      "name": "沪深300",
+      "code": "sh000300"
+    },
+    "risk_portfolio": {
+      "name": "纳斯达克100",
+      "code": "usr_ndx"
+    }
+  },
+  "target_weights": {
+    "Dividend": 35,
+    "Tech": 20,
+    "Resource": 20,
+    "Pension": 25
+  },
+  "rebalance": {
+    "threshold_pct": 5,
+    "note": "当某板块实际权重偏离目标权重超过 threshold_pct 时触发再平衡提醒"
+  }
+}

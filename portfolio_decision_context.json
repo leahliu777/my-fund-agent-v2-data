@@ -1,0 +1,255 @@
+{
+  "generated_at": "2026-06-07 17:24:20",
+  "stats": {
+    "current_mv": 24471.63,
+    "weekly_return": -1.97,
+    "ytd_pnl_rate": 17.99,
+    "ytd_pnl_value": 3022.0,
+    "max_drawdown": -11.01,
+    "total_cost": 23251.1
+  },
+  "goals": {
+    "target_weights": {
+      "Dividend": 35,
+      "Tech": 20,
+      "Resource": 20,
+      "Pension": 25
+    },
+    "rebalance_threshold_pct": 5.0,
+    "risk_line_pct": -10.0,
+    "single_trade_limit_pct": 2.0,
+    "capital_goal": 50000.0,
+    "capital_goal_detail": {
+      "target": 50000,
+      "current": 25000
+    }
+  },
+  "sector_weights": [
+    {
+      "sector": "Pension",
+      "market_value": 8000.09,
+      "actual_pct": 34.4,
+      "target_pct": 25.0,
+      "drift_pct": 9.4
+    },
+    {
+      "sector": "Dividend",
+      "market_value": 7726.63,
+      "actual_pct": 33.2,
+      "target_pct": 35.0,
+      "drift_pct": -1.8
+    },
+    {
+      "sector": "Tech",
+      "market_value": 4022.12,
+      "actual_pct": 17.3,
+      "target_pct": 20.0,
+      "drift_pct": -2.7
+    },
+    {
+      "sector": "Resource",
+      "market_value": 3502.26,
+      "actual_pct": 15.1,
+      "target_pct": 20.0,
+      "drift_pct": -4.9
+    }
+  ],
+  "holdings": [
+    {
+      "code": "jj005562",
+      "name": "创金合信中证红利低波指数C",
+      "shares": 1656.88,
+      "cost": 2.0352,
+      "category": "active",
+      "sector": "Dividend",
+      "benchmark": "000300",
+      "market_value": 3372.08
+    },
+    {
+      "code": "jj016452",
+      "name": "南方纳斯达克100指数(QDII)A",
+      "shares": 962.65,
+      "cost": 2.0257,
+      "category": "active",
+      "sector": "Tech",
+      "benchmark": "QQQ",
+      "market_value": 1950.04
+    },
+    {
+      "code": "jj100038",
+      "name": "富国沪深300增强A",
+      "shares": 1573.44,
+      "cost": 1.8142,
+      "category": "active",
+      "sector": "Dividend",
+      "benchmark": "000300",
+      "market_value": 2854.53
+    },
+    {
+      "code": "jj016582",
+      "name": "嘉实上海金ETF联接C",
+      "shares": 1028.94,
+      "cost": 2.1723,
+      "category": "active",
+      "sector": "Resource",
+      "benchmark": "GC=F",
+      "market_value": 2235.17
+    },
+    {
+      "code": "jj017675",
+      "name": "东方红颐和积极养老五年(FOF)Y",
+      "shares": 2383.96,
+      "cost": 1.2584,
+      "category": "pension",
+      "sector": "Pension",
+      "benchmark": "000300",
+      "market_value": 2999.98
+    },
+    {
+      "code": "jj017403",
+      "name": "广发养老2050五年持有期混合(FOF)Y",
+      "shares": 3407.93,
+      "cost": 1.4672,
+      "category": "pension",
+      "sector": "Pension",
+      "benchmark": "000300",
+      "market_value": 5000.11
+    },
+    {
+      "code": "jj016707",
+      "name": "华夏中证有色金属ETF联接A",
+      "shares": 634.53,
+      "cost": 1.9969,
+      "category": "active",
+      "sector": "Resource",
+      "benchmark": "GC=F",
+      "market_value": 1267.09
+    },
+    {
+      "code": "jj008586",
+      "name": "华夏人工智能ETC联接C",
+      "shares": 1282.23,
+      "cost": 1.616,
+      "category": "active",
+      "sector": "Tech",
+      "benchmark": "QQQ",
+      "market_value": 2072.08
+    },
+    {
+      "code": "jj003016",
+      "name": "中金中证3500指数增强A",
+      "shares": 573.6,
+      "cost": 2.6151,
+      "category": "active",
+      "sector": "Dividend",
+      "benchmark": "000300",
+      "market_value": 1500.02
+    }
+  ],
+  "holding_whitelist": [
+    {
+      "code": "jj005562",
+      "name": "创金合信中证红利低波指数C",
+      "sector": "Dividend"
+    },
+    {
+      "code": "jj016452",
+      "name": "南方纳斯达克100指数(QDII)A",
+      "sector": "Tech"
+    },
+    {
+      "code": "jj100038",
+      "name": "富国沪深300增强A",
+      "sector": "Dividend"
+    },
+    {
+      "code": "jj016582",
+      "name": "嘉实上海金ETF联接C",
+      "sector": "Resource"
+    },
+    {
+      "code": "jj017675",
+      "name": "东方红颐和积极养老五年(FOF)Y",
+      "sector": "Pension"
+    },
+    {
+      "code": "jj017403",
+      "name": "广发养老2050五年持有期混合(FOF)Y",
+      "sector": "Pension"
+    },
+    {
+      "code": "jj016707",
+      "name": "华夏中证有色金属ETF联接A",
+      "sector": "Resource"
+    },
+    {
+      "code": "jj008586",
+      "name": "华夏人工智能ETC联接C",
+      "sector": "Tech"
+    },
+    {
+      "code": "jj003016",
+      "name": "中金中证3500指数增强A",
+      "sector": "Dividend"
+    }
+  ],
+  "recent_flows": [
+    {
+      "date": "2026-06-02",
+      "type": "withdrawal",
+      "amount": 1190.31,
+      "note": "卖出 华夏中证有色金属ETF联接A"
+    },
+    {
+      "date": "2026-03-01",
+      "type": "deposit",
+      "amount": 1000,
+      "note": "买入中金中证3500指数增强A"
+    },
+    {
+      "date": "2026-03-01",
+      "type": "deposit",
+      "amount": 1000,
+      "note": "买入富国沪深300增强A"
+    },
+    {
+      "date": "2026-02-25",
+      "type": "withdrawal",
+      "amount": 872.04,
+      "note": "赎回华夏有色金属ETF联接A"
+    },
+    {
+      "date": "2026-02-12",
+      "type": "deposit",
+      "amount": 2000,
+      "note": "增投红利低波"
+    },
+    {
+      "date": "2026-01-30",
+      "type": "deposit",
+      "amount": 2000,
+      "note": "买入有色金属"
+    },
+    {
+      "date": "2026-01-30",
+      "type": "deposit",
+      "amount": 1500,
+      "note": "买入上海金"
+    },
+    {
+      "date": "2026-01-21",
+      "type": "deposit",
+      "amount": 500,
+      "note": "买入人工智能"
+    }
+  ],
+  "action_plan": {
+    "action": "sell",
+    "title": "先降风险",
+    "amount": "0",
+    "trigger": "最大回撤 -11.0% 触及风险线 -10.0%",
+    "reason": "先处理风险线，不做补仓。",
+    "risk_line": "最大回撤接近 -10.0% 时，优先减风险而不是补仓。",
+    "fund": "组合整体"
+  }
+}

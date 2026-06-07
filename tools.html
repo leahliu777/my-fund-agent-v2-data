@@ -20,16 +20,7 @@
 .inner-pane { display:none; }
 .inner-pane.active { display:block; }
 
-/* ── 组合决策 ── */
-.heat-summary { display:flex; flex-wrap:wrap; gap:var(--s2); margin-bottom:var(--s3); font-size:var(--t-xs); }
-.hot-tag  { background:var(--up-bg);   color:var(--up);   padding:3px 10px; border-radius:var(--r-full); }
-.cold-tag { background:var(--down-bg); color:var(--down); padding:3px 10px; border-radius:var(--r-full); }
-.industry-heat-treemap { width:100%; height:320px; }
-.heat-fallback { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:var(--s2); margin-top:var(--s3); }
-.heat-item { border:0.5px solid var(--line); border-radius:var(--r-sm); padding:var(--s3); background:var(--bg-card); }
-.heat-item .hn { font-size:var(--t-xs); color:var(--tx-1); margin-bottom:4px; }
-.heat-item .hv { font-size:var(--t-xs); color:var(--tx-3); font-family:var(--f-mono); }
-.heat-stale { border:0.5px solid rgba(217,119,6,0.28); background:rgba(217,119,6,0.08); color:#92400e; border-radius:var(--r-sm); padding:var(--s3); font-size:var(--t-xs); line-height:1.55; margin-bottom:var(--s3); }
+/* ── 计划配置 ── */
 .decision-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--s3); margin-bottom:var(--s4); }
 .decision-card { border:0.5px solid var(--line); border-radius:var(--r-md); background:var(--bg-card); padding:var(--s4); min-width:0; }
 .decision-card .dl { font-size:var(--t-xs); color:var(--tx-3); margin-bottom:var(--s2); }
@@ -45,10 +36,15 @@
 .decision-row .fill { height:100%; width:0; border-radius:var(--r-full); background:var(--accent); }
 .decision-row .meta { font-size:var(--t-xs); color:var(--tx-3); font-family:var(--f-mono); text-align:right; }
 .decision-note { font-size:var(--t-xs); color:var(--tx-2); line-height:1.65; border:0.5px solid var(--line); border-radius:var(--r-sm); background:var(--bg-raised); padding:var(--s3); margin-bottom:var(--s3); }
+.plan-form { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--s3); margin-top:var(--s4); }
+.plan-form .field { margin-bottom:0; }
+.role-grid { display:grid; gap:var(--s2); margin-top:var(--s3); }
+.role-row { display:grid; grid-template-columns:1.4fr .8fr .8fr; gap:var(--s2); align-items:center; border:0.5px solid var(--line); border-radius:var(--r-sm); background:var(--bg-card); padding:var(--s3); font-size:var(--t-xs); }
 @media (max-width:560px) {
   .decision-grid { grid-template-columns:1fr; }
   .decision-row { grid-template-columns:1fr; }
   .decision-row .meta { text-align:left; }
+  .plan-form, .role-row { grid-template-columns:1fr; }
 }
 
 /* ── 术语词典 ── */
@@ -124,21 +120,23 @@
 
 <div class="container" style="padding-top:var(--s4)">
   <div class="inner-tabs">
-    <button class="inner-tab" onclick="switchTab('heat')">组合决策</button>
-    <button class="inner-tab" onclick="switchTab('screener')">基金筛选</button>
     <button class="inner-tab active" onclick="switchTab('trade')">交易记录</button>
+    <button class="inner-tab" onclick="switchTab('plan')">计划配置</button>
+    <button class="inner-tab" onclick="switchTab('screener')">基金筛选</button>
     <button class="inner-tab" onclick="switchTab('dict')">术语词典</button>
   </div>
 
-  <!-- ══ 组合决策 ══ -->
-  <div id="pane-heat" class="inner-pane">
-    <div id="heatLoading" style="padding:20px;text-align:center;color:var(--tx-3)">加载中…</div>
-    <div id="heatContent" style="display:none">
-      <div class="heat-summary" id="heatSummary"></div>
+  <!-- ══ 计划配置 ══ -->
+  <div id="pane-plan" class="inner-pane">
+    <div id="planLoading" style="padding:20px;text-align:center;color:var(--tx-3)">加载中…</div>
+    <div id="planContent" style="display:none">
       <div id="decisionPanel"></div>
-      <div id="industry-heat-treemap" class="industry-heat-treemap"></div>
+      <div class="decision-note">这里是执行前检查台。报告给出计划后，先在交易记录里预览权重变化，再决定是否同步。</div>
+      <div class="plan-form" id="planForm"></div>
+      <div class="section-hdr" style="margin-top:var(--s5)"><span>持仓角色</span></div>
+      <div class="role-grid" id="roleGrid"></div>
     </div>
-    <div id="heatError" style="display:none;color:var(--up);font-size:var(--t-sm);padding:var(--s4)"></div>
+    <div id="planError" style="display:none;color:var(--up);font-size:var(--t-sm);padding:var(--s4)"></div>
   </div>
 
   <!-- ══ 基金筛选 ══ -->
@@ -212,6 +210,7 @@
       <div class="pt">交易后预览</div>
       <div class="preview-row"><span>份额</span><span><span id="pvSharesOld"></span> → <span id="pvSharesNew" class="preview-new"></span></span></div>
       <div class="preview-row"><span>成本净值</span><span><span id="pvCostOld"></span> → <span id="pvCostNew" class="preview-new"></span></span></div>
+      <div id="sectorPreview"></div>
     </div>
 
     <div class="field"><label>备注（自动写入资金流水）</label><textarea id="txNote" rows="2" placeholder="定投 / 换仓说明…"></textarea></div>
@@ -270,10 +269,13 @@
           <textarea id="exportHoldings" readonly></textarea>
           <div style="font-size:var(--t-xs);color:var(--tx-2);margin:var(--s3) 0 4px">capital_flows.json</div>
           <textarea id="exportFlows" readonly></textarea>
+          <div style="font-size:var(--t-xs);color:var(--tx-2);margin:var(--s3) 0 4px">portfolio_goals.json</div>
+          <textarea id="exportGoals" readonly></textarea>
           <div class="export-btns" style="margin-top:var(--s3)">
             <button class="btn btn-secondary btn-sm" onclick="copyText('exportHoldings')">复制 holdings</button>
             <button class="btn btn-secondary btn-sm" onclick="copyText('exportFlows')">复制 flows</button>
-            <button class="btn btn-secondary btn-sm" onclick="downloadAll()">下载两个文件</button>
+            <button class="btn btn-secondary btn-sm" onclick="copyText('exportGoals')">复制 goals</button>
+            <button class="btn btn-secondary btn-sm" onclick="downloadAll()">下载文件</button>
           </div>
         </div>
       </details>
@@ -314,170 +316,161 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script>
 // ══════════════════════════════════════
 // 页内 Tab 切换
 // ══════════════════════════════════════
-var tabs = ['heat','screener','trade','dict'];
-var heatLoaded = false, screenerLoaded = false, glossaryLoaded = false;
+var tabs = ['trade','plan','screener','dict'];
+var planLoaded = false, screenerLoaded = false, glossaryLoaded = false;
+var decisionContext = null;
+var portfolioGoals = {
+  capital_goal: {target: 50000, current: 25000},
+  risk_limit: {max_drawdown: -0.10},
+  target_weights: {Dividend:35, Tech:20, Resource:20, Pension:25},
+  rebalance: {threshold_pct:5, note:'当某板块实际权重偏离目标权重超过 threshold_pct 时触发再平衡提醒'},
+  single_trade_limit_pct: 2
+};
 
 function switchTab(id) {
   document.querySelectorAll('.inner-tab').forEach(function(b,i){ b.classList.toggle('active', tabs[i]===id); });
-  document.querySelectorAll('.inner-pane').forEach(function(p,i){ p.classList.toggle('active', tabs[i]===id); });
-  if (id==='heat'    && !heatLoaded)     { loadHeat();     heatLoaded=true; }
+  document.querySelectorAll('.inner-pane').forEach(function(p){ p.classList.toggle('active', p.id === 'pane-' + id); });
+  if (id==='plan'    && !planLoaded)     { loadDecisionContext(); planLoaded=true; }
   if (id==='screener'&& !screenerLoaded) { loadFunds();    screenerLoaded=true; }
   if (id==='dict'    && !glossaryLoaded) { loadGlossary(); glossaryLoaded=true; }
 }
 
 // ══════════════════════════════════════
-// 组合决策
+// 计划配置
 // ══════════════════════════════════════
-function actionForDrift(item) {
-  var drift = Number(item.change_pct || 0);
-  var sector = item.sector || item.name || '';
-  if (drift >= 5) return {level:'alert', title:'优先减仓', text:sector + ' 超配 ' + drift.toFixed(1) + '%，先停止加仓，若需要操作优先减这里。'};
-  if (drift <= -5) return {level:'watch', title:'候选补仓', text:sector + ' 低配 ' + Math.abs(drift).toFixed(1) + '%，只有在宏观和基金趋势确认后小额补。'};
-  return {level:'ok', title:'保持观察', text:sector + ' 偏离在阈值内，不需要为了配平而交易。'};
+function getTargets() {
+  return Object.assign({Dividend:35, Tech:20, Resource:20, Pension:25}, portfolioGoals.target_weights || {});
 }
 
-function renderDecisionPanel(data) {
+function actionForDrift(row) {
+  var drift = Number(row.drift_pct || 0);
+  var sector = row.sector || '';
+  if (drift >= 5) return {level:'alert', text:sector + ' 超配 ' + drift.toFixed(1) + '%，新买入先避开，必要时小步减仓。'};
+  if (drift <= -5) return {level:'watch', text:sector + ' 低配 ' + Math.abs(drift).toFixed(1) + '%，只有在周计划允许时小额补。'};
+  return {level:'ok', text:sector + ' 在目标附近，维持即可。'};
+}
+
+function renderDecisionPanel(ctx) {
   var panel = document.getElementById('decisionPanel');
   if (!panel) return;
-  var items = (data.items || []).filter(function(x){ return x.type === 'portfolio_proxy' || x.weight_pct != null; });
-  if (!items.length) {
-    panel.innerHTML = '<div class="decision-note">当前展示的是外部市场行业数据。基金组合操作请优先参考分析页的下周计划和交易记录页。</div>';
+  var rows = (ctx.sector_weights || []).slice();
+  if (!rows.length) {
+    panel.innerHTML = '<div class="decision-note">暂无组合权重数据，等待 workflow 生成 portfolio_decision_context.json。</div>';
     return;
   }
-  var sorted = items.slice().sort(function(a,b){ return Math.abs(b.change_pct||0) - Math.abs(a.change_pct||0); });
+  var sorted = rows.slice().sort(function(a,b){ return Math.abs(b.drift_pct||0) - Math.abs(a.drift_pct||0); });
   var top = sorted[0] || {};
   var topAction = actionForDrift(top);
-  var over = items.filter(function(x){ return Number(x.change_pct||0) >= 5; });
-  var under = items.filter(function(x){ return Number(x.change_pct||0) <= -5; });
-  var headline = '持有观察';
-  var reason = '没有必须马上交易的组合级触发。';
-  var cardClass = 'ok';
-  if (over.length) {
-    headline = '先处理超配';
-    reason = over.map(function(x){ return (x.sector || x.name) + ' +' + Number(x.change_pct).toFixed(1) + '%'; }).join('，');
-    cardClass = 'alert';
-  } else if (under.length) {
-    headline = '只列补仓候选';
-    reason = under.map(function(x){ return (x.sector || x.name) + ' ' + Number(x.change_pct).toFixed(1) + '%'; }).join('，') + '。没有趋势确认前不追补。';
-    cardClass = 'watch';
-  }
-  var rows = items.slice().sort(function(a,b){ return (b.weight_pct||0) - (a.weight_pct||0); }).map(function(x){
-    var w = Number(x.weight_pct || 0);
+  var action = ctx.action_plan || {};
+  var cardClass = (action.action === 'reduce' || action.action === 'rebalance') ? 'alert' : (action.action === 'watch' ? 'watch' : 'ok');
+  var list = rows.slice().sort(function(a,b){ return (b.actual_pct||0) - (a.actual_pct||0); }).map(function(x){
+    var w = Number(x.actual_pct || 0);
     var target = Number(x.target_pct || 0);
-    var drift = Number(x.change_pct || 0);
+    var drift = Number(x.drift_pct || 0);
     var fill = Math.max(2, Math.min(100, w));
     var color = drift >= 5 ? 'var(--up)' : drift <= -5 ? 'var(--down)' : 'var(--accent)';
-    return '<div class="decision-row"><div class="name">'+(x.sector || x.name)+'</div><div class="bar"><div class="fill" style="width:'+fill+'%;background:'+color+'"></div></div><div class="meta">'+w.toFixed(1)+'% / 目标 '+target.toFixed(1)+'%<br>偏离 '+(drift>=0?'+':'')+drift.toFixed(1)+'%</div></div>';
+    return '<div class="decision-row"><div class="name">'+x.sector+'</div><div class="bar"><div class="fill" style="width:'+fill+'%;background:'+color+'"></div></div><div class="meta">'+w.toFixed(1)+'% / 目标 '+target.toFixed(1)+'%<br>偏离 '+(drift>=0?'+':'')+drift.toFixed(1)+'%</div></div>';
   }).join('');
   panel.innerHTML =
     '<div class="decision-grid">' +
-      '<div class="decision-card '+cardClass+'"><div class="dl">当前动作</div><div class="dv">'+headline+'</div><div class="dd">'+reason+'</div></div>' +
-      '<div class="decision-card '+topAction.level+'"><div class="dl">最大偏离</div><div class="dv">'+(top.sector || top.name || '--')+'</div><div class="dd">'+topAction.text+'</div></div>' +
-      '<div class="decision-card ok"><div class="dl">交易原则</div><div class="dv">基金优先</div><div class="dd">不因行业热度或个股快照单独交易，只按组合偏离、回撤和周计划执行。</div></div>' +
+      '<div class="decision-card '+cardClass+'"><div class="dl">当前动作</div><div class="dv">'+(action.title || '观察/不操作')+'</div><div class="dd">'+(action.reason || '没有强触发。')+'</div></div>' +
+      '<div class="decision-card '+topAction.level+'"><div class="dl">最大偏离</div><div class="dv">'+(top.sector || '--')+'</div><div class="dd">'+topAction.text+'</div></div>' +
+      '<div class="decision-card ok"><div class="dl">风险线</div><div class="dv">'+((ctx.stats && ctx.stats.max_drawdown != null) ? Number(ctx.stats.max_drawdown).toFixed(1)+'%' : '--')+'</div><div class="dd">'+(action.risk_line || '守住最大回撤线，单次交易小步执行。')+'</div></div>' +
     '</div>' +
-    '<div class="decision-note">这里是基于 holdings.csv 和 portfolio_goals.json 生成的组合视角。它回答“我的组合结构是否偏离目标”，不是全市场热点排名。</div>' +
-    '<div class="decision-list">'+rows+'</div>';
+    '<div class="decision-list">'+list+'</div>';
 }
 
-function renderHeatFallback(items, isProxy) {
-  var el = document.getElementById('industry-heat-treemap');
-  if (!el) return;
-  var top = (items || []).slice(0, 24);
-  el.style.height = 'auto';
-  if (!top.length) {
-    el.innerHTML = '<div style="padding:var(--s4);font-size:var(--t-sm);color:var(--tx-3);border:0.5px solid var(--line);border-radius:var(--r-sm)">暂无组合决策数据，等待 workflow 更新 industry_heat.json。</div>';
-    return;
+function renderPlanForm(ctx) {
+  var form = document.getElementById('planForm');
+  if (!form) return;
+  var goals = ctx.goals || {};
+  var targets = getTargets();
+  form.innerHTML =
+    Object.keys(targets).map(function(k){
+      return '<div class="field"><label>'+k+' 目标权重 (%)</label><input type="number" step="0.1" data-target="'+k+'" value="'+Number(targets[k]).toFixed(1)+'" onchange="updatePlanConfig()"></div>';
+    }).join('') +
+    '<div class="field"><label>再平衡阈值 (%)</label><input id="goalRebalance" type="number" step="0.1" value="'+Number(goals.rebalance_threshold_pct || portfolioGoals.rebalance.threshold_pct || 5).toFixed(1)+'" onchange="updatePlanConfig()"></div>' +
+    '<div class="field"><label>最大回撤线 (%)</label><input id="goalRisk" type="number" step="0.1" value="'+Number(goals.risk_line_pct || -10).toFixed(1)+'" onchange="updatePlanConfig()"></div>' +
+    '<div class="field"><label>单次交易上限 (%)</label><input id="goalTradeLimit" type="number" step="0.1" value="'+Number(goals.single_trade_limit_pct || portfolioGoals.single_trade_limit_pct || 2).toFixed(1)+'" onchange="updatePlanConfig()"></div>' +
+    '<div class="field"><label>年度投入目标</label><input id="goalCapital" type="number" step="100" value="'+Number(goals.capital_goal || ((portfolioGoals.capital_goal||{}).target) || 0).toFixed(0)+'" onchange="updatePlanConfig()"></div>';
+}
+
+function renderRoleGrid(ctx) {
+  var grid = document.getElementById('roleGrid');
+  if (!grid) return;
+  var list = holdings || [];
+  grid.innerHTML = list.map(function(h, i){
+    var value = Number(h.market_value || h.shares * h.cost || 0);
+    return '<div class="role-row"><div><strong>'+h.name+'</strong><br><span style="color:var(--tx-3);font-size:var(--t-xs)">'+h.code+'</span></div>' +
+      '<select onchange="updateHoldingSector('+i+', this.value)">' +
+        ['Dividend','Tech','Resource','Pension'].map(function(s){return '<option value="'+s+'" '+(h.sector===s?'selected':'')+'>'+s+'</option>';}).join('') +
+      '</select><div>¥'+value.toFixed(0)+'</div></div>';
+  }).join('');
+}
+
+function updatePlanConfig() {
+  var targets = {};
+  document.querySelectorAll('[data-target]').forEach(function(input){
+    targets[input.getAttribute('data-target')] = Number(input.value || 0);
+  });
+  portfolioGoals.target_weights = targets;
+  portfolioGoals.rebalance = Object.assign({}, portfolioGoals.rebalance || {}, {threshold_pct: Number(document.getElementById('goalRebalance').value || 5)});
+  portfolioGoals.risk_limit = {max_drawdown: Number(document.getElementById('goalRisk').value || -10) / 100};
+  portfolioGoals.single_trade_limit_pct = Number(document.getElementById('goalTradeLimit').value || 2);
+  portfolioGoals.capital_goal = Object.assign({}, portfolioGoals.capital_goal || {}, {target: Number(document.getElementById('goalCapital').value || 0)});
+  if (decisionContext) {
+    decisionContext.goals = Object.assign({}, decisionContext.goals || {}, {
+      target_weights: targets,
+      rebalance_threshold_pct: portfolioGoals.rebalance.threshold_pct,
+      risk_line_pct: Number(document.getElementById('goalRisk').value || -10),
+      single_trade_limit_pct: portfolioGoals.single_trade_limit_pct,
+      capital_goal: portfolioGoals.capital_goal.target
+    });
+    decisionContext.sector_weights = sectorWeights(holdings);
+    renderDecisionPanel(decisionContext);
   }
-  el.innerHTML = '<div class="heat-fallback">' + top.map(function(x) {
-    var score = x.heat_score != null ? Number(x.heat_score).toFixed(1) : '--';
-    var pct = x.change_pct != null ? ((x.change_pct >= 0 ? '+' : '') + Number(x.change_pct).toFixed(2) + '%') : '--';
-    var weight = x.weight_pct != null ? ' · 权重 ' + Number(x.weight_pct).toFixed(1) + '%' : '';
-    var label = isProxy ? '偏离 ' : '涨跌 ';
-    var metric = isProxy ? '暴露 ' : '热度 ';
-    return '<div class="heat-item"><div class="hn">' + (x.name || '未命名行业') + '</div><div class="hv">' + metric + score + ' · ' + label + pct + weight + '</div></div>';
-  }).join('') + '</div>';
+  renderAll();
 }
 
-function loadHeat() {
-  fetch('industry_heat.json')
+function updateHoldingSector(i, sector) {
+  if (!holdings[i]) return;
+  holdings[i].sector = sector;
+  if (decisionContext) {
+    decisionContext.sector_weights = sectorWeights(holdings);
+    renderDecisionPanel(decisionContext);
+  }
+  renderAll();
+  toast('已更新持仓角色');
+}
+
+function loadDecisionContext() {
+  fetch('portfolio_decision_context.json')
     .then(function(r){ if(!r.ok) return Promise.reject('HTTP '+r.status); return r.text(); })
     .then(function(t){ if(t.trim()[0]==='<') return Promise.reject('未配置'); return JSON.parse(t); })
-    .then(function(data){
-      document.getElementById('heatLoading').style.display='none';
-      document.getElementById('heatContent').style.display='block';
-      var updated=data.updated_at||'', hot=(data.summary&&data.summary.hot)||[], cold=(data.summary&&data.summary.cold)||[];
-      var items=data.items||[];
-      var isProxy=data.source==='portfolio_proxy';
-      var freshHtml='';
-      var stale=false, staleReason=data.stale_reason||'';
-      if(updated){
-        var ms=new Date(updated.replace(' ','T')).getTime(), h=(Date.now()-ms)/3600000;
-        var col=isNaN(h)?'var(--tx-3)':h<6?'#16a34a':h<24?'#d97706':'var(--up)';
-        var lbl=isNaN(h)?updated:h<6?'数据新鲜 · '+updated:h<24?'⚠️ 已有'+Math.floor(h)+'小时 · '+updated:'⚠️ 超过'+Math.floor(h/24)+'天未更新 · '+updated;
-        freshHtml='<span style="color:'+col+';font-size:var(--t-xs)">'+lbl+'</span>';
-        stale = Boolean(data.stale) || (!isNaN(h) && h >= 24);
-      }
-      if (data.stale) stale = true;
-      document.getElementById('heatSummary').innerHTML=
-        '<span class="hot-tag">🔥 '+hot.slice(0,5).join('、')+'</span>'+
-        '<span class="cold-tag">❄️ '+cold.slice(0,5).join('、')+'</span>'+freshHtml;
-      if (isProxy) {
-        document.getElementById('heatSummary').innerHTML +=
-          '<div class="heat-stale">外部市场接口不可用，当前显示基于真实持仓与目标权重的组合主题代理。' +
-          (data.proxy_reason ? '<br>原因：'+data.proxy_reason : '') + '</div>';
-      }
-      if (stale) {
-        document.getElementById('heatSummary').innerHTML +=
-          '<div class="heat-stale">外部市场数据已过期或本次更新失败，仅供参考，不用于加仓决策。' +
-          (staleReason ? '<br>原因：'+staleReason : '') + '</div>';
-      }
-      renderDecisionPanel(data);
-      renderHeatFallback(items, isProxy);
-      return;
-      if (!items.length || typeof echarts === 'undefined') { renderHeatFallback(items, isProxy); return; }
-      var hmin=Math.min.apply(null,items.map(function(x){return x.heat_score||0;}));
-      var hmax=Math.max.apply(null,items.map(function(x){return x.heat_score||100;}));
-      if(hmax<=hmin) hmax=hmin+1;
-      try {
-        var chart=echarts.init(document.getElementById('industry-heat-treemap'));
-        chart.setOption({
-          backgroundColor:'transparent',
-          tooltip:{formatter:function(info){
-            var item=items.find(function(x){return x.name===info.name;});
-            var pct=item&&item.change_pct!=null?(item.change_pct>=0?'+':'')+item.change_pct.toFixed(2)+'%':'';
-            return '<b>'+info.name+'</b><br>热度: '+info.value+(pct?'<br>涨跌: '+pct:'');
-          }},
-          series:[{
-            type:'treemap',
-            leafDepth:1, roam:false,
-            data:[{name:'组合决策',children:items.slice(0,80).map(function(x){
-              return {name:x.name||'',value:Math.max(1,x.heat_score||50),heat_score:x.heat_score,change_pct:x.change_pct};
-            })}],
-            label:{show:true,formatter:function(p){
-              var pct=p.data.change_pct;
-              return p.name+(pct!=null?'\n'+(pct>=0?'+':'')+pct.toFixed(1)+'%':'');
-            },fontSize:11},
-            itemStyle:{borderRadius:4},
-            levels:[{},{colorMappingBy:'value',colorAlpha:[0.3,1],color:['#dc2626','#f59e0b','#059669']}]
-          }]
-        });
-        window.addEventListener('resize',function(){chart.resize();});
-      } catch (err) {
-        renderHeatFallback(items, isProxy);
-      }
+    .then(function(ctx){
+      decisionContext = ctx;
+      portfolioGoals.target_weights = Object.assign({}, (ctx.goals || {}).target_weights || portfolioGoals.target_weights);
+      portfolioGoals.rebalance.threshold_pct = Number((ctx.goals || {}).rebalance_threshold_pct || portfolioGoals.rebalance.threshold_pct || 5);
+      portfolioGoals.risk_limit.max_drawdown = Number((ctx.goals || {}).risk_line_pct || -10) / 100;
+      portfolioGoals.single_trade_limit_pct = Number((ctx.goals || {}).single_trade_limit_pct || portfolioGoals.single_trade_limit_pct || 2);
+      portfolioGoals.capital_goal = Object.assign({}, portfolioGoals.capital_goal || {}, {target: Number((ctx.goals || {}).capital_goal || ((portfolioGoals.capital_goal || {}).target) || 0)});
+      document.getElementById('planLoading').style.display='none';
+      document.getElementById('planContent').style.display='block';
+      renderDecisionPanel(ctx);
+      renderPlanForm(ctx);
+      renderRoleGrid(ctx);
     })
     .catch(function(e){
-      document.getElementById('heatLoading').style.display='none';
-      var el=document.getElementById('heatError'); el.style.display='block';
-      el.textContent=(e+'').indexOf('未配置')>=0?'组合决策数据暂未配置，workflow 运行 python industry_heat.py 后自动生效。':'加载失败: '+e;
+      document.getElementById('planLoading').style.display='none';
+      var el=document.getElementById('planError'); el.style.display='block';
+      el.textContent=(e+'').indexOf('未配置')>=0?'组合决策事实层暂未生成。':'加载失败: '+e;
     });
 }
-// 默认进入交易记录，组合决策按需加载。
+// 默认进入交易记录，计划配置按需加载。
 
 // ══════════════════════════════════════
 // 基金筛选
@@ -784,6 +777,46 @@ function onFundChange(){
   document.getElementById('hintCost').textContent=h.cost.toFixed(4);
   hint.style.display='block'; calcPreview();
 }
+function cloneHoldingsWithPreview(idx, newShares, newCost) {
+  return holdings.map(function(h, i) {
+    var copy = Object.assign({}, h);
+    if (i === Number(idx)) {
+      copy.shares = newShares;
+      copy.cost = newCost;
+    }
+    return copy;
+  });
+}
+function sectorWeights(list) {
+  var targets = getTargets();
+  var sectors = Object.keys(targets);
+  var totals = {}, total = 0;
+  sectors.forEach(function(s){ totals[s] = 0; });
+  list.forEach(function(h) {
+    var sector = h.sector || 'Other';
+    var value = Number(h.shares || 0) * Number(h.cost || 0);
+    if (totals[sector] == null) totals[sector] = 0;
+    totals[sector] += value;
+    total += value;
+  });
+  return sectors.map(function(s) {
+    var actual = total > 0 ? totals[s] / total * 100 : 0;
+    var target = Number(targets[s] || 0);
+    return {sector:s, actual_pct:actual, target_pct:target, drift_pct:actual - target};
+  });
+}
+function renderSectorPreview(list) {
+  var el = document.getElementById('sectorPreview');
+  if (!el) return;
+  var rows = sectorWeights(list);
+  el.innerHTML =
+    '<div class="pt" style="margin-top:var(--s4)">四类资产权重</div>' +
+    rows.map(function(x) {
+      var drift = Number(x.drift_pct || 0);
+      var color = drift >= 5 ? 'var(--up)' : drift <= -5 ? 'var(--down)' : 'var(--tx-2)';
+      return '<div class="preview-row"><span>'+x.sector+'</span><span>'+x.actual_pct.toFixed(1)+'% <span style="color:'+color+'">('+(drift>=0?'+':'')+drift.toFixed(1)+'%)</span></span></div>';
+    }).join('');
+}
 function calcPreview(){
   var box=document.getElementById('previewBox');
   var idx=document.getElementById('fundSelect').value;
@@ -798,6 +831,7 @@ function calcPreview(){
   document.getElementById('pvSharesNew').textContent=newShares.toFixed(2);
   document.getElementById('pvCostOld').textContent=h.cost.toFixed(4);
   document.getElementById('pvCostNew').textContent=newCost.toFixed(4);
+  renderSectorPreview(cloneHoldingsWithPreview(idx, newShares, newCost));
   box.style.display='block';
 }
 function submitTx(){
@@ -880,11 +914,14 @@ function renderExport(){
   var csv='code,name,shares,cost,category,sector,benchmark\n'+holdings.map(function(h){return[h.code,h.name,h.shares,h.cost,h.category,h.sector,h.benchmark].join(',');}).join('\n');
   document.getElementById('exportHoldings').value=csv;
   document.getElementById('exportFlows').value=JSON.stringify({flows},null,2);
+  var goalsEl = document.getElementById('exportGoals');
+  if (goalsEl) goalsEl.value = JSON.stringify(portfolioGoals, null, 2);
 }
 function copyText(id){document.getElementById(id).select();document.execCommand('copy');toast('已复制 ✓');}
 function downloadAll(){
   dl('holdings.csv',document.getElementById('exportHoldings').value,'text/csv');
   setTimeout(function(){dl('capital_flows.json',document.getElementById('exportFlows').value,'application/json');},300);
+  setTimeout(function(){dl('portfolio_goals.json',document.getElementById('exportGoals').value,'application/json');},600);
 }
 function dl(name,content,mime){
   var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type:mime}));a.download=name;a.click();
@@ -989,13 +1026,15 @@ async function syncToGitHub() {
   try {
     var csvContent  = document.getElementById('exportHoldings').value;
     var jsonContent = document.getElementById('exportFlows').value;
+    var goalsContent = document.getElementById('exportGoals').value;
     var now = new Date().toLocaleString('zh-CN', {timeZone:'Asia/Shanghai'}).replace(/\//g,'-');
     var commitMsg = '交易记录更新: ' + now;
 
     statusEl.textContent = '读取文件版本…';
-    var [holdingsSha, flowsSha] = await Promise.all([
+    var [holdingsSha, flowsSha, goalsSha] = await Promise.all([
       getFileSha(token, 'holdings.csv'),
-      getFileSha(token, 'capital_flows.json')
+      getFileSha(token, 'capital_flows.json'),
+      getFileSha(token, 'portfolio_goals.json')
     ]);
 
     statusEl.textContent = '写入 holdings.csv…';
@@ -1003,6 +1042,9 @@ async function syncToGitHub() {
 
     statusEl.textContent = '写入 capital_flows.json…';
     await putFile(token, 'capital_flows.json', jsonContent, flowsSha, commitMsg);
+
+    statusEl.textContent = '写入 portfolio_goals.json…';
+    await putFile(token, 'portfolio_goals.json', goalsContent, goalsSha, commitMsg);
 
     statusEl.style.color = 'var(--green)';
     statusEl.textContent = '✓ 已同步，workflow 将在下次定时触发时更新报告';
