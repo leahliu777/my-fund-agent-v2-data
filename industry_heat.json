@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-06-07 06:05:09",
-  "last_attempt_at": "2026-06-07 06:05:09",
+  "updated_at": "2026-06-07 08:06:02",
+  "last_attempt_at": "2026-06-07 08:06:02",
   "source": "portfolio_proxy",
-  "proxy_reason": "fetch_failed: RuntimeError: eastmoney fallback failed for m:90+t:2; tried 3 hosts; https://82.push2.eastmoney.com/api/qt/clist/get: RemoteDisconnected: Remote end closed connection without",
+  "proxy_reason": "fetch_failed: RuntimeError: eastmoney fallback failed for m:90+t:3; tried 3 hosts; https://82.push2.eastmoney.com/api/qt/clist/get: RemoteDisconnected: Remote end closed connection without",
   "stale": false,
   "stale_reason": "",
   "items": [
