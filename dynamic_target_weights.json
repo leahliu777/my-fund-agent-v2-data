@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-08 13:58:00",
+  "updated_at": "2026-06-08 14:05:10",
   "source": "dynamic_targets_v1",
   "base_target_weights": {
     "Dividend": 35.0,
@@ -26,7 +26,7 @@
   },
   "signals": {
     "macro_score": -0.4,
-    "current_drawdown_pct": -36.06
+    "current_drawdown_pct": -36.07
   },
   "reasons": [
     "DXY 99.9 不强，外部流动性压力较低",
