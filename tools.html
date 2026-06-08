@@ -328,7 +328,8 @@ var portfolioGoals = {
   risk_limit: {max_drawdown: -0.10},
   target_weights: {Dividend:35, Tech:20, Resource:20, Pension:25},
   rebalance: {threshold_pct:5, note:'当某板块实际权重偏离目标权重超过 threshold_pct 时触发再平衡提醒'},
-  single_trade_limit_pct: 2
+  single_trade_limit_pct: 2,
+  constraints: {locked_sell_sectors:['Pension'], notes:{Pension:'个人养老金基金只能增持或暂停新增，不能卖出或减仓。'}}
 };
 
 function switchTab(id) {
@@ -349,6 +350,8 @@ function getTargets() {
 function actionForDrift(row) {
   var drift = Number(row.drift_pct || 0);
   var sector = row.sector || '';
+  var locked = ((portfolioGoals.constraints || {}).locked_sell_sectors || []).indexOf(sector) >= 0;
+  if (drift >= 5 && locked) return {level:'alert', text:sector + ' 超配 ' + drift.toFixed(1) + '%，只能暂停新增，不能卖出或减仓。'};
   if (drift >= 5) return {level:'alert', text:sector + ' 超配 ' + drift.toFixed(1) + '%，新买入先避开，必要时小步减仓。'};
   if (drift <= -5) return {level:'watch', text:sector + ' 低配 ' + Math.abs(drift).toFixed(1) + '%，只有在周计划允许时小额补。'};
   return {level:'ok', text:sector + ' 在目标附近，维持即可。'};

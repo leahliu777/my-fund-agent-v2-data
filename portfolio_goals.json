@@ -25,5 +25,13 @@
   "rebalance": {
     "threshold_pct": 5,
     "note": "当某板块实际权重偏离目标权重超过 threshold_pct 时触发再平衡提醒"
+  },
+  "constraints": {
+    "locked_sell_sectors": [
+      "Pension"
+    ],
+    "notes": {
+      "Pension": "个人养老金基金只能增持或暂停新增，不能卖出或减仓；即使超配，也只提示停止加仓。"
+    }
   }
 }

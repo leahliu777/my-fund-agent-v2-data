@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-08 22:05:50",
+  "generated_at": "2026-06-08 22:27:08",
   "stats": {
-    "current_mv": 24290.23,
-    "weekly_return": -4.04,
-    "ytd_pnl_rate": 13.24,
-    "ytd_pnl_value": 2840.0,
+    "current_mv": 24296.11,
+    "weekly_return": -4.01,
+    "ytd_pnl_rate": 13.27,
+    "ytd_pnl_value": 2846.0,
     "ytd_method": "modified_dietz",
     "max_drawdown": -11.01,
     "total_cost": 23251.1,
     "ytd_start_mv": 16800.0,
-    "ytd_end_mv": 24290.23,
+    "ytd_end_mv": 24296.11,
     "ytd_net_inflow": 4650.08,
     "ytd_capital_base": 21454.44
   },
@@ -27,6 +27,14 @@
     "capital_goal_detail": {
       "target": 50000,
       "current": 25000
+    },
+    "constraints": {
+      "locked_sell_sectors": [
+        "Pension"
+      ],
+      "notes": {
+        "Pension": "个人养老金基金只能增持或暂停新增，不能卖出或减仓；即使超配，也只提示停止加仓。"
+      }
     }
   },
   "sector_weights": [
@@ -249,11 +257,11 @@
     }
   ],
   "action_plan": {
-    "action": "sell",
-    "title": "先降风险",
+    "action": "watch",
+    "title": "先降风险：暂停补仓",
     "amount": "0",
     "trigger": "最大回撤 -11.0% 触及风险线 -10.0%",
-    "reason": "先处理风险线，不做补仓。",
+    "reason": "先处理风险线，不做补仓；Pension 为个人养老金，只能暂停新增，不能卖出或减仓。",
     "risk_line": "最大回撤接近 -10.0% 时，优先减风险而不是补仓。",
     "fund": "组合整体"
   }
