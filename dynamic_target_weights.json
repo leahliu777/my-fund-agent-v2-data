@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-14 10:05:33",
+  "updated_at": "2026-06-14 14:55:35",
   "source": "dynamic_targets_v1",
   "base_target_weights": {
     "Dividend": 35.0,
@@ -26,11 +26,11 @@
   },
   "signals": {
     "macro_score": -0.4,
-    "current_drawdown_pct": -35.91
+    "current_drawdown_pct": -35.82
   },
   "reasons": [
     "DXY 99.8 不强，外部流动性压力较低",
-    "当前回撤 -35.9% 触及风险线，压低进攻仓目标",
+    "当前回撤 -35.8% 触及风险线，压低进攻仓目标",
     "Pension 相对战略目标超配 9.4%，动态目标小幅下调"
   ]
 }
