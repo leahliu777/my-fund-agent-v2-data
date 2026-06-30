@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-30 10:08:29",
+  "updated_at": "2026-06-30 15:14:01",
   "source": "dynamic_targets_v1",
   "base_target_weights": {
     "Dividend": 35.0,
@@ -26,7 +26,7 @@
   },
   "signals": {
     "macro_score": 0.0,
-    "current_drawdown_pct": -33.04
+    "current_drawdown_pct": -32.96
   },
   "reasons": [
     "当前回撤 -33.0% 触及风险线，压低进攻仓目标",
