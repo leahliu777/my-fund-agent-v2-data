@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-15 08:56:31",
+  "updated_at": "2026-07-15 14:21:37",
   "source": "dynamic_targets_v1",
   "base_target_weights": {
     "Dividend": 35.0,
@@ -8,10 +8,10 @@
     "Pension": 25.0
   },
   "target_weights": {
-    "Dividend": 38.3,
-    "Tech": 17.2,
-    "Resource": 17.2,
-    "Pension": 27.3
+    "Dividend": 36.8,
+    "Tech": 18.7,
+    "Resource": 18.7,
+    "Pension": 25.8
   },
   "actual_weights": {
     "Dividend": 33.2,
@@ -25,12 +25,10 @@
     "min_weight_pct": 5.0
   },
   "signals": {
-    "macro_score": 1.5,
+    "macro_score": 0.0,
     "current_drawdown_pct": -35.9
   },
   "reasons": [
-    "US10Y 4.61% 高位，压低成长和资源风险预算",
-    "宏观风险分 1.5，动态目标向 Dividend/Pension 倾斜 3.0%",
     "当前回撤 -35.9% 触及风险线，压低进攻仓目标",
     "Pension 相对战略目标超配 9.4%，动态目标小幅下调"
   ]
