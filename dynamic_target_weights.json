@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-21 14:36:18",
+  "updated_at": "2026-07-22 04:49:33",
   "source": "dynamic_targets_v1",
   "base_target_weights": {
     "Dividend": 35.0,
@@ -29,7 +29,7 @@
     "current_drawdown_pct": -38.81
   },
   "reasons": [
-    "US10Y 4.62% 高位，压低成长和资源风险预算",
+    "US10Y 4.63% 高位，压低成长和资源风险预算",
     "宏观风险分 1.5，动态目标向 Dividend/Pension 倾斜 3.0%",
     "当前回撤 -38.8% 触及风险线，压低进攻仓目标",
     "Pension 相对战略目标超配 9.4%，动态目标小幅下调"
