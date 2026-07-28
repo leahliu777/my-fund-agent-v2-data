@@ -1,6 +1,6 @@
 {
-  "update_time": "2026-07-28 12:44:51",
-  "rate_a": -0.07,
+  "update_time": "2026-07-28 17:18:48",
+  "rate_a": -0.08,
   "rate_b": 0.0,
   "weather": "🌫️ 横盘震荡",
   "macro": {
@@ -12,5 +12,5 @@
   "total_pnl": -897.54,
   "twr_return": 1.23,
   "twr_max_drawdown": -3.19,
-  "daily_pnl": -10.33
+  "daily_pnl": -11.32
 }
