@@ -1,0 +1,323 @@
+{
+  "attribution": {
+    "period": {
+      "start": "2026-07-27",
+      "end": "2026-07-31",
+      "previous": "2026-07-26"
+    },
+    "funds": [
+      {
+        "code": "005562",
+        "name": "创金合信中证红利低波指数C",
+        "sector": "Dividend",
+        "category": "active",
+        "shares": 1656.88,
+        "start_nav": 2.0802,
+        "start_nav_date": "2026-07-24",
+        "end_nav": 2.1553,
+        "end_nav_date": "2026-07-30",
+        "start_mv": 3446.6418,
+        "end_mv": 3571.0735,
+        "weekly_pnl": 124.4317,
+        "weekly_return_pct": 3.61,
+        "max_daily_move_pct": 1.55,
+        "nav_delayed": true,
+        "risk_signals": [
+          "delayed_nav"
+        ],
+        "contribution_pct": 0.54,
+        "weight_pct": 15.67,
+        "sector_weight_pct": 34.37,
+        "target_weight_pct": 35.0,
+        "drift_pct": -0.63
+      },
+      {
+        "code": "016452",
+        "name": "南方纳斯达克100指数(QDII)A",
+        "sector": "Tech",
+        "category": "active",
+        "shares": 962.65,
+        "start_nav": 2.1912,
+        "start_nav_date": "2026-07-24",
+        "end_nav": 2.1208,
+        "end_nav_date": "2026-07-29",
+        "start_mv": 2109.3587,
+        "end_mv": 2041.5881,
+        "weekly_pnl": -67.7706,
+        "weekly_return_pct": -3.21,
+        "max_daily_move_pct": 2.0,
+        "nav_delayed": true,
+        "risk_signals": [
+          "weekly_loss",
+          "delayed_nav"
+        ],
+        "contribution_pct": -0.29,
+        "weight_pct": 8.96,
+        "sector_weight_pct": 17.49,
+        "target_weight_pct": 20.0,
+        "drift_pct": -2.51
+      },
+      {
+        "code": "100038",
+        "name": "富国沪深300增强A",
+        "sector": "Dividend",
+        "category": "active",
+        "shares": 1573.44,
+        "start_nav": 1.899,
+        "start_nav_date": "2026-07-24",
+        "end_nav": 1.864,
+        "end_nav_date": "2026-07-30",
+        "start_mv": 2987.9626,
+        "end_mv": 2932.8922,
+        "weekly_pnl": -55.0704,
+        "weekly_return_pct": -1.84,
+        "max_daily_move_pct": 2.86,
+        "nav_delayed": true,
+        "risk_signals": [
+          "weekly_loss",
+          "delayed_nav"
+        ],
+        "contribution_pct": -0.24,
+        "weight_pct": 12.87,
+        "sector_weight_pct": 34.37,
+        "target_weight_pct": 35.0,
+        "drift_pct": -0.63
+      },
+      {
+        "code": "016582",
+        "name": "嘉实上海金ETF联接C",
+        "sector": "Resource",
+        "category": "active",
+        "shares": 1028.94,
+        "start_nav": 1.7996,
+        "start_nav_date": "2026-07-24",
+        "end_nav": 1.7955,
+        "end_nav_date": "2026-07-30",
+        "start_mv": 1851.6804,
+        "end_mv": 1847.4618,
+        "weekly_pnl": -4.2187,
+        "weekly_return_pct": -0.23,
+        "max_daily_move_pct": 1.35,
+        "nav_delayed": true,
+        "risk_signals": [
+          "weekly_loss",
+          "delayed_nav",
+          "sector_weight_drift"
+        ],
+        "contribution_pct": -0.02,
+        "weight_pct": 8.1,
+        "sector_weight_pct": 12.73,
+        "target_weight_pct": 20.0,
+        "drift_pct": -7.27
+      },
+      {
+        "code": "017675",
+        "name": "东方红颐和积极养老五年(FOF)Y",
+        "sector": "Pension",
+        "category": "pension",
+        "shares": 2383.96,
+        "start_nav": 1.2818,
+        "start_nav_date": "2026-07-24",
+        "end_nav": 1.2629,
+        "end_nav_date": "2026-07-28",
+        "start_mv": 3055.7599,
+        "end_mv": 3010.7031,
+        "weekly_pnl": -45.0568,
+        "weekly_return_pct": -1.47,
+        "max_daily_move_pct": 3.25,
+        "nav_delayed": true,
+        "risk_signals": [
+          "weekly_loss",
+          "high_daily_move",
+          "delayed_nav",
+          "sector_weight_drift"
+        ],
+        "contribution_pct": -0.19,
+        "weight_pct": 13.21,
+        "sector_weight_pct": 35.41,
+        "target_weight_pct": 25.0,
+        "drift_pct": 10.41
+      },
+      {
+        "code": "017403",
+        "name": "广发养老2050五年持有期混合(FOF)Y",
+        "sector": "Pension",
+        "category": "pension",
+        "shares": 3407.93,
+        "start_nav": 1.533,
+        "start_nav_date": "2026-07-24",
+        "end_nav": 1.4853,
+        "end_nav_date": "2026-07-28",
+        "start_mv": 5224.3567,
+        "end_mv": 5061.7984,
+        "weekly_pnl": -162.5583,
+        "weekly_return_pct": -3.11,
+        "max_daily_move_pct": 4.89,
+        "nav_delayed": true,
+        "risk_signals": [
+          "weekly_loss",
+          "high_daily_move",
+          "delayed_nav",
+          "sector_weight_drift"
+        ],
+        "contribution_pct": -0.7,
+        "weight_pct": 22.21,
+        "sector_weight_pct": 35.41,
+        "target_weight_pct": 25.0,
+        "drift_pct": 10.41
+      },
+      {
+        "code": "016707",
+        "name": "华夏中证有色金属ETF联接A",
+        "sector": "Resource",
+        "category": "active",
+        "shares": 634.53,
+        "start_nav": 1.6375,
+        "start_nav_date": "2026-07-24",
+        "end_nav": 1.6631,
+        "end_nav_date": "2026-07-30",
+        "start_mv": 1039.0429,
+        "end_mv": 1055.2868,
+        "weekly_pnl": 16.244,
+        "weekly_return_pct": 1.56,
+        "max_daily_move_pct": 2.21,
+        "nav_delayed": true,
+        "risk_signals": [
+          "delayed_nav",
+          "sector_weight_drift"
+        ],
+        "contribution_pct": 0.07,
+        "weight_pct": 4.63,
+        "sector_weight_pct": 12.73,
+        "target_weight_pct": 20.0,
+        "drift_pct": -7.27
+      },
+      {
+        "code": "008586",
+        "name": "华夏人工智能ETC联接C",
+        "sector": "Tech",
+        "category": "active",
+        "shares": 1282.23,
+        "start_nav": 1.6971,
+        "start_nav_date": "2026-07-24",
+        "end_nav": 1.5165,
+        "end_nav_date": "2026-07-30",
+        "start_mv": 2176.0725,
+        "end_mv": 1944.5018,
+        "weekly_pnl": -231.5707,
+        "weekly_return_pct": -10.64,
+        "max_daily_move_pct": 6.73,
+        "nav_delayed": true,
+        "risk_signals": [
+          "weekly_loss",
+          "high_daily_move",
+          "delayed_nav"
+        ],
+        "contribution_pct": -1.0,
+        "weight_pct": 8.53,
+        "sector_weight_pct": 17.49,
+        "target_weight_pct": 20.0,
+        "drift_pct": -2.51
+      },
+      {
+        "code": "003016",
+        "name": "中金中证3500指数增强A",
+        "sector": "Dividend",
+        "category": "active",
+        "shares": 573.6,
+        "start_nav": 2.3696,
+        "start_nav_date": "2026-07-24",
+        "end_nav": 2.3185,
+        "end_nav_date": "2026-07-30",
+        "start_mv": 1359.2026,
+        "end_mv": 1329.8916,
+        "weekly_pnl": -29.311,
+        "weekly_return_pct": -2.16,
+        "max_daily_move_pct": 3.62,
+        "nav_delayed": true,
+        "risk_signals": [
+          "weekly_loss",
+          "high_daily_move",
+          "delayed_nav"
+        ],
+        "contribution_pct": -0.13,
+        "weight_pct": 5.83,
+        "sector_weight_pct": 34.37,
+        "target_weight_pct": 35.0,
+        "drift_pct": -0.63
+      }
+    ],
+    "portfolio": {
+      "start_mv": 23250.078,
+      "end_mv": 22795.1973,
+      "fund_pnl_sum": -454.8808,
+      "weekly_return_pct": -1.96,
+      "net_flow": 0.0
+    },
+    "reconciliation": {
+      "history_market_pnl": -454.8807,
+      "fund_pnl_sum": -454.8808,
+      "difference": 0.0001,
+      "tolerance_amount": 5.0,
+      "within_tolerance": true
+    },
+    "is_complete": true,
+    "warnings": [],
+    "focus_codes": [
+      "005562",
+      "008586",
+      "017403",
+      "017675"
+    ]
+  },
+  "risk": {
+    "level": "控制",
+    "summary": "已有风控条件被触发，应暂停扩大风险并按条件小步处理。",
+    "drivers": [
+      "收益集中：最大贡献基金占全部正贡献的 88.5%",
+      "创金合信中证红利低波指数C 净值延迟，判断使用截至 2026-07-30 的正式数据",
+      "南方纳斯达克100指数(QDII)A 净值延迟，判断使用截至 2026-07-29 的正式数据",
+      "富国沪深300增强A 净值延迟，判断使用截至 2026-07-30 的正式数据",
+      "嘉实上海金ETF联接C 净值延迟，判断使用截至 2026-07-30 的正式数据",
+      "Pension 超配 10.4%，只能暂停新增，不能卖出或减仓",
+      "东方红颐和积极养老五年(FOF)Y 净值延迟，判断使用截至 2026-07-28 的正式数据",
+      "东方红颐和积极养老五年(FOF)Y 单日最大波动 3.2%",
+      "广发养老2050五年持有期混合(FOF)Y 净值延迟，判断使用截至 2026-07-28 的正式数据",
+      "广发养老2050五年持有期混合(FOF)Y 单日最大波动 4.9%",
+      "华夏中证有色金属ETF联接A 净值延迟，判断使用截至 2026-07-30 的正式数据",
+      "华夏人工智能ETC联接C 净值延迟，判断使用截至 2026-07-30 的正式数据",
+      "华夏人工智能ETC联接C 单日最大波动 6.7%",
+      "中金中证3500指数增强A 净值延迟，判断使用截至 2026-07-30 的正式数据",
+      "中金中证3500指数增强A 单日最大波动 3.6%",
+      "组合回撤 -11.0% 已触及 -10% 底线"
+    ],
+    "contribution_concentration_pct": 88.45,
+    "largest_sector_weight_pct": 35.41,
+    "strong_actions_allowed": true
+  },
+  "plan": {
+    "weekly_plan": [
+      {
+        "action": "hold",
+        "title": "保持组合不动，验证本周判断",
+        "fund": "组合整体",
+        "amount": "0",
+        "trigger": "回撤、权重偏离和主要拖累均未继续恶化",
+        "not_action_condition": "任一非 Pension 类别超配继续扩大 2 个百分点",
+        "reason": "单周盈亏不足以证明持仓角色已经改变",
+        "risk_line": "组合回撤触及 -10% 时停止新增并重新评估"
+      },
+      {
+        "action": "hold",
+        "title": "Pension 暂停新增",
+        "fund": "东方红颐和积极养老五年(FOF)Y",
+        "amount": "0",
+        "trigger": "Pension 仍超配 10.4%",
+        "not_action_condition": "权重回到目标阈值内",
+        "reason": "养老仓位只能持有或暂停新增，不能卖出减仓",
+        "risk_line": "组合回撤恶化时也只暂停新增"
+      }
+    ],
+    "confidence": 6
+  }
+}
