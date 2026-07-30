@@ -7,6 +7,7 @@
 <meta name="theme-color" content="#121212">
 <title>交易记录 | Trade Log</title>
 <link rel="stylesheet" href="modern-financial-theme.css">
+<link rel="stylesheet" href="private-wealth-report.css">
 <style>
 /* ─── 布局 ─── */
 .tl-grid { display: grid; grid-template-columns: 380px 1fr; gap: 20px; align-items: start; }
@@ -154,7 +155,7 @@
 }
 </style>
 </head>
-<body>
+<body data-report="support">
 <div id="tooltip" class="tooltip"></div>
 
 <nav class="nav-tabs tab-nav">
@@ -166,9 +167,8 @@
   <a href="trade_log.html" class="nav-tab active">交易记录</a>
 </nav>
 
-<div class="container">
-  <h1 class="page-title">交易记录 (Trade Log)</h1>
-  <p style="color:var(--text-muted);font-size:13px;margin:0 0 20px;">申购/赎回后在此填写一次，持仓份额和资金流水同步更新，导出后替换仓库文件即可。</p>
+<div class="container pw-support-page" data-product-page="trade-log">
+  <header class="pw-support-header"><p class="pw-kicker">PRIVATE WEALTH · DECISION LOG</p><h1 class="page-title">交易与决策记录</h1><p>在执行前预览份额与成本变化，执行后保留理由，让每笔交易都能回到原始判断。</p></header>
 
   <div class="tl-grid">
 
