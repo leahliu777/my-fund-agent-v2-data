@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-30 23:55:12",
+  "generated_at": "2026-07-31 00:35:12",
   "stats": {
     "current_mv": 22795.2,
     "weekly_return": -1.96,
@@ -11,7 +11,7 @@
     "ytd_start_mv": 16800.0,
     "ytd_end_mv": 22795.2,
     "ytd_net_inflow": 4650.08,
-    "ytd_capital_base": 21453.29
+    "ytd_capital_base": 21453.27
   },
   "goals": {
     "target_weights": {

@@ -28,9 +28,9 @@
   --pw-space-lg: 1.5rem;
   --pw-space-xl: 2.5rem;
   --pw-space-2xl: 4rem;
-  --pw-text-xs: 0.6875rem;
-  --pw-text-sm: 0.8125rem;
-  --pw-text-base: 1rem;
+  --pw-text-xs: 0.9375rem;
+  --pw-text-sm: 1rem;
+  --pw-text-base: 1.0625rem;
   --pw-text-md: 1.25rem;
   --pw-text-lg: 1.5625rem;
   --pw-text-xl: 1.953rem;
@@ -63,11 +63,18 @@
   --white: var(--pw-accent-ink);
   --f-ui: var(--pw-font-body);
   --f-mono: var(--pw-font-body);
+  --t-xs: var(--pw-text-xs);
+  --t-sm: var(--pw-text-sm);
+  --t-base: var(--pw-text-base);
 }
 
 html,
 body {
   overflow-x: clip;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 body {
@@ -76,7 +83,7 @@ body {
   color: var(--pw-ink);
   font-family: var(--pw-font-body);
   font-size: var(--pw-text-base);
-  line-height: 1.6;
+  line-height: 1.72;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -181,7 +188,7 @@ main[data-product-page] {
 .tab-nav {
   position: sticky;
   inset-block-start: 0;
-  z-index: 200;
+  z-index: 2000;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   width: min(100%, 72rem);
@@ -411,11 +418,25 @@ main[data-product-page] {
 .pw-gain,
 .positive {
   color: var(--pw-gain) !important;
+  font-weight: 700;
 }
 
 .pw-loss,
 .negative {
   color: var(--pw-loss) !important;
+  font-weight: 700;
+}
+
+body:not(.public-mode) .pw-gain::before,
+body:not(.public-mode) .positive::before {
+  content: "▲ ";
+  font-size: 0.72em;
+}
+
+body:not(.public-mode) .pw-loss::before,
+body:not(.public-mode) .negative::before {
+  content: "▼ ";
+  font-size: 0.72em;
 }
 
 .pw-data-state {
@@ -631,6 +652,8 @@ summary {
 }
 
 #loginStatus {
+  top: auto !important;
+  bottom: var(--pw-space-md) !important;
   border: 1px solid var(--pw-rule) !important;
   border-radius: 0 !important;
   background: var(--pw-paper) !important;
@@ -639,14 +662,22 @@ summary {
 }
 
 .public-mode .pw-private {
-  color: transparent !important;
-  text-shadow: 0 0 0.55rem var(--pw-muted);
+  display: inline-flex;
+  align-items: center;
+  min-width: 6.5rem;
+  color: var(--pw-muted) !important;
+  font-size: 0 !important;
+  font-weight: 600;
+  text-shadow: none;
   user-select: none;
 }
 
-.public-mode #daily-primary-holdings {
-  opacity: 0.42;
-  filter: blur(0.35rem);
+.public-mode .pw-private::after {
+  content: "登录后查看";
+  font-family: var(--pw-font-body);
+  font-size: var(--pw-text-sm);
+  letter-spacing: 0;
+  white-space: nowrap;
 }
 
 .chat-bar,
@@ -694,7 +725,20 @@ summary {
 
   .pw-decision {
     margin-inline: calc(var(--pw-space-md) * -1);
-    padding-inline: var(--pw-space-md);
+    padding: var(--pw-space-lg) var(--pw-space-md);
+  }
+
+  .pw-section,
+  .pw-account-summary {
+    padding-block: var(--pw-space-lg);
+  }
+
+  .pw-holding {
+    padding-block: var(--pw-space-sm);
+  }
+
+  .pw-section-head {
+    margin-bottom: var(--pw-space-sm);
   }
 
   .pw-condition-grid {
@@ -816,7 +860,7 @@ body[data-report="weekly"] .ai-report p,
 body[data-report="weekly"] .ai-report li {
   max-width: 740px;
   color: var(--pw-muted);
-  font-size: 15px;
+  font-size: var(--pw-text-base);
   line-height: 1.85;
 }
 body[data-report="weekly"] #weekly-thesis {
@@ -840,7 +884,7 @@ body[data-report="weekly"] #weekly-thesis li {
   grid-template-columns: minmax(90px, 1fr) minmax(120px, 3fr) 54px;
   align-items: center;
   gap: 14px;
-  font-size: 13px;
+  font-size: var(--pw-text-sm);
 }
 .weekly-allocation-track {
   height: 5px;
@@ -858,10 +902,10 @@ body[data-report="weekly"] #weekly-thesis li {
 }
 @media (max-width: 720px) {
   body[data-report="weekly"] .dashboard-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr !important;
   }
   body[data-report="weekly"] .dashboard-grid .card-bench {
-    grid-column: 1 / -1;
+    grid-column: 1 / -1 !important;
   }
   .weekly-allocation-row {
     grid-template-columns: 86px 1fr 48px;
@@ -892,7 +936,7 @@ body[data-report="support"] .pw-support-page {
   max-width: 620px;
   margin: 0;
   color: var(--pw-muted);
-  font-size: 15px;
+  font-size: var(--pw-text-base);
   line-height: 1.75;
 }
 body[data-report="support"] .card,
