@@ -1,16 +1,16 @@
 {
-  "update_time": "2026-07-31 17:25:58",
-  "rate_a": -1.15,
-  "rate_b": -4.28,
+  "update_time": "2026-07-31 23:01:11",
+  "rate_a": 1.67,
+  "rate_b": 0.24,
   "weather": "🌫️ 横盘震荡",
   "macro": {
-    "us10y": "4.66%",
-    "vix": "2902.7",
-    "dxy": "100.0"
+    "us10y": "4.72%",
+    "vix": "2936.4",
+    "dxy": "100.2"
   },
   "grid_count": 2,
-  "total_pnl": -455.91,
+  "total_pnl": -194.5,
   "twr_return": 1.73,
   "twr_max_drawdown": -3.07,
-  "daily_pnl": -515.28
+  "daily_pnl": 269.74
 }
