@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-05 09:20:19",
+  "updated_at": "2026-08-05 14:56:56",
   "source": "dynamic_targets_v1",
   "base_target_weights": {
     "Dividend": 35.0,
@@ -26,12 +26,12 @@
   },
   "signals": {
     "macro_score": 1.1,
-    "current_drawdown_pct": -39.25
+    "current_drawdown_pct": -38.86
   },
   "reasons": [
     "US10Y 4.63% 高位，压低成长和资源风险预算",
-    "DXY 99.8 不强，外部流动性压力较低",
-    "当前回撤 -39.2% 触及风险线，压低进攻仓目标",
+    "DXY 99.7 不强，外部流动性压力较低",
+    "当前回撤 -38.9% 触及风险线，压低进攻仓目标",
     "Pension 相对战略目标超配 9.4%，动态目标小幅下调"
   ]
 }
