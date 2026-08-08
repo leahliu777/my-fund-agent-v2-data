@@ -1,7 +1,7 @@
 {
-  "update_time": "2026-08-08 12:36:21",
+  "update_time": "2026-08-08 15:30:56",
   "rate_a": 0.7,
-  "rate_b": 2.13,
+  "rate_b": 1.9,
   "weather": "💨 持续顺风",
   "macro": {
     "us10y": "4.66%",
@@ -9,8 +9,8 @@
     "dxy": "99.6"
   },
   "grid_count": 1,
-  "total_pnl": 389.02,
+  "total_pnl": 474.13,
   "twr_return": 2.38,
   "twr_max_drawdown": -3.07,
-  "daily_pnl": 219.06
+  "daily_pnl": 265.34
 }
