@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-08-08 15:31:46",
+  "generated_at": "2026-08-08 21:29:04",
   "stats": {
-    "current_mv": 23725.24,
-    "weekly_return": 2.9,
-    "ytd_pnl_rate": 10.61,
-    "ytd_pnl_value": 2275.0,
+    "current_mv": 20640.15,
+    "weekly_return": -10.48,
+    "ytd_pnl_rate": -3.78,
+    "ytd_pnl_value": -810.0,
     "ytd_method": "modified_dietz",
-    "max_drawdown": -11.01,
+    "max_drawdown": -18.98,
     "total_cost": 23251.1,
     "ytd_start_mv": 16800.0,
-    "ytd_end_mv": 23725.24,
+    "ytd_end_mv": 20640.15,
     "ytd_net_inflow": 4650.08,
     "ytd_capital_base": 21453.15
   },
@@ -260,7 +260,7 @@
     "action": "watch",
     "title": "先降风险：暂停补仓",
     "amount": "0",
-    "trigger": "最大回撤 -11.0% 触及风险线 -10.0%",
+    "trigger": "最大回撤 -19.0% 触及风险线 -10.0%",
     "reason": "先处理风险线，不做补仓；Pension 为个人养老金，只能暂停新增，不能卖出或减仓。",
     "risk_line": "最大回撤接近 -10.0% 时，优先减风险而不是补仓。",
     "fund": "组合整体"
