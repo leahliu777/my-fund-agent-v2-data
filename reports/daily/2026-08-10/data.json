@@ -1,12 +1,12 @@
 {
-  "update_time": "2026-08-10 13:08:02",
+  "update_time": "2026-08-10 16:14:22",
   "rate_a": 0.7,
   "rate_b": 1.9,
-  "weather": "💨 持续顺风",
+  "weather": "🌫️ 横盘震荡",
   "macro": {
     "us10y": "4.66%",
     "vix": "3139.4",
-    "dxy": "99.7"
+    "dxy": "99.6"
   },
   "grid_count": 1,
   "total_pnl": 474.13,
