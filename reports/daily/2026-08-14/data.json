@@ -1,16 +1,16 @@
 {
-  "update_time": "2026-08-14 15:58:16",
-  "rate_a": -0.52,
-  "rate_b": -0.77,
+  "update_time": "2026-08-14 21:55:25",
+  "rate_a": 0.23,
+  "rate_b": 0.88,
   "weather": "💨 持续顺风",
   "macro": {
-    "us10y": "4.64%",
-    "vix": "3112.4",
-    "dxy": "99.8"
+    "us10y": "4.65%",
+    "vix": "3103.1",
+    "dxy": "99.5"
   },
-  "grid_count": 1,
-  "total_pnl": 458.74,
-  "twr_return": 2.32,
+  "grid_count": 0,
+  "total_pnl": 567.25,
+  "twr_return": 2.78,
   "twr_max_drawdown": -3.07,
-  "daily_pnl": -143.82
+  "daily_pnl": 110.23
 }
