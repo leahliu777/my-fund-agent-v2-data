@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-01 14:41:32",
+  "generated_at": "2026-09-02 00:51:39",
   "stats": {
-    "current_mv": 23867.22,
-    "weekly_return": 1.21,
-    "ytd_pnl_rate": 11.27,
-    "ytd_pnl_value": 2417.0,
+    "current_mv": 23782.65,
+    "weekly_return": 0.23,
+    "ytd_pnl_rate": 10.87,
+    "ytd_pnl_value": 2333.0,
     "ytd_method": "modified_dietz",
     "max_drawdown": -18.98,
     "total_cost": 23251.1,
     "ytd_start_mv": 16800.0,
-    "ytd_end_mv": 23867.22,
+    "ytd_end_mv": 23782.65,
     "ytd_net_inflow": 4650.08,
-    "ytd_capital_base": 21452.83
+    "ytd_capital_base": 21452.82
   },
   "goals": {
     "target_weights": {
